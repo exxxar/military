@@ -1,0 +1,2124 @@
+[
+    {
+        "id": 1,
+        "region": "г. Донецк",
+        "locations": [
+            {
+                "address": "пгт. Еленовка, ул. Почтовая, 147",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Авангардная, 26",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Баумана, 1 В",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Баумана, 1 Г",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Гутченкого, 24 В",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Моспино, ул. Ново-Моспино, 31 Б, шахта \"Моспинская\"",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Полоцкая, 2 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Антропова, 2 Ш",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Нижнекурганская, 15 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Таганская, 10 Г",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г.Донецк, ул. Бехтерева, 17",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г.Донецк, ул. Таллинская, 1А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Краснооктябрьская, 206",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Мира, 44 Д",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Мира, 44 Е",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Гутченкого, 24 В",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Ильича, 97",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Ильича, 103",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Ильича, 111",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Петровского, 74",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Кирова, 284 А, шахта 'Лидиевка'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Ильича, 99",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Ильича, 115",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Красногвардейский, 42",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Красногвардейский, 46",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. 50-й Гвардейской дивизии, 17",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Павших Коммунаров, 79",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Павших Коммунаров, 104",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Разенкова, 2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Разенкова, 6",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Дзержинского, 70 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Кирова, 292, 'Шахта им. Е. Т. Абакумова'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Кирова, 320",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Бахметьева, 34",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Королевой. 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Бахметьева, 24",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Ломоносова, 12",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Нефтяная, 9",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Адыгейская, 13",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Адыгейская, 13 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Адыгейская, 1Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Куйбышева, 61",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Левобережная, 6 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Мечникова, 100 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Павлодарская, 14 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Рослого, 86 Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Заварзина, 1В",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Соколиная, 1 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Курчатова, 45",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Профессоров Богуславских, 12 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Химиков, 42 Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Веселый, 74 Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Североуральская, 40",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Палладина, 54",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Баранникова, 27",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Панфилова, 3",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. ул. Левицкого, 31",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Будапештская, 10 В, 'Шахта им. А. Ф. Засядько'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Освобождения Донбасса, 8 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Батищева, 2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Артема, 106 Д",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Челюскинцев, 291 Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Экономическая, 15",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Киевский, 48",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Советская, 27 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Новороссийская 9",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Сочинская, 9",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пл. Правды, 1 'Шахта им. Челюскинцев'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Чусовская, 1 Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Камвольная, 39 А. ст. Мандрыкино",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Зональная, 11",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Ивана Ткаченко, 122 (ГП ЮМЗ)",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Ревякина, 20",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Артема, 125",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Артема, 66 У",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Розы Люксембург, 70",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Университетская, 24",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Артема, 58",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, бр. Пушкина, 11",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, бр. Пушкина, 34",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, пр. Комсомольский, 22",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Гутченкого, 24 В",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. пл. Правды 1 В 'Шахта им. Челюскинцев'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк. пл.Правды, 1 Г, 'Шахта им. Челюскинцев'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Петровского, 74",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Углекаменская, 7 А, 'Шахта им. А. А. Скочинского'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Кирова, 1 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Кирова, шахта '17-17 бис'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Куприна, 185",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Кирова, 332",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Жуковского, 2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Жуковского, 2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Ткаченко, 122",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Ткаченко, 122",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Заварзина, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Новороссийская, 13",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Победы, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Щорса, 110 Ю",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Товарная, 15 Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Донецк, ул. Батищева, 2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "region": "г. Макеевка",
+        "locations": [
+            {
+                "address": "г. Макеевка, ул. Кирова, 141",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Ленина, 47",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Кирова, 73",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Таежная, 2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Ленина, 400",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Ленина, 401",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Тычины, 1 Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Ярошенко 80 В",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Тычины, 1 Б, 'Шахта Щегловская-Глубокая'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. 40-летия Октября, 30 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка. ул. Трубицына, 2 Г",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Янки Купала, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Трубицына, 2 В",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ЗАО 'Макеевский городской молокозавод'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Клубная, 2 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Лихачева, 60",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Горького, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Энгельса, 58 Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Горького, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, Советский район, пос. Ханженково, ул. Горноспасательная (шахта Советская)",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Горького, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ЧАО 'Макеевский завод 'Лазер'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Горького, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка. пер. Автобусный, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул.Тореза, 62-1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. 50-летия создания СССР, 5",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. 50-летия создания СССР, 5",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, Советский район, ул. Шевченко, 26 б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. 50-летия создания СССР, 5",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Металлургическая, 47",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Металлургическая, 47",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, Горняцкий район, п. Свердлова, ул. Свободы, 7",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Энгельса, 58",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Металлургическая, 47",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Металлургическая, 47",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка,, Горняцкий район, пгт. Свердлова, ул. Свободы. 9 А (промплощадка шахты Кировская- Западная).",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Островского, 3/18",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Лихачева, 60",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Волгоградская, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Жуковского, 60 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Томская, 8 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Макеевка, ул. Янки Купалы, 12 Б",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "region": "г. Горловка",
+        "locations": [
+            {
+                "address": "с. Михайловка, ул. Ленина, 21",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Горловка, ул. Карла Маркса, 2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Горловка, ул. Горловской дивизии, 10",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Горловка, ул. Нестерова, 127/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Погодина, 5",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Пражская, 101/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Шахтная, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "Г. Горловка, ул. Ленина, 182/2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Вокзальная, 24",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Ленина, 182/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Вознесенского, 5 г",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Черкасская, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Плеханова, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Умова, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Щукина, 2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Вокзальная, 1/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Ушинского, 3",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка. ул. Жуковского, 8",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, Горловской дивизии, 97",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Днепровская, 40 А/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Интернациональная, 69/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Горького, 4/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Колисниченко, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Вавилова, 39 В",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Куйбышева, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Никитовская, 33",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Бубнова, 8 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, пр. Ленина, 26",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Колисниченко, 1/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Больничная, 2/2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, пр. Ленина, 11",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Живописная, 46/3",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Данченко, Калининская исправительная колония",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Карла Маркса, 3",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Живописная, 46/2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Живописная, 46/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Горловка, ул. Куйбышева, ЛШ 'Комсомолец'",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }
+
+        ]
+    },
+    {
+        "id": 4,
+        "region": "г. Енакиево и Ждановка",
+        "locations": [
+            {
+                "address": "г. Енакиево, ул. Лебедева Кумача, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, пр. Ленина, 82",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, пр. Металлургов, 9",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }, {
+                "address": "г. Енакиево, пр. 50 лет Октября, 11",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, пр. Металлургов, 9",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, пр. Металлургов, 9",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, пр. Металлургов, 9",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, пр. Металлургов, 9",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, пр. Металлургов, 9",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, ул. Марата, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, ул. Марата, 1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, ул. Луганское шоссе, 22",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Енакиево, ул. Станционная, 2",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }
+
+        ]
+    },
+    {
+        "id": 5,
+        "region": "г. Дебальцево",
+        "locations": [
+            {
+                "address": "г. Углегорск, ул. Тимирязева, 20 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Кооперативная, 3",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Мокиевской, 79",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Октябрьская, 84",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Октябрьская, 84",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Мокиевской, 78/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },   {
+                "address": "г. Дебальцево. ул. Ленина, 12 Д",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево. ул. Ленина, 12",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Ленина, 16",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево. ул. Пушкина, 4 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, пос. Заводской, 40",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Мокиевской, 104 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Курчатова, 62",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Пожарная, 4б/1",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Курчатова, 74 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Космонавтов, 8",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Путевая, 6 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            },
+            {
+                "address": "г. Дебальцево, ул. Путевая, 6 А",
+                "lat": 0,
+                "lon": 0,
+                "region": null,
+                "balance_holder": null,
+                "responsible_person": null,
+                "capacity": 0,
+                "description": null
+            }
+        ]
+    }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
