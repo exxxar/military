@@ -7,6 +7,7 @@ use App\Imports\MainImport;
 use App\Models\Shelter;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Yandex\Geocode\Facades\YandexGeocodeFacade;
 
 class TestController extends Controller
 {
@@ -33,6 +34,34 @@ class TestController extends Controller
         }
 
         dd(Shelter::all()->count());
+    }
+
+    public function yandexTest()
+    {
+        ini_set('max_execution_time', '-1');
+        $shelters = Shelter::all();
+        $ids = [];
+
+        foreach ($shelters as $key => $shelter) {
+            if ($shelter->lat != 0 && $shelter->lon != 0) {
+                continue;
+            }
+
+            try {
+                $data = YandexGeocodeFacade::setQuery($shelter->city . "," . $shelter->address)->load();
+
+                $lat = $data->getResponse()->getLatitude();
+                $lon = $data->getResponse()->getLongitude();
+
+                $shelter->lat = $lat;
+                $shelter->lon = $lon;
+                $shelter->save();
+            } catch (\Throwable $th) {
+                array_push($ids, $shelter->id);
+            }
+        }
+
+        dd($ids);
     }
 
     public function importExcel()
