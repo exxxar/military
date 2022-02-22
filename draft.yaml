@@ -1,0 +1,16 @@
+models:
+  Shelter:
+    id: id
+    city: string
+    region: string
+    address: string:400
+    lat: double
+    lon: double
+    balance_holder: string
+    responsible_person: string
+    capacity: integer
+    description: longtext
+
+controllers:
+  Shelter:
+    resource: api
