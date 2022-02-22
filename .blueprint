@@ -1,7 +1,7 @@
 created:
     - app/Http/Controllers/ShelterController.php
     - database/factories/ShelterFactory.php
-    - database/migrations/2022_02_22_062646_create_shelters_table.php
+    - database/migrations/2022_02_22_062935_create_shelters_table.php
     - app/Models/Shelter.php
     - tests/Feature/Http/Controllers/ShelterControllerTest.php
     - app/Http/Requests/ShelterStoreRequest.php
@@ -11,4 +11,4 @@ created:
 updated:
     - routes/api.php
 models:
-    Shelter: { id: id, city: string, region: string, address: 'string:400', lat: double, lon: double, balance_holder: string, responsible_person: string, capacity: integer, description: longtext }
+    Shelter: { id: id, city: 'string nullable', region: 'string nullable', address: 'string:400', lat: 'double default:0', lon: 'double default:0', balance_holder: 'string nullable', responsible_person: 'string nullable', capacity: 'integer default:0', description: 'longtext nullable' }

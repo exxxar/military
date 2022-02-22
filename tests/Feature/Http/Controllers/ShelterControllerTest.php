@@ -46,38 +46,23 @@ class ShelterControllerTest extends TestCase
      */
     public function store_saves()
     {
-        $city = $this->faker->city;
-        $region = $this->faker->word;
         $address = $this->faker->word;
         $lat = $this->faker->latitude;
         $lon = $this->faker->randomFloat(/** double_attributes **/);
-        $balance_holder = $this->faker->word;
-        $responsible_person = $this->faker->word;
         $capacity = $this->faker->numberBetween(-10000, 10000);
-        $description = $this->faker->text;
 
         $response = $this->post(route('shelter.store'), [
-            'city' => $city,
-            'region' => $region,
             'address' => $address,
             'lat' => $lat,
             'lon' => $lon,
-            'balance_holder' => $balance_holder,
-            'responsible_person' => $responsible_person,
             'capacity' => $capacity,
-            'description' => $description,
         ]);
 
         $shelters = Shelter::query()
-            ->where('city', $city)
-            ->where('region', $region)
             ->where('address', $address)
             ->where('lat', $lat)
             ->where('lon', $lon)
-            ->where('balance_holder', $balance_holder)
-            ->where('responsible_person', $responsible_person)
             ->where('capacity', $capacity)
-            ->where('description', $description)
             ->get();
         $this->assertCount(1, $shelters);
         $shelter = $shelters->first();
@@ -119,26 +104,16 @@ class ShelterControllerTest extends TestCase
     public function update_behaves_as_expected()
     {
         $shelter = Shelter::factory()->create();
-        $city = $this->faker->city;
-        $region = $this->faker->word;
         $address = $this->faker->word;
         $lat = $this->faker->latitude;
         $lon = $this->faker->randomFloat(/** double_attributes **/);
-        $balance_holder = $this->faker->word;
-        $responsible_person = $this->faker->word;
         $capacity = $this->faker->numberBetween(-10000, 10000);
-        $description = $this->faker->text;
 
         $response = $this->put(route('shelter.update', $shelter), [
-            'city' => $city,
-            'region' => $region,
             'address' => $address,
             'lat' => $lat,
             'lon' => $lon,
-            'balance_holder' => $balance_holder,
-            'responsible_person' => $responsible_person,
             'capacity' => $capacity,
-            'description' => $description,
         ]);
 
         $shelter->refresh();
@@ -146,15 +121,10 @@ class ShelterControllerTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([]);
 
-        $this->assertEquals($city, $shelter->city);
-        $this->assertEquals($region, $shelter->region);
         $this->assertEquals($address, $shelter->address);
         $this->assertEquals($lat, $shelter->lat);
         $this->assertEquals($lon, $shelter->lon);
-        $this->assertEquals($balance_holder, $shelter->balance_holder);
-        $this->assertEquals($responsible_person, $shelter->responsible_person);
         $this->assertEquals($capacity, $shelter->capacity);
-        $this->assertEquals($description, $shelter->description);
     }
 
 

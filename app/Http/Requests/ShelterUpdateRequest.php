@@ -24,15 +24,15 @@ class ShelterUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'city' => ['required', 'string'],
-            'region' => ['required', 'string'],
+            'city' => ['string'],
+            'region' => ['string'],
             'address' => ['required', 'string', 'max:400'],
             'lat' => ['required', 'numeric'],
             'lon' => ['required', 'numeric'],
-            'balance_holder' => ['required', 'string'],
-            'responsible_person' => ['required', 'string'],
+            'balance_holder' => ['string'],
+            'responsible_person' => ['string'],
             'capacity' => ['required', 'integer'],
-            'description' => ['required', 'string'],
+            'description' => ['string'],
         ];
     }
 }

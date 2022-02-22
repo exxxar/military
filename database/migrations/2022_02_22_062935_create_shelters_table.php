@@ -15,15 +15,15 @@ class CreateSheltersTable extends Migration
     {
         Schema::create('shelters', function (Blueprint $table) {
             $table->id();
-            $table->string('city');
-            $table->string('region');
+            $table->string('city')->nullable();
+            $table->string('region')->nullable();
             $table->string('address', 400);
-            $table->double('lat');
-            $table->double('lon');
-            $table->string('balance_holder');
-            $table->string('responsible_person');
-            $table->integer('capacity');
-            $table->longText('description');
+            $table->double('lat')->default(0);
+            $table->double('lon')->default(0);
+            $table->string('balance_holder')->nullable();
+            $table->string('responsible_person')->nullable();
+            $table->integer('capacity')->default(0);
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }

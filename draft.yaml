@@ -1,15 +1,15 @@
 models:
   Shelter:
     id: id
-    city: string
-    region: string
+    city: string nullable
+    region: string nullable
     address: string:400
-    lat: double
-    lon: double
-    balance_holder: string
-    responsible_person: string
-    capacity: integer
-    description: longtext
+    lat: double default:0
+    lon: double default:0
+    balance_holder: string nullable
+    responsible_person: string nullable
+    capacity: integer default:0
+    description: longtext nullable
 
 controllers:
   Shelter:
