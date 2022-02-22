@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Mpdf\Mpdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +22,12 @@ Route::get('/', function () {
 
 Route::get('/mobile', function () {
     return view('welcome');
+});
+
+
+Route::get("/test",function (){
+
+
 });
 
 Route::any('/telegram/handler', [\App\Http\Controllers\TelegramController::class, "handler"]);
