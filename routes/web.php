@@ -27,6 +27,3 @@ Route::any('/telegram/handler', [\App\Http\Controllers\TelegramController::class
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-Route::get('/test', [App\Http\Controllers\TestController::class, 'yandexTest'])->name('test');
