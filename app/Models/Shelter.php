@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\QualityStateEnum;
+use App\Enums\ShelterStatusEnum;
+use App\Enums\ShelterTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +27,10 @@ class Shelter extends Model
         'responsible_person',
         'capacity',
         'description',
+        "status",
+        "quality",
+        "type",
+        "facility"
     ];
 
     /**
@@ -33,11 +40,14 @@ class Shelter extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'status' => ShelterStatusEnum::class,
+        'quality' => QualityStateEnum::class,
+        'type' => ShelterTypeEnum::class,
         'lat' => 'double',
         'lon' => 'double',
     ];
 
-    public static function getNearestQuestPoints($latitude, $longitude, $dist )
+    public static function getNearestQuestPoints($latitude, $longitude, $dist)
     {
 
         $lon1 = $longitude - $dist / abs(cos(rad2deg($latitude)) * 111.0); # 1 градус широты = 111 км

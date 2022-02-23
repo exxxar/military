@@ -2,11 +2,13 @@
 
 namespace App\Classes;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Api;
 
 class TelegramBotHandler extends BaseBot
 {
+    private $user;
 
     public function __construct()
     {
@@ -20,6 +22,24 @@ class TelegramBotHandler extends BaseBot
         $botId = $response->getId();
         $firstName = $response->getFirstName();
         $username = $response->getUsername();
+
+
+        $this->user = User::query()->where("telegram_chat_id", $botId)->first();
+
+        if (is_null($this->user)) {
+            $this->user = User::query()->create([
+                'name' => $username ?? $firstName ?? null,
+                'email' => "$botId@donbassit.ru",
+                'telegram_chat_id' => $botId,
+                'password' => bcrypt($botId),
+                'full_name' => $firstName ?? null
+
+            ]);
+        }
+    }
+
+    public function currentUser(){
+        return $this->user;
     }
 
     public function bot()
@@ -64,6 +84,7 @@ class TelegramBotHandler extends BaseBot
                     }
             }
 
+
             return;
         }
 
@@ -72,7 +93,7 @@ class TelegramBotHandler extends BaseBot
 
         foreach ($this->routes as $item) {
 
-            if (is_null($item["path"])||$item["is_service"])
+            if (is_null($item["path"]) || $item["is_service"])
                 continue;
 
             $reg = $item["path"];
@@ -87,8 +108,19 @@ class TelegramBotHandler extends BaseBot
                 } catch (\Exception $e) {
                     Log::error($e->getMessage() . " " . $e->getLine());
                 }
-
                 break;
+            }
+
+        }
+
+        if (!empty($this->next)){
+            foreach ($this->next as $item){
+                try {
+                    $item["function"]($message);
+                    $find = true;
+                }catch (\Exception $e){
+                    Log::error($e->getMessage() . " " . $e->getLine());
+                }
             }
         }
 

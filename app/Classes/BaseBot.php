@@ -13,35 +13,43 @@ abstract class BaseBot
 
     protected $routes = [];
 
+    protected $next = [];
+
     public function reply($message)
     {
-        $this->sendMessage($this->chatId, $message);
+        return $this->sendMessage($this->chatId, $message);
+    }
+
+    public function replyEditInlineKeyboard($messageId, $keyboard)
+    {
+        return $this->editInlineKeyboard($this->chatId, $messageId, $keyboard);
     }
 
     public function replyLocation($lat, $lon)
     {
-        $this->sendLocation($this->chatId, $lat, $lon);
+        return $this->sendLocation($this->chatId, $lat, $lon);
     }
 
-    public function replyInvoice($title,$description, $prices, $data )
+    public function replyInvoice($title, $description, $prices, $data)
     {
-        $this->sendInvoice($this->chatId,$title, $description,$prices, $data );
+        return $this->sendInvoice($this->chatId, $title, $description, $prices, $data);
     }
 
     public function replyKeyboard($message, $keyboard = [])
     {
-        $this->sendReplyKeyboard($this->chatId, $message, $keyboard);
+        return $this->sendReplyKeyboard($this->chatId, $message, $keyboard);
     }
 
     public function replyDocument($caption, $path, $filename = 'locations.pdf')
     {
-        $this->sendDocument($this->chatId, $caption, InputFile::create($path, $filename));
+        return $this->sendDocument($this->chatId, $caption, InputFile::create($path, $filename));
     }
 
 
     public function inlineKeyboard($message, $keyboard = [])
     {
-        $this->sendInlineKeyboard($this->chatId, $message, $keyboard);
+        return $this->sendInlineKeyboard($this->chatId, $message, $keyboard);
+
     }
 
     public function sendMessage($chatId, $message)
@@ -55,6 +63,8 @@ abstract class BaseBot
         } catch (\Exception $e) {
 
         }
+
+        return $this;
 
     }
 
@@ -71,6 +81,8 @@ abstract class BaseBot
 
         }
 
+        return $this;
+
     }
 
     public function sendDocument($chatId, $caption, $path)
@@ -85,6 +97,8 @@ abstract class BaseBot
         } catch (\Exception $e) {
 
         }
+
+        return $this;
 
     }
 
@@ -109,9 +123,12 @@ abstract class BaseBot
 
         }
 
+        return $this;
+
     }
 
-    public function sendInvoice($chatId, $title, $description, $prices, $data){
+    public function sendInvoice($chatId, $title, $description, $prices, $data)
+    {
         try {
             $this->bot->sendInvoice([
                 "chat_id" => $chatId,
@@ -122,13 +139,34 @@ abstract class BaseBot
                 "currency" => env("PAYMENT_PROVIDER_CURRENCY"),
                 "prices" => $prices,
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
 
         }
+
+        return $this;
 
         //[
         //                ["label"=>"Test", "amount"=>10000]
         //            ]
+    }
+
+    public function editInlineKeyboard($chatId, $messageId, $keyboard)
+    {
+        try {
+            $this->bot->editMessageReplyMarkup([
+                "chat_id" => $chatId,
+                "message_id" => $messageId,
+                "parse_mode" => "HTML",
+                'reply_markup' => json_encode([
+                    'inline_keyboard' => $keyboard,
+                ])
+
+            ]);
+        } catch (\Exception $e) {
+
+        }
+
+        return $this;
     }
 
     public function sendInlineKeyboard($chatId, $message, $keyboard)
@@ -147,35 +185,53 @@ abstract class BaseBot
         } catch (\Exception $e) {
 
         }
+
+        return $this;
     }
 
-    public function addRoute($path, $function):TelegramBotHandler
+    public function next($name)
+    {
+        foreach ($this->routes as $route) {
+            if (isset($route["name"]))
+                if ($route["name"] == $name)
+                    array_push($this->next, [
+                        "name" => $name,
+                        "function" => $route["function"],
+                        //  "arguments"=>$arguments??[]
+                    ]);
+        }
+
+        return $this;
+    }
+
+    public function addRoute($path, $function, $name = null): TelegramBotHandler
     {
         array_push($this->routes, [
             "path" => $path,
-            "is_service"=>false,
-            "function" => $function
+            "is_service" => false,
+            "function" => $function,
+            "name" => $name
         ]);
 
         return $this;
     }
 
-    public function addRouteLocation($function):TelegramBotHandler
+    public function addRouteLocation($function): TelegramBotHandler
     {
         array_push($this->routes, [
             "path" => "location",
-            "is_service"=>true,
+            "is_service" => true,
             "function" => $function
         ]);
 
         return $this;
     }
 
-    public function addRouteFallback($function):TelegramBotHandler
+    public function addRouteFallback($function): TelegramBotHandler
     {
         array_push($this->routes, [
             "path" => "fallback",
-            "is_service"=>true,
+            "is_service" => true,
             "function" => $function
         ]);
 

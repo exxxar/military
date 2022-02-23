@@ -9,8 +9,6 @@ use Telegram\Bot\Api;
 
 class TelegramController extends Controller
 {
-    //
-
     public function handler(Request $request)
     {
         MilitaryServiceFacade::bot()->handler();
