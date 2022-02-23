@@ -1,8 +1,11 @@
 <?php
 
+use App\Exports\ShelterExport;
 use App\Facades\MilitaryServiceFacade;
 use App\Models\Shelter;
 use Illuminate\Support\Facades\Log;
+
+use Maatwebsite\Excel\Facades\Excel;
 use Telegram\Bot\Methods\Message;
 
 MilitaryServiceFacade::bot()
@@ -10,10 +13,11 @@ MilitaryServiceFacade::bot()
 
         MilitaryServiceFacade::bot()->reply("Скачать список!");
 
-        /*   $mpdf = new Mpdf();
-           $mpdf->WriteHTML("<p>Test</p>");*/
 
-        // MilitaryServiceFacade::bot()->replyDocument("Список в pdf",,"coords.pdf");
+        Excel::store(new ShelterExport, 'coords.xlsx');
+
+
+        MilitaryServiceFacade::bot()->replyDocument("Список всех убежищь",\Illuminate\Support\Facades\Storage::get("coords.xlsx"),"coords.xlsx");
 
 
         $schelters = \App\Models\Shelter::query()->get();
@@ -114,25 +118,31 @@ MilitaryServiceFacade::bot()
         ]);
     })
     ->addRouteLocation(function ($message, $coords) {
-        MilitaryServiceFacade::bot()->reply("Координаты!" . $coords->lon . " " . $coords->lat);
+        //MilitaryServiceFacade::bot()->reply("Координаты!" . $coords->lon . " " . $coords->lat);
 
         $lat = $coords->lat;
         $lon = $coords->lon;
 
         $user = MilitaryServiceFacade::bot()->currentUser();
 
-        $tmp_text = "*Ближайшие точки (в настройках ~$user->radius км):*\n";
-        MilitaryServiceFacade::bot()->reply(print_r(Shelter::getNearestQuestPoints($lat, $lon, $user->radius)->toArray(), true));
-        $findLocation = false;
 
+        //MilitaryServiceFacade::bot()->reply(print_r(Shelter::getNearestQuestPoints($lat, $lon, $user->radius)->toArray(), true));
+        $findLocation = false;
 
         foreach (Shelter::getNearestQuestPoints($lat, $lon, $user->radius)->toArray() as $pos) {
 
             $pos = (object)$pos;
-
-            $tmp_text .= "\xF0\x9F\x94\xB6 " . $pos->address . "\n" . round(Shelter::dist($pos->lat, $pos->lon, $lat, $lon)) . " метров от вас";
+            
+            $tmp_text = "<b>Ближайшие точки (в настройках ~$user->radius км):</b>\n";
+            $tmp_text .= "\xF0\x9F\x94\xB6 " . $pos->address . "\n" . round(Shelter::dist($pos->lat, $pos->lon, $lat, $lon)) . " метров от вас \n";
+            $tmp_text .="Город: <b>".$pos->city."</b>\n";
+            $tmp_text .="На балане: <b>".$pos->balance_holder."</b>\n";
+            $tmp_text .="Отвественный: <b>".$pos->responsible_person."</b>\n";
+            $tmp_text .="Описание: <b>".$pos->description."</b>\n";
 
             MilitaryServiceFacade::bot()->replyLocation($pos->lat, $pos->lon);
+            MilitaryServiceFacade::bot()->reply($tmp_text);
+
             $findLocation = true;
             /*  if ($pos->inRange($lat, $lng)) {
                   $tmp_text .= "	\xF0\x9F\x94\xB7Точка " . $pos->city . " находится в 0.1км от вас!\n";
@@ -140,18 +150,13 @@ MilitaryServiceFacade::bot()
         }
 
         if (!$findLocation) {
-            $tmp_text .= "Не найдено ни одной ближайшей к вам точки:(";
-            MilitaryServiceFacade::bot()->inlineKeyboard($tmp_text, [
+            MilitaryServiceFacade::bot()->inlineKeyboard("Не найдено (в радиусе ~$user->radius км) ни одной ближайшей к вам точки:(", [
                 [
                     ["text" => "Сменить настройки дальности", "callback_data" => "/settings"],
                 ]
             ]);
-            return;
         }
 
-        MilitaryServiceFacade::bot()->reply($tmp_text);
-
-        MilitaryServiceFacade::bot()->reply("END");
     })
     ->addRouteFallback(function ($message) {
         MilitaryServiceFacade::bot()->reply("Методов не обнаружено!");

@@ -42,7 +42,7 @@ abstract class BaseBot
 
     public function replyDocument($caption, $path, $filename = 'locations.pdf')
     {
-        return $this->sendDocument($this->chatId, $caption, InputFile::create($path, $filename));
+        return $this->sendDocument($this->chatId, $caption, InputFile::createFromContents($path, $filename));
     }
 
 

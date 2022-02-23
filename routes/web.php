@@ -1,6 +1,8 @@
 <?php
 
+use App\Exports\ShelterExport;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Mpdf\Mpdf;
@@ -27,6 +29,7 @@ Route::get('/mobile', function () {
 
 Route::get("/test",function (){
 
+    return Excel::download(new ShelterExport, 'invoices.xlsx');
 
 });
 
