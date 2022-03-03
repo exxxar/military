@@ -13,6 +13,14 @@ import ShelterCounter from './components/Shelters/ShelterCounter'
 import ShelterRegions from './components/Shelters/ShelterRegions'
 import ShelterFrom from './components/Shelters/AddNewShelterForm'
 
+import BaseHelpForm from './components/OtherForms/BaseHelpForm'
+import FoodAndGoodsForm from './components/OtherForms/FoodAndGoodsForm'
+import DeliveryForm from './components/OtherForms/DeliveryForm'
+import AssistanceForm from './components/OtherForms/AssistanceForm'
+import DriverForm from './components/OtherForms/DriverForm'
+import FeederForm from './components/OtherForms/FeederForm'
+import AidCenterForm from './components/OtherForms/AidCenterForm'
+
 import AboutPage from './pages/About'
 import HomePage from './pages/Home'
 import AidCentersPage from './pages/AidCenters'
@@ -43,6 +51,14 @@ app.component('shelter-map-component', ShelterMap)
 app.component('shelter-counter-component', ShelterCounter)
 app.component('shelter-regions-component', ShelterRegions)
 app.component('shelter-form-component', ShelterFrom)
+
+app.component('base-help-form-component', BaseHelpForm)
+app.component('food-and-goods-form-component', FoodAndGoodsForm)
+app.component('delivery-form-component', DeliveryForm)
+app.component('assistance-form-component', AssistanceForm)
+app.component('driver-form-component', DriverForm)
+app.component('feeder-form-component', FeederForm)
+app.component('aid-center-form-component', AidCenterForm)
 
 
 app.component('about-page', AboutPage)

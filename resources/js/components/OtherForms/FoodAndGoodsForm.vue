@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h4>Запрос на помощь</h4>
+                <h4>Запрос на помощь с продуктами</h4>
                 <form v-on:submit.prevent="submit" ref="newShelter">
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle"></i>Все добваляемые заявки обрабатываются оператором. После обрботки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
@@ -18,26 +18,32 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="inputAge">Ваш возраст<span
-                            style="color:red;">*</span></label>
-                        <input class="form-control" id="inputAge" type="number" placeholder="18"
-                               v-model="form.age" required>
-                    </div>
-
-                    <div class="form-group">
                         <label class="form-label" for="inputYourPhone">Ваш номер телефон<span
                             style="color:red;">*</span></label>
                         <input class="form-control" id="inputYourPhone" type="text" placeholder="(071) 000-00-00"
                                v-mask="['(###) ###-##-##']" v-model="form.phone" required>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="range-people">Сколько людей с вами?</label>
-                        <div class="range-with-value d-flex align-items-center">
-                            <input class="form-range" id="range-people" type="range" min="0" max="10" value="2"
-                                   step="1" v-model="form.people_count">
-                            <button class="btn btn-primary btn-sm ms-3">{{ form.people_count }}</button>
-                        </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-danger"
+                               v-model="form.cannotPay"
+                               id="cannotPay" type="checkbox" checked="">
+                        <label class="form-check-label" for="cannotPay">В тяжелом материальном состоянии</label>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.need_water"
+                               id="needHelpWithWater" type="checkbox" checked="">
+                        <label class="form-check-label" for="needHelpWithWater">Нужна доставка воды</label>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.need_arrive"
+                               id="needHelpWithDeliveredFood" type="checkbox" checked="">
+                        <label class="form-check-label" for="needHelpWithDeliveredFood">Нужна помощь с доставкой(перевозкой) еды </label>
                     </div>
 
                     <div class="form-group">
@@ -49,15 +55,8 @@
 
                     <div class="divider divider-center-icon border-success"><i class="bi bi-arrow-down"></i></div>
 
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.need_goods"
-                               id="needHelpWithGoods" type="checkbox">
-                        <label class="form-check-label" for="needHelpWithGoods">Нужна помощь с продуктами</label>
-                    </div>
 
-                    <div v-if="form.need_goods" class="mt-2 mb-2">
-
+                    <div class="form-group">
                         <h6>Сформируйте продуктовый список ({{form.food_and_goods.length}}/{{max_food_and_goods}})</h6>
                         <div class="row" v-for="(item,index) in form.food_and_goods">
                             <div class="col-12">
@@ -103,62 +102,9 @@
                         </button>
                     </div>
 
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.need_psyhologist"
-                               id="needHelpByPsyhologist" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpByPsyhologist">Нужна помощь психолога</label>
-                    </div>
+                    <div class="divider divider-center-icon mt-4 border-success"><i class="bi bi-arrow-down"></i></div>
 
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.need_home"
-                               id="needHelpWithHome" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpWithHome">Нужно жильё или временное размещение</label>
-                    </div>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.need_animal"
-                               id="needHelpWithAnimals" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpWithAnimals">Нужна помощь с животными (у меня есть животные)</label>
-                    </div>
-
-                    <div class="form-group" v-if="form.need_animal">
-                        <label class="form-label" for="inputAnimals">Укажите животных (перечислите)</label>
-                        <input class="form-control" id="inputAnimals" type="text" placeholder="Кот, собака, 2 попугайчика"
-                               v-model="form.animals">
-                    </div>
-
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.need_clothes"
-                               id="needHelpWithCloth" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpWithCloth">Нужна помощь с одеждой</label>
-                    </div>
-
-                    <div class="form-group" v-if="form.need_clothes">
-                        <label class="form-label" for="facility">Необходимая одежда
-                            ({{ form.clothes.length }}/{{ max_clothes }})</label>
-                        <input class="form-control mb-2" id="facility" type="text" placeholder="Название одежы и размер"
-                               v-for="(item,index) in form.clothes" v-model="form.clothes[index]">
-                        <button class="btn btn-info w-100 d-flex align-items-center justify-content-center mt-2"
-                                @click="addNewClothes"
-                                v-if="this.max_clothes>this.form.clothes.length"
-                                type="button">Добавить еще
-                        </button>
-                    </div>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success" i
-                               v-model="form.need_medical_goods"
-                               id="needHelpWithMedicalGoods" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpWithMedicalGoods">Нужна помощь с медикаментами</label>
-                    </div>
-
-                    <div v-if="form.need_medical_goods" class="mt-2 mb-2">
-
+                    <div class="form-group">
                         <h6>Сформируйте список мед.товаров ({{form.medical_goods.length}}/{{max_medical_goods}})</h6>
                         <div class="row" v-for="(item,index) in form.medical_goods">
                             <div class="col-12">
@@ -203,50 +149,6 @@
                                 @click="addNewMedicalGoods"
                                 type="button">Добавить еще
                         </button>
-                    </div>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.need_doctor"
-                               id="needHelpByDoctor" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpByDoctor">Нужна помощь или консультация врача</label>
-                    </div>
-
-                    <div class="form-group" v-if="form.need_doctor">
-                        <label class="form-label" for="descriptionForDoctor">Краткое описание ситуации</label>
-                        <textarea class="form-control" id="descriptionForDoctor" name="description" cols="3" rows="5"
-                                  v-model="form.description_for_doctor"
-                                  placeholder="Описание проблемы"></textarea>
-                    </div>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.need_debris_removal"
-                               id="needHelpWithDebrisRemoval" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpWithDebrisRemoval">Нужна помощь с разбором завалов</label>
-                    </div>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.need_arrive"
-                               id="needHelpWithArrive" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpWithArrive">Нужна помощь с проездом или доставкой</label>
-                    </div>
-
-                    <div class="divider divider-center-icon mt-3 border-success"><i class="bi bi-gear"></i></div>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-danger"
-                               v-model="form.cannotPay"
-                               id="cannotPay" type="checkbox" checked="">
-                        <label class="form-check-label" for="cannotPay">В тяжелом материальном состоянии</label>
-                    </div>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.need_search_people"
-                               id="needHelpWithSearchPeople" type="checkbox">
-                        <label class="form-check-label" for="needHelpWithSearchPeople">Нужна помощь в поиске родственников</label>
                     </div>
 
                     <div class="form-group mt-3 mb-3">
@@ -343,27 +245,15 @@ export default {
             message:null,
             max_food_and_goods: 10,
             max_medical_goods: 10,
-            max_clothes: 20,
             form: {
                 full_name: null,
-                age: 18,
                 phone: null,
                 people_count: 2,
                 description: null,
-                need_goods: true,
-                need_psyhologist: true,
-                need_home: false,
-                need_animal: false,
-                need_clothes: false,
-                need_medical_goods: false,
-                need_debris_removal: false,
                 need_arrive: false,
-                need_doctor: false,
+                need_water: false,
                 cannotPay: true,
-                need_search_people: false,
-                animals:null,
                 rating:1,
-                description_for_doctor: null,
                 food_and_goods:[{
                     title:"",
                     value:0,
@@ -376,7 +266,7 @@ export default {
                         measure:"шт",
                     }
                 ],
-                clothes:[""]
+
 
             }
         }
@@ -414,12 +304,7 @@ export default {
                     measure:"шт",
                 });
         },
-        addNewClothes() {
-            let find = this.form.clothes.filter(item => item.trim() === "").length > 0;
 
-            if (!find && this.max_clothes > this.form.clothes.length)
-                this.form.clothes.push("");
-        }
     }
 }
 </script>

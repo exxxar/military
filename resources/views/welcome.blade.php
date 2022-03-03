@@ -51,7 +51,23 @@
 
 <div id="app">
 <!--    <application></application>-->
-    <shelter-form-component></shelter-form-component>
+
+<!--    <shelter-form-component></shelter-form-component>-->
+
+<!--    <base-help-form-component></base-help-form-component>-->
+
+<!--    <food-and-goods-form-component></food-and-goods-form-component>-->
+
+<!--    <delivery-form-component></delivery-form-component>-->
+
+<!--    <assistance-form-component></assistance-form-component>-->
+
+<!--    <driver-form-component></driver-form-component>-->
+
+<!--    <feeder-form-component></feeder-form-component>-->
+
+    <aid-center-form-component></aid-center-form-component>
+
 </div>
 
 <script src="{{ mix('/js/app.js') }}"></script>
