@@ -18,6 +18,8 @@ return new class extends Migration
           $table->integer("quality")->default(\App\Enums\QualityStateEnum::UNKNOWN->value);
           $table->integer("type")->default(\App\Enums\ShelterTypeEnum::REFUGE->value);
           $table->json("facility")->nullable();
+          $table->integer("rating")->defalt(1);
+          $table->boolean("is_moderate")->default(false);
         });
     }
 

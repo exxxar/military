@@ -1,8 +1,8 @@
 "use strict";
 
 var intId = document.getElementById("internetStatus");
-var sucText = "Your internet connection is back.";
-var failText = "Oops! No internet connection.";
+var sucText = "Интернет снова присутствует!";
+var failText = "Интернет соединение отсутствует";
 var sucCol = "#00b894";
 var failCol = "#ea4c62";
 
@@ -35,7 +35,7 @@ if(intId) {
             }, 20);
         }, 5000);
     });
-    
+
     window.addEventListener("offline", function() {
         intId.innerHTML = failText;
         intId.style.display = "block";

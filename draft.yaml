@@ -1,16 +1,16 @@
 models:
-  Shelter:
+   AidCenter:
     id: id
     city: string nullable
     region: string nullable
     address: string:400
-    lat: double default:0
-    lon: double default:0
-    balance_holder: string nullable
-    responsible_person: string nullable
-    capacity: integer default:0
+    phone: string:100
+    required: longtext nullable
     description: longtext nullable
 
+seeders: AidCenter
+
 controllers:
-  Shelter:
+  AidCenter:
     resource: api
+

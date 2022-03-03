@@ -1,3 +1,6 @@
 <template>
-    <h1>About Page</h1>
+    <header-component/>
+    <side-bar-component/>
+    <about-page/>
+    <footer-component/>
 </template>

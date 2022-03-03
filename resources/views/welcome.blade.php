@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -14,7 +13,9 @@
     <title>Affan - PWA Mobile HTML Template</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+        rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
     <link rel="apple-touch-icon" href="img/icons/icon-96x96.png">
@@ -33,6 +34,10 @@
     <link rel="stylesheet" href="{{asset('/style.css')}}">
     <!-- Web App Manifest -->
     <link rel="manifest" href="{{asset('/manifest.json')}}">
+
+    @if(\Illuminate\Support\Facades\Auth::check())
+        <meta name="current-user" content="{{\Illuminate\Support\Facades\Auth::user()}}">
+    @endif
 </head>
 <body>
 <!-- Preloader -->
@@ -45,10 +50,11 @@
 <div class="internet-connection-status" id="internetStatus"></div>
 
 <div id="app">
-
-    <application/>
+<!--    <application></application>-->
+    <shelter-form-component></shelter-form-component>
 </div>
 
+<script src="{{ mix('/js/app.js') }}"></script>
 <!-- All JavaScript Files -->
 <script src="{{asset('/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('/js/slideToggle.min.js')}}"></script>
@@ -65,7 +71,7 @@
 <!-- PWA -->
 <script src="{{asset('/js/pwa.js')}}"></script>
 
-<script src="{{ mix('/js/app.js') }}"></script>
+
 </body>
 </html>
 

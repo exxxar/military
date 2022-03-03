@@ -8,5 +8,4 @@ enum ShelterTypeEnum: int
     case PILLBOX = 1; //ДОТ
     case BASEMENT = 2; //ПОДВАЛ
 
-
 }

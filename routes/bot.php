@@ -2,11 +2,86 @@
 
 use App\Exports\ShelterExport;
 use App\Facades\MilitaryServiceFacade;
+use App\Models\AidCenter;
 use App\Models\Shelter;
 use Illuminate\Support\Facades\Log;
-
 use Maatwebsite\Excel\Facades\Excel;
-use Telegram\Bot\Methods\Message;
+
+function sortNearestQuestPointsArray($array, $lat, $lon)
+{
+    for ($j = 0; $j < count($array) - 1; $j++) {
+        for ($i = 0; $i < count($array) - $j - 1; $i++) {
+            if (round(Shelter::dist($array[$i]["lat"], $array[$i]["lon"], $lat, $lon)) >
+                round(Shelter::dist($array[$i + 1]["lat"], $array[$i + 1]["lon"], $lat, $lon))
+            ) {
+                $tmp_var = $array[$i + 1];
+                $array[$i + 1] = $array[$i];
+                $array[$i] = $tmp_var;
+            }
+        }
+    }
+
+    return $array;
+}
+
+function getInfoByCoords($coords, $page = 0)
+{
+
+    $lat = $coords->lat;
+    $lon = $coords->lon;
+
+    $user = MilitaryServiceFacade::bot()->currentUser();
+
+    $radius = 0.5;
+
+    if (!is_null($user))
+        $radius = $user->radius ?? 0.5;
+
+    //MilitaryServiceFacade::bot()->reply(print_r(Shelter::getNearestQuestPoints($lat, $lon, $user->radius)->toArray(), true));
+    $findLocation = false;
+
+    $array = Shelter::getNearestQuestPoints($lat, $lon, $radius)->toArray();
+    $array = collect(sortNearestQuestPointsArray($array, $lat, $lon))->skip($page * 5)->take(5);
+
+    foreach ($array as $pos) {
+
+        $pos = (object)$pos;
+
+        $tmp_text = "<b>Ближайшие точки (в настройках ~$radius км):</b>\n";
+        $tmp_text .= "\xF0\x9F\x94\xB6 " . $pos->address . "\n" . round(Shelter::dist($pos->lat, $pos->lon, $lat, $lon)) . " метров от вас \n";
+        $tmp_text .= "Город: <b>" . $pos->city . "</b>\n";
+        $tmp_text .= "На балане: <b>" . $pos->balance_holder . "</b>\n";
+        $tmp_text .= "Отвественный: <b>" . $pos->responsible_person . "</b>\n";
+        $tmp_text .= "Описание: <b>" . $pos->description . "</b>\n";
+
+        MilitaryServiceFacade::bot()->replyLocation($pos->lat, $pos->lon);
+        MilitaryServiceFacade::bot()->reply($tmp_text);
+
+        $findLocation = true;
+        /*  if ($pos->inRange($lat, $lng)) {
+              $tmp_text .= "	\xF0\x9F\x94\xB7Точка " . $pos->city . " находится в 0.1км от вас!\n";
+          }*/
+    }
+
+    if ($findLocation) {
+
+        $tmp = base64_encode("$lat $lon");
+
+        MilitaryServiceFacade::bot()->inlineKeyboard("В вашем радиусе (~$radius км) есть еще точки!", [
+            [
+                ["text" => "Показать еще!", "callback_data" => "/more_shelters $tmp " . ($page + 1)],
+            ]
+        ]);
+    }
+
+    if (!$findLocation) {
+        MilitaryServiceFacade::bot()->inlineKeyboard("Не найдено (в радиусе ~$radius км) ни одной ближайшей к вам точки:(", [
+            [
+                ["text" => "Сменить настройки дальности", "callback_data" => "/settings"],
+            ]
+        ]);
+    }
+}
 
 MilitaryServiceFacade::bot()
     ->addRoute("/.*Скачать список", function ($message) {
@@ -17,7 +92,7 @@ MilitaryServiceFacade::bot()
         Excel::store(new ShelterExport, 'coords.xlsx');
 
 
-        MilitaryServiceFacade::bot()->replyDocument("Список всех убежищь",\Illuminate\Support\Facades\Storage::get("coords.xlsx"),"coords.xlsx");
+        MilitaryServiceFacade::bot()->replyDocument("Список всех убежищ", \Illuminate\Support\Facades\Storage::get("coords.xlsx"), "coords.xlsx");
 
 
         $schelters = \App\Models\Shelter::query()->get();
@@ -27,7 +102,64 @@ MilitaryServiceFacade::bot()
             return;
         }
 
-        MilitaryServiceFacade::bot()->reply("Будет доступен в ближайшее время!");
+    })
+    ->addRoute("/.*Помощь и волонтерство", function ($message) {
+
+        $url = env("APP_URL");
+        MilitaryServiceFacade::bot()->inlineKeyboard("Направления помощи", [
+            [
+                ["text" => "\xF0\x9F\x9A\x80Добвить новое убежище", "url" => "$url/forms/new-shelter"],
+            ],
+            [
+                ["text" => "\xF0\x9F\x8F\xA0Добвить точку сбор гуманитарки", "url" => "$url/forms/new-aid-center"],
+            ],
+            [
+                ["text" => "\xE2\x98\x9DПомогу с благоустройством убежищ", "url" => "$url/forms/help-with-shelter"],
+            ],
+            [
+                ["text" => "\xE2\x9C\x8AИмею полезные навыки!", "url" => "$url/forms/can-help-1"],
+            ],
+            [
+                ["text" => "\xF0\x9F\x8D\x94Моку кормить людей!", "url" => "$url/forms/can-help-2"],
+            ],
+            [
+                ["text" => "\xF0\x9F\x92\xB5Могу помочь деньгами", "url" => "$url/forms/help-with-money"],
+            ],
+            [
+                ["text" => "\xF0\x9F\x92\xB5Могу помочь с жильём", "url" => "$url/forms/help-with-home"],
+            ],
+            [
+                ["text" => "\xF0\x9F\x91\x95Могу помочь с вещами", "url" => "$url/forms/help-with-clothes"],
+            ],
+            [
+                ["text" => "\xF0\x9F\x9A\x97Могу подвести \ доставить", "url" => "$url/forms/help-with-car"],
+            ],
+
+        ]);
+
+    })
+    ->addRoute("/.*Я нуждюсь...", function ($message) {
+
+        $url = env("APP_URL");
+
+        $message = "Запрос на помощь...\n" .
+            "\xF0\x9F\x8D\xB4Продукты питания\n" .
+            "\xF0\x9F\x8D\x80Психологическя помощь и поддержка!\n" .
+            "\xF0\x9F\x8F\xA0Жильё или временное размещение\n".
+            "\xF0\x9F\x9A\x90Помощь с проездом или доставкой\n".
+            "\xF0\x9F\x93\xA6Одежда\n".
+            "\xF0\x9F\x92\x8AМедикаменты\n".
+            "\xF0\x9F\x92\x89Мед. помощь\n".
+            "\xF0\x9F\x93\x88Работа\n".
+            "\xF0\x9F\x94\xA8Разбор завалов";
+
+        MilitaryServiceFacade::bot()->inlineKeyboard("Запрос на помощь...", [
+            [
+                ["text" => "\xF0\x9F\x93\x9DМне нужна помощь", "url" => "$url/forms/need-help"],
+            ],
+        ]);
+
+
     })
     ->addRoute("/.*Доступные регионы ([()0-9]+)", function ($message, $command, $count) {
 
@@ -59,6 +191,36 @@ MilitaryServiceFacade::bot()
             ->next("start");
 
     }, "regions")
+    ->addRoute("/.*Центры гуманитарной помощи ([()0-9]+)", function ($message, $command, $count) {
+
+        MilitaryServiceFacade::bot()->reply("Доступные гуманитарные центры!");
+
+        $aid_centers = AidCenter::query()->select("city", "id")->get()->unique('city');
+
+        $keyboard = [];
+
+        $index = 0;
+
+        $tmp = [];
+
+        foreach ($aid_centers as $key => $shelter) {
+
+            $index++;
+
+            array_push($tmp, ["text" => $shelter->city, "callback_data" => "/aid_centers " . $key . " 0"]);
+
+            if ($index % 2 == 0 || $index == count($aid_centers)) {
+                array_push($keyboard, $tmp);
+                $tmp = [];
+            }
+
+        }
+
+        MilitaryServiceFacade::bot()
+            ->inlineKeyboard("Из какого региона отобрзить центры сбора гуманитарной помощи?", $keyboard)
+            ->next("start");
+
+    })
     ->addRoute("/settings|.*Настройки", function ($message) {
 
         $radius_table = [
@@ -68,8 +230,13 @@ MilitaryServiceFacade::bot()
 
         $user = MilitaryServiceFacade::bot()->currentUser();
 
+        $radius = 0.5;
+
+        if (!is_null($user))
+            $radius = $user->radius ?? 0.5;
+
         foreach ($radius_table as $key => $value) {
-            if ($user->radius === $value) {
+            if ($radius === $value) {
                 $index = $key;
                 break;
             }
@@ -119,47 +286,54 @@ MilitaryServiceFacade::bot()
     })
     ->addRouteLocation(function ($message, $coords) {
         //MilitaryServiceFacade::bot()->reply("Координаты!" . $coords->lon . " " . $coords->lat);
-
-        $lat = $coords->lat;
-        $lon = $coords->lon;
-
-        $user = MilitaryServiceFacade::bot()->currentUser();
-
-
-        //MilitaryServiceFacade::bot()->reply(print_r(Shelter::getNearestQuestPoints($lat, $lon, $user->radius)->toArray(), true));
-        $findLocation = false;
-
-        foreach (Shelter::getNearestQuestPoints($lat, $lon, $user->radius)->toArray() as $pos) {
-
-            $pos = (object)$pos;
-            
-            $tmp_text = "<b>Ближайшие точки (в настройках ~$user->radius км):</b>\n";
-            $tmp_text .= "\xF0\x9F\x94\xB6 " . $pos->address . "\n" . round(Shelter::dist($pos->lat, $pos->lon, $lat, $lon)) . " метров от вас \n";
-            $tmp_text .="Город: <b>".$pos->city."</b>\n";
-            $tmp_text .="На балане: <b>".$pos->balance_holder."</b>\n";
-            $tmp_text .="Отвественный: <b>".$pos->responsible_person."</b>\n";
-            $tmp_text .="Описание: <b>".$pos->description."</b>\n";
-
-            MilitaryServiceFacade::bot()->replyLocation($pos->lat, $pos->lon);
-            MilitaryServiceFacade::bot()->reply($tmp_text);
-
-            $findLocation = true;
-            /*  if ($pos->inRange($lat, $lng)) {
-                  $tmp_text .= "	\xF0\x9F\x94\xB7Точка " . $pos->city . " находится в 0.1км от вас!\n";
-              }*/
-        }
-
-        if (!$findLocation) {
-            MilitaryServiceFacade::bot()->inlineKeyboard("Не найдено (в радиусе ~$user->radius км) ни одной ближайшей к вам точки:(", [
-                [
-                    ["text" => "Сменить настройки дальности", "callback_data" => "/settings"],
-                ]
-            ]);
-        }
-
+        getInfoByCoords((object)[
+            "lat" => $coords->lat ?? 0,
+            "lon" => $coords->lon ?? 0
+        ]);
     })
     ->addRouteFallback(function ($message) {
-        MilitaryServiceFacade::bot()->reply("Методов не обнаружено!");
+        $need_to_search = false;
+        $text = $message->text ?? "";
+
+        $objects = ["ул.", "c.", "пгт.", "город", "г.", "квартал", "улица", "район", "микрорайон", "мк-р"];
+
+        foreach ($objects as $object) {
+            if (mb_strpos($text, $object) !== false) {
+                $need_to_search = true;
+            }
+
+        }
+
+        if ($need_to_search) {
+
+            try {
+                $data = YaGeo::setQuery($text)->load();
+
+                if (!is_null($data->getResponse())) {
+                    $data = (object)$data->getResponse()->getRawData();
+
+                    $tmp = explode(' ', $data->Point["pos"]);
+
+                    getInfoByCoords((object)[
+                        "lat" => $tmp[1] ?? 0,
+                        "lon" => $tmp[0] ?? 0
+                    ]);
+                } else {
+                    MilitaryServiceFacade::bot()->reply("На ваш запрос ничего не найдено! Попробуйте ввести данные по примеру <b>город Донецк, ул. Кирова, 22</b>");
+                }
+
+            } catch (Exception $e) {
+                MilitaryServiceFacade::bot()->reply("На текущий момент поиск ограничен!");
+            }
+
+
+        } else {
+            MilitaryServiceFacade::bot()->reply("Обратитесь за помощью в https://vk.com/nddnr");
+        }
+
+
+        //MilitaryServiceFacade::bot()->reply("Методов не обнаружено!");
+
     });
 
 MilitaryServiceFacade::bot()
@@ -174,7 +348,7 @@ MilitaryServiceFacade::bot()
             ->skip(0)
             ->get();
 
-        $shelter_in_base =  Shelter::query()
+        $shelter_in_base = Shelter::query()
             ->where("city", $regions[$index]["city"])->count();
 
 
@@ -184,24 +358,83 @@ MilitaryServiceFacade::bot()
         foreach ($shelters as $shelter) {
 
             if ($shelter->lon == 0 || $shelter->lat == 0)
-                $link = "https://www.google.com.ua/maps/place/" . $shelter->address;
+                $link = "https://www.google.com/maps/search/" . $shelter->address . " " . $shelter->city;
             else
-                $link = "https://www.google.com.ua/maps/place/" . $shelter->lat.",".$shelter->lon;
+                $link = "https://www.google.com/maps/search/" . $shelter->lat . "," . $shelter->lon;
 
-                $tmp .= "\xF0\x9F\x93\x8D " . ($shelter->address ?? "-") . " <a href='" . $link . "'>На карте</a>\n";
+            $tmp .= "\xF0\x9F\x93\x8D " . ($shelter->address ?? "-") . " <a href='" . $link . "'>На карте</a>\n";
         }
 
 
         $keyboard = [];
 
-        if ($shelter_in_base>20)
-        {
+        if ($shelter_in_base > 20) {
             array_push($keyboard, [
                 ["text" => "Еще убежища", "callback_data" => "/shelters " . $index . " 1"]
             ]);
         }
-        MilitaryServiceFacade::bot()->inlineKeyboard("Локаций в регионе ($shelter_in_base - в нашей базе):\n $tmp",$keyboard);
+        MilitaryServiceFacade::bot()->inlineKeyboard("Локаций в регионе ($shelter_in_base - в нашей базе):\n $tmp", $keyboard);
 
+
+    })
+    ->addRoute("/aid_centers ([0-9a-zA-Z=]+) ([0-9]+)", function ($message, $command, $index, $page) {
+        $regions = AidCenter::query()->select("city", "id")
+            ->get()
+            ->unique('city')->toArray();
+
+        $aid_centers = AidCenter::query()
+            ->where("city", $regions[$index]["city"])
+            ->take(20)
+            ->skip(0)
+            ->get();
+
+        $aid_centers_in_base = AidCenter::query()
+            ->where("city", $regions[$index]["city"])->count();
+
+
+        $tmp = "Вы выбрали город <b>" . $regions[$index]["city"] . "</b>\n";
+
+
+        foreach ($aid_centers as $aid_center) {
+
+            $link = "";
+            if (!is_null($aid_center->address))
+                $link = "https://www.google.com/maps/search/" . $aid_center->address . " " . $aid_center->city;
+            $link = " <a href='" . $link . "'>На карте</a>\n";
+
+            $tmp .= "\xF0\x9F\x93\x8D " . ($aid_center->address ?? "-") . $link
+                . "\nЧто требуется: <i>$aid_center->required</i>"
+
+                . "\nОписание: <i>$aid_center->description</i>"
+
+                . "\nНомер телефона: <i>" . ($aid_center->phone ?? "-") . "</i>";
+        }
+
+
+        $keyboard = [];
+
+        if ($aid_centers_in_base > 20) {
+            array_push($keyboard, [
+                ["text" => "Еще центры", "callback_data" => "/aid_centers " . $index . " 1"]
+            ]);
+        }
+        MilitaryServiceFacade::bot()->inlineKeyboard("Локаций в регионе ($aid_centers_in_base - в нашей базе):\n $tmp", $keyboard);
+
+
+    })
+    ->addRoute("/more_shelters ([0-9a-zA-Z=]+) ([0-9]+)", function ($message, $command, $bCoords, $page) {
+
+        $tmp = base64_decode($bCoords);
+
+        $tmp = explode(" ", $tmp);
+
+        $lat = $tmp[0] ?? 0;
+        $lon = $tmp[1] ?? 0;
+
+        getInfoByCoords((object)[
+            "lat" => $lat,
+            "lon" => $lon
+        ], $page);
 
     })
     ->addRoute("/shelters ([0-9a-zA-Z=]+) ([0-9]+)", function ($message, $command, $index, $page) {
@@ -213,10 +446,10 @@ MilitaryServiceFacade::bot()
         $shelters = Shelter::query()
             ->where("city", $regions[$index]["city"])
             ->take(20)
-            ->skip($page*20)
+            ->skip($page * 20)
             ->get();
 
-        $shelter_in_base =  Shelter::query()
+        $shelter_in_base = Shelter::query()
             ->where("city", $regions[$index]["city"])->count();
 
 
@@ -226,9 +459,9 @@ MilitaryServiceFacade::bot()
         foreach ($shelters as $shelter) {
 
             if ($shelter->lon == 0 || $shelter->lat == 0)
-                $link = "https://www.google.com.ua/maps/place/" . $shelter->address;
+                $link = "https://www.google.com/maps/search/" . $shelter->address . " " . $shelter->city;
             else
-                $link = "https://www.google.com.ua/maps/place/" . $shelter->lat.",".$shelter->lon;
+                $link = "https://www.google.com/maps/search/" . $shelter->lat . "," . $shelter->lon;
 
             $tmp .= "\xF0\x9F\x93\x8D " . ($shelter->address ?? "-") . " <a href='" . $link . "'>На карте</a>\n";
         }
@@ -236,13 +469,12 @@ MilitaryServiceFacade::bot()
 
         $keyboard = [];
 
-        if ($shelter_in_base>$page*20+$shelters->count())
-        {
+        if ($shelter_in_base > $page * 20 + $shelters->count()) {
             array_push($keyboard, [
-                ["text" => "Еще убежища", "callback_data" => "/shelters " . $index . " ".($page+1) ]
+                ["text" => "Еще убежища", "callback_data" => "/shelters " . $index . " " . ($page + 1)]
             ]);
         }
-        MilitaryServiceFacade::bot()->inlineKeyboard("Локаций в регионе ($shelter_in_base - в нашей базе):\n $tmp",$keyboard);
+        MilitaryServiceFacade::bot()->inlineKeyboard("Локаций в регионе ($shelter_in_base - в нашей базе):\n $tmp", $keyboard);
 
 
     })
@@ -279,30 +511,52 @@ MilitaryServiceFacade::bot()
     })
     ->addRoute("/start", function ($message) {
 
-        Log::info("message=>" . print_r($message, true));
-
         $shelters_count = Shelter::query()->select("city", "id")->get()->unique('city')->count();
-        MilitaryServiceFacade::bot()->replyKeyboard("Главное меню", [
+        $aid_center_count = AidCenter::query()->select("city", "id")->get()->unique('city')->count();
+
+        MilitaryServiceFacade::bot()->replyKeyboard(
+            "Главное меню. Тестовая версия. Обновлено <b>25.02.2022 18:00</b>\n
+⚡️Друзья, подписывайтесь на Telegram-канал Народной Дружины и будьте вкурсе последних новостей.\n
+Подписаться можно здесь👇🏻\n
+@nddnr
+",
+
             [
-                ["text" => "\xF0\x9F\x93\x8DОтправить координаты", "request_location" => true],
-            ],
-            [
-                ["text" => "\xF0\x9F\x8C\x8DДоступные регионы ($shelters_count)"],
-            ],
-            [
-                ["text" => "\xF0\x9F\x93\x91Скачать список"],
-                ["text" => "\xF0\x9F\x92\xBBНастройки"],
-            ],
-            [
-                ["text" => "\xE2\x98\x95Разработчикам на кофе"],
-            ]
-        ]);
+                [
+                    ["text" => "\xF0\x9F\x93\x8DОтправить координаты", "request_location" => true],
+                ],
+                [
+                    ["text" => "\xF0\x9F\x94\x8DЯ нуждаюсь..."],
+                ],
+                [
+                    ["text" => "\xF0\x9F\x8C\x8DДоступные регионы ($shelters_count)"],
+                ],
+                [
+                    ["text" => "\xE2\x9D\xA4Помощь и волонтерство"],
+                ],
+                [
+                    ["text" => "\xF0\x9F\x93\x91Скачать список"],
+                    ["text" => "\xF0\x9F\x92\xBBНастройки"],
+                ],
+                [
+                    ["text" => "\xF0\x9F\x9A\xA8Центры гуманитарной помощи ($aid_center_count)"],
+                ],
+                /*[
+                    ["text" => "\xF0\x9F\x92\xB3Разработчикам на кофе"],
+                ]*/
+            ]);
     }, "start")
     ->addRoute("/help", function ($message) {
-        MilitaryServiceFacade::bot()->reply("Помощь!");
+        MilitaryServiceFacade::bot()->reply("Здравствуйте!\n
+Приветствуем Вас в чат-боте <b>НД ДНР</b>, который покажет адреса бомбоубежищ.\n
+В скором времени будет запущено приложение, работающее в оффлайн-режиме.\n
+Надеемся, оно Вам не пригодится 🙃\n
+<b>Дежурная часть МГБ: 071-300-19-81, 062-301-85-38, 062-340-62-99</b>
+");
+        MilitaryServiceFacade::bot()->reply("https://vk.com/nddnr По вопросам помощи обращаться по ссылке!");
     })
     ->addRoute("/invoice", function ($message) {
-        MilitaryServiceFacade::bot()->replyInvoice("test", "test", [
-            ["label" => "Test", "amount" => 10000]
+        MilitaryServiceFacade::bot()->replyInvoice("Временно в разработке", "test", [
+            ["label" => "В разработке", "amount" => 10000]
         ], "data");
     });

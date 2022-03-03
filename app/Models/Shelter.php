@@ -30,7 +30,9 @@ class Shelter extends Model
         "status",
         "quality",
         "type",
-        "facility"
+        "facility",
+        "is_moderate",
+        "rating"
     ];
 
     /**
@@ -40,6 +42,7 @@ class Shelter extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'rating' => 'integer',
         'status' => ShelterStatusEnum::class,
         'quality' => QualityStateEnum::class,
         'type' => ShelterTypeEnum::class,

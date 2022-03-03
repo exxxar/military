@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AidCenterController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\AssistanceController;
+use App\Http\Controllers\ShelterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,13 +18,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->prefix('v1')->group(function (){
+    Route::get("/test", function (){
+       return "test";
+    });
 });
+
+
+Route::get('shelters/regions', [ShelterController::class, 'regions']);
+Route::get('shelters/search', [ShelterController::class, 'search']);
+Route::post('shelters/new-shelter', [ShelterController::class, 'newShelter']);
+Route::get('shelters/download/excel', [ShelterController::class, 'downloadExcel']);
+Route::get('shelters/download/pdf', [ShelterController::class, 'downloadPdf']);
+
+
+/*
+ * хочу добавить убежище
+ * хочу помочь в обустройстве убежищь
+ * я готов помочь как: водитель, повар, врач, психолог, другое
+ * хочу помочь материально деньгами
+ * хочу помочь физически
+ * хочу помочь вещами
+ * Я могу кормить людей
+ * Я могу предоставить жильё
+ * Предложить новость
+ * центры гумонитарной помощи
+ * подвезти людей
+ * продукты для людей, которые не могут себя обеспечить
+ * хочу в дружину
+ */
+
+Route::apiResource("shelters", ShelterController::class);
 
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
 
 
+Route::apiResource('assistance', AssistanceController::class);
 
-Route::apiResource('shelter', App\Http\Controllers\ShelterController::class);
+Route::apiResource('aid-center', AidCenterController::class);
