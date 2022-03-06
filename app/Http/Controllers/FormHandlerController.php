@@ -654,10 +654,10 @@ class FormHandlerController extends Controller
             "Значимость для заявителя: <b>$priority</b>\n";
 
         if ($need_drinking_water)
-            $message = "Требуется питьевая вода в объеме $drinking_water л.\n";
+            $message .= "Требуется питьевая вода в объеме $drinking_water л.\n";
 
         if ($need_technical_water)
-            $message = "Требуется техническая вода в объеме $technical_water л.\n";
+            $message .= "Требуется техническая вода в объеме $technical_water л.\n";
 
         MilitaryServiceFacade::bot()
             ->sendMessage(env("ASK_LOGGER_CHANNEL"),
