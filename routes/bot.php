@@ -103,7 +103,7 @@ MilitaryServiceFacade::bot()
         }
 
     })
-    ->addRoute("/.*Помощь и волонтерство", function ($message) {
+    ->addRoute("/can_help|.*Помощь и волонтерство", function ($message) {
 
         $user_id = $this->chatId;
 
@@ -135,7 +135,7 @@ MilitaryServiceFacade::bot()
         ]);
 
     })
-    ->addRoute("/.*Я нуждаюсь", function ($message) {
+    ->addRoute("/need_help|.*Я нуждаюсь", function ($message) {
 
         $url = env("APP_URL");
 
@@ -156,16 +156,16 @@ MilitaryServiceFacade::bot()
 
         MilitaryServiceFacade::bot()->inlineKeyboard($message, [
             [
-                ["text" => "\xF0\x9F\x93\x9DМне нужна помощь", "url" => "$url/forms/need-help?uid=$user_id"],
+                ["text" => "Нужна помощь", "url" => "$url/forms/need-help?uid=$user_id"],
             ],
             [
-                ["text" => "\xF0\x9F\x8D\xB4Мне нужны продукты или медикаменты", "url" => "$url/forms/need-goods-and-food?uid=$user_id"],
+                ["text" => "Продукты или медикаменты", "url" => "$url/forms/need-goods-and-food?uid=$user_id"],
             ],
             [
-                ["text" => "\xF0\x9F\x8D\xB4Мне нужна вода", "url" => "$url/forms/help-water?uid=$user_id"],
+                ["text" => "Нужна вода", "url" => "$url/forms/help-water?uid=$user_id"],
             ],
             [
-                ["text" => "\xF0\x9F\x8D\xB4Мне нужна перевозка \ доставка", "url" => "$url/forms/help-delivery?uid=$user_id"],
+                ["text" => "Нужна перевозка", "url" => "$url/forms/help-delivery?uid=$user_id"],
             ],
           /*  [
                 ["text" => "\xF0\x9F\x8D\xB4Мне нужен ремонт эл. техники или авто", "url" => "$url/forms/help-delivery?uid=$user_id"],
