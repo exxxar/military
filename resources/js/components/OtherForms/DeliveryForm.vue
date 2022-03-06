@@ -229,9 +229,10 @@ export default {
                 this.loader = false
                 this.$refs.delivery.reset();
 
-                setTimeout(() => {
-                    window.location.reload()
-                }, 5000)
+                window.location.href = "https://t.me/shelter_dpr_bot";
+                /*   setTimeout(() => {
+                       window.location.reload()
+                   }, 2000)*/
             }).catch(()=>{
                 this.message = "Ошибка добавления заявки!"
                 this.messageType = 1;

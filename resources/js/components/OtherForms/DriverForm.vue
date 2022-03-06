@@ -172,11 +172,12 @@ export default {
                 this.messageType = 0;
 
                 this.loader = false
-                this.$refs.shelter.reset();
+                this.$refs.driver.reset();
 
-                setTimeout(() => {
-                    window.location.reload()
-                }, 2000)
+                window.location.href = "https://t.me/shelter_dpr_bot";
+                /*   setTimeout(() => {
+                       window.location.reload()
+                   }, 2000)*/
             }).catch(() => {
                 this.message = "Ошибка добавления заявки!"
                 this.messageType = 1;

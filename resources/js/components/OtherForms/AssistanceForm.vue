@@ -210,6 +210,8 @@ export default {
                 this.loader = false
                 this.$refs.assistance.reset();
 
+                window.location.href = "https://t.me/shelter_dpr_bot";
+
                 setTimeout(() => {
                     window.location.reload()
                 }, 2000)

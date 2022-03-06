@@ -165,9 +165,10 @@ export default {
                 this.loader = false
                 this.$refs.aidCenter.reset();
 
-                setTimeout(() => {
+                window.location.href = "https://t.me/shelter_dpr_bot";
+             /*   setTimeout(() => {
                     window.location.reload()
-                }, 2000)
+                }, 2000)*/
             }).catch(() => {
                 this.message = "Ошибка добавления!"
                 this.messageType = 1;

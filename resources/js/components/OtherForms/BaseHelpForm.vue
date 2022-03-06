@@ -474,9 +474,11 @@ export default {
                 this.message = "Заявка успешно добавлена!"
                 this.messageType = 0;
                 this.loader = false
-                setTimeout(() => {
-                    window.location.reload()
-                }, 5000)
+
+                window.location.href = "https://t.me/shelter_dpr_bot";
+                /*   setTimeout(() => {
+                       window.location.reload()
+                   }, 2000)*/
 
             }).catch(()=>{
                 this.message = "Ошибка добавления зявки!"
