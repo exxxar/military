@@ -540,13 +540,12 @@ MilitaryServiceFacade::bot()
                 ],
                 [
                     ["text" => "\xF0\x9F\x94\x8DЯ нуждаюсь..."],
+                    ["text" => "\xE2\x9D\xA4Помощь и волонтерство"],
                 ],
                 [
                     ["text" => "\xF0\x9F\x8C\x8DДоступные регионы ($shelters_count)"],
                 ],
-                [
-                    ["text" => "\xE2\x9D\xA4Помощь и волонтерство"],
-                ],
+
                 [
                     ["text" => "\xF0\x9F\x93\x91Скачать список"],
                     ["text" => "\xF0\x9F\x92\xBBНастройки"],
