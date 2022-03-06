@@ -177,7 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FacadeServiceProvider::class,
-        Yandex\Geocode\YandexGeocodeServiceProvider::class
+        Yandex\Geocode\YandexGeocodeServiceProvider::class,
+
     ],
 
     /*
@@ -192,7 +193,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'YaGeo' => Yandex\Geocode\Facades\YandexGeocodeFacade::class
+        'YaGeo' => Yandex\Geocode\Facades\YandexGeocodeFacade::class,
+
     ])->toArray(),
 
 ];

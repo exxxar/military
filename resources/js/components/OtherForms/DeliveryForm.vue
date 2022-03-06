@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <h4>Запрос на помощь перевозки \ доставки</h4>
-                <form v-on:submit.prevent="submit" ref="newShelter">
+                <form v-on:submit.prevent="submit" ref="delivery">
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle"></i>Все добваляемые заявки обрабатываются оператором. После обрботки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
                         <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -75,7 +75,7 @@
                             style="color:red;">*</span></label>
                         <input class="form-control form-control-clicked" id="inputDate"
                                v-model="form.arrive_date" required
-                               type="date">
+                               type="datetime-local">
                     </div>
 
                     <div class="form-group">
@@ -158,14 +158,21 @@
                         <i class="bi bi-check-circle"></i>{{message}}
                     </div>
 
+
                     <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
-                            type="submit">Отправить запрос
-                        <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
-                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            type="submit" :disabled="loader">
+                        <span v-if="!loader">Отправить запрос
+                         <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
+                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                   d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
                         </svg>
+                        </span>
+                        <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
+
+
                     </button>
+
 
                     <a href="https://t.me/shelter_dpr_bot" class="btn btn-link w-100 d-flex align-items-center justify-content-center">Перейти в бота
                     </a>
@@ -176,8 +183,15 @@
 </template>
 <script>
 export default {
+    props: {
+        userId: {
+            type: String,
+            default: null
+        },
+    },
     data() {
         return {
+            loader: false,
             messageType:0,
             message:null,
             max_food_and_goods: 10,
@@ -196,20 +210,30 @@ export default {
                 cannotPay: true,
                 rating:1,
 
+                user_id: null,
 
             }
         }
     },
     methods: {
         submit() {
+            this.form.user_id = this.userId;
+            this.loader = true
             this.message = null
             this.messageType = 0;
-            axios.post('/api/shelters/new-shelter', this.form).then(resp => {
-                this.$refs.newShelter.reset();
-                this.message = "Убежище успешно добавлено!"
+            axios.post('/forms/help-delivery', this.form).then(resp => {
+
+                this.message = "Заявка успешно добавлена!"
                 this.messageType = 0;
+
+                this.loader = false
+                this.$refs.delivery.reset();
+
+                setTimeout(() => {
+                    window.location.reload()
+                }, 5000)
             }).catch(()=>{
-                this.message = "Ошибка добавления убежища!"
+                this.message = "Ошибка добавления заявки!"
                 this.messageType = 1;
             })
         },

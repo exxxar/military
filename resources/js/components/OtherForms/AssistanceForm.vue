@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <h4>Могу предложить свою помощь</h4>
-                <form v-on:submit.prevent="submit" ref="newShelter">
+                <form v-on:submit.prevent="submit" ref="assistance">
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle"></i>Все добваляемые заявки обрабатываются оператором. После обрботки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
                         <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -56,6 +56,8 @@
                         <div class="row" v-for="(item,index) in form.skills">
                             <div class="col-12">
                                 <div class="form-group">
+                                    <a type="button" class="text-secondary small mb-2 w-100" v-if="index>0"
+                                       @click="remove(index)">Удалить</a>
                                     <label class="form-label" for="foodTitle">Название навыка</label>
                                     <input class="form-control" id="foodTitle" type="text" placeholder="Сварщик, 1 разряд"
                                            v-model="form.skills[index].title" required>
@@ -141,12 +143,17 @@
                     </div>
 
                     <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
-                            type="submit">Отправить запрос
-                        <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
-                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            type="submit" :disabled="loader">
+                        <span v-if="!loader">Добавить
+                         <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
+                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                   d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
                         </svg>
+                        </span>
+                        <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
+
+
                     </button>
 
                     <a href="https://t.me/shelter_dpr_bot" class="btn btn-link w-100 d-flex align-items-center justify-content-center">Перейти в бота
@@ -158,8 +165,15 @@
 </template>
 <script>
 export default {
+    props: {
+        userId: {
+            type: String,
+            default: null
+        },
+    },
     data() {
         return {
+            loader: false,
             messageType:0,
             message:null,
             max_skills: 20,
@@ -169,6 +183,7 @@ export default {
                 phone: null,
                 description: null,
                 need_transfer: true,
+                user_id: null,
                 skills:[
                     {
                         title:"",
@@ -183,13 +198,25 @@ export default {
         submit() {
             this.message = null
             this.messageType = 0;
-            axios.post('/api/shelters/new-shelter', this.form).then(resp => {
-                this.$refs.newShelter.reset();
-                this.message = "Убежище успешно добавлено!"
+
+            this.form.user_id = this.userId;
+            this.loader = true
+
+            axios.post('/forms/can-assistance', this.form).then(resp => {
+
+                this.message = "Ваши навыки нам пригодятся!Спасибо!"
                 this.messageType = 0;
+
+                this.loader = false
+                this.$refs.assistance.reset();
+
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
             }).catch(()=>{
-                this.message = "Ошибка добавления убежища!"
+                this.message = "Ошибка добавления анкеты!"
                 this.messageType = 1;
+                this.loader = false
             })
         },
 
@@ -201,7 +228,12 @@ export default {
                     title:"",
                     rating:1
                 });
-        }
+        },
+        remove(index) {
+            this.form.skills.splice(index, 1);
+        },
+
+
     }
 }
 </script>

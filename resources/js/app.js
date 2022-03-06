@@ -20,6 +20,8 @@ import AssistanceForm from './components/OtherForms/AssistanceForm'
 import DriverForm from './components/OtherForms/DriverForm'
 import FeederForm from './components/OtherForms/FeederForm'
 import AidCenterForm from './components/OtherForms/AidCenterForm'
+import WaterForm from './components/OtherForms/WaterForm'
+import ClothesForm from './components/OtherForms/ClothesForm'
 
 import AboutPage from './pages/About'
 import HomePage from './pages/Home'
@@ -59,6 +61,8 @@ app.component('assistance-form-component', AssistanceForm)
 app.component('driver-form-component', DriverForm)
 app.component('feeder-form-component', FeederForm)
 app.component('aid-center-form-component', AidCenterForm)
+app.component('water-help-form-component', WaterForm)
+app.component('clothes-form-component', WaterForm)
 
 
 app.component('about-page', AboutPage)

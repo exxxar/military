@@ -2,83 +2,83 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h4>Добавление нового убежища</h4>
-                <form @submit.prevent="submit" ref="shelter">
+                <h4>Запрос на доставку воды</h4>
+                <form v-on:submit.prevent="submit" ref="water">
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
-                        <i class="bi bi-check-circle"></i>Все добавляемые убежища проверяются модератором перед
-                        утверждением!
+                        <i class="bi bi-check-circle"></i>Все добавляемые заявки обрабатываются оператором. После
+                        обработки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
                         <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button"
                                 data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="inputCity">Название населенного пункта<span
-                            style="color:red;">*</span></label>
-                        <input class="form-control" id="inputCity" type="text" placeholder="город Донецк"
-                               v-model="form.city" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="inputAddress">Улица и номер строения<span
-                            style="color:red;">*</span></label>
-                        <input class="form-control" id="inputAddress" type="text" placeholder="ул. Артема, 2а"
-                               v-model="form.address" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="regionInput">Регион \ район</label>
-                        <input class="form-control" id="regionInput" type="text" placeholder="Куйбышевский район"
-                               v-model="form.region">
-                    </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="range-with-value">Примерная вместимость</label>
-                        <div class="range-with-value d-flex align-items-center">
-                            <input class="form-range" id="range-with-value" type="range" min="0" max="500" value="10"
-                                   step="1" v-model="form.capacity">
-                            <button class="btn btn-primary btn-sm ms-3">{{ form.capacity }}</button>
-                        </div>
+                        <label class="form-label" for="inputFullName">Ваше Ф.И.О.<span
+                            style="color:red;">*</span></label>
+                        <input class="form-control" id="inputFullName" type="text" placeholder="Иванов Иван Иванович"
+                               v-model="form.full_name" required>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="balanceHolderInput">У кого на балансе</label>
-                        <input class="form-control" id="balanceHolderInput" type="text"
-                               placeholder="ООО'Вода Донбасса'" v-model="form.balance_holder">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="responsiblePersonInput">Ответственный</label>
-                        <input class="form-control" id="responsiblePersonInput" type="text" placeholder="Ивнова В.В."
-                               v-model="form.responsible_person">
-                    </div>
                     <div class="form-group">
                         <label class="form-label" for="inputYourPhone">Ваш номер телефон<span
                             style="color:red;">*</span></label>
                         <input class="form-control" id="inputYourPhone" type="text" placeholder="(071) 000-00-00"
                                v-mask="['(###) ###-##-##']" v-model="form.phone" required>
                     </div>
+
+
                     <div class="form-group">
-                        <label class="form-label" for="shelterStatusSelect">Выберите статус убежища</label>
-                        <select class="form-select form-select-lg" id="shelterStatusSelect" name="shelterStatusSelect"
-                                v-model="form.status"
-                                aria-label="Выбор состояния убежища">
-                            <option value="0" selected="">Не проверено</option>
-                            <option value="1">Действующее</option>
-                            <option value="2">Разрушенное</option>
-                        </select>
+                        <label class="form-label" for="description">Дополнительня информация о вас</label>
+                        <textarea class="form-control" id="description" name="description" cols="3" rows="5"
+                                  v-model="form.description"
+                                  placeholder="Описание"></textarea>
                     </div>
+
+
                     <div class="form-group">
-                        <label class="form-label" for="qualityStateSelect">Выберите техническое состояние
-                            убежища</label>
-                        <select class="form-select form-select-lg" id="qualityStateSelect" name="qualityStateSelect"
-                                v-model="form.quality"
-                                aria-label="Выберите технчиеское состояние убежища">
-                            <option value="0" selected="">Неизвестное состояние</option>
-                            <option value="1">В нормальном состоянии</option>
-                            <option value="2">Неприемлимое состояние</option>
-                            <option value="3">Подтопленное</option>
-                        </select>
+                        <label class="form-label" for="range-people">Для скольки людей?</label>
+                        <div class="range-with-value d-flex align-items-center">
+                            <input class="form-range" id="range-people" type="range" min="0" max="10" value="2"
+                                   step="1" v-model="form.people_count">
+                            <button class="btn btn-primary btn-sm ms-3">{{ form.people_count }}</button>
+                        </div>
                     </div>
-                    <div class="form-group">
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.need_technical_water"
+                               id="needTechnicalWater" type="checkbox">
+                        <label class="form-check-label" for="needTechnicalWater">Нужна техническая вода</label>
+                    </div>
+
+                    <div class="form-group" v-if="form.need_technical_water">
+                        <label class="form-label" for="range-technical-water">Объем технической воды, литров</label>
+                        <div class="range-with-value d-flex align-items-center">
+                            <input class="form-range" id="range-technical-water" type="range" min="0" max="100" value="2"
+                                   step="1" v-model="form.technical_water">
+                            <button class="btn btn-primary btn-sm ms-3">{{ form.technical_water }}</button>
+                        </div>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.need_drinking_water"
+                               id="needDrinkingWater" type="checkbox">
+                        <label class="form-check-label" for="needDrinkingWater">Нужна питьевая вода</label>
+                    </div>
+
+                    <div class="form-group" v-if="form.need_drinking_water">
+                        <label class="form-label" for="range-drinking-water">Объем питьевой воды, литров</label>
+                        <div class="range-with-value d-flex align-items-center">
+                            <input class="form-range" id="range-drinking-water" type="range" min="0" max="100" value="2"
+                                   step="1" v-model="form.drinking_water">
+                            <button class="btn btn-primary btn-sm ms-3">{{ form.drinking_water }}</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3 mb-3">
                         <div class="rating-card-three text-center">
-                            <h6 class="mb-3">Оценка качества убежища</h6>
+                            <h6 class="mb-3">На сколько это критично для вас?</h6>
                             <div class="stars">
                                 <input class="stars-checkbox" id="first-star" type="radio" name="star" value="5"
                                        v-model="form.rating">
@@ -138,40 +138,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="shelterTypeSelect">Выберите тип убежища</label>
-                        <select class="form-select form-select-lg" id="shelterTypeSelect" name="shelterTypeSelect"
-                                value="1" v-model="form.type"
-                                aria-label="Выберите тип убежища">
-                            <option value="0" selected="">Убежище</option>
-                            <option value="2">Подвальное помещение</option>
-                            <option value="1">Военный дот</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="facility">Удобства
-                            ({{ form.facility.length }}/{{ maxFacilities }})</label>
-                        <div v-for="(item,index) in form.facility">
-                            <a type="button" class="text-secondary small mb-2 w-100" v-if="index>0"
-                               @click="remove(index)">Удалить</a>
-                            <input class="form-control mb-2" id="facility" type="text" placeholder="Название удобств"
-                                   v-model="form.facility[index]">
-
-                        </div>
-                        <button class="btn btn-info w-100 d-flex align-items-center justify-content-center mt-2"
-                                @click="addNewFacility"
-                                v-if="this.maxFacilities>this.form.facility.length"
-                                type="button">Указать еще удобство
-                        </button>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="description">Введите детали (номер телефона, др. детали)</label>
-                        <textarea class="form-control" id="description" name="description" cols="3" rows="5"
-                                  v-model="form.description"
-                                  placeholder="Описание"></textarea>
-                    </div>
 
                     <div class="alert custom-alert-2 alert-dismissible fade  show"
                          v-bind:class="{'alert-success':messageType===0,'alert-danger':messageType===1}"
@@ -181,7 +147,7 @@
 
                     <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
                             type="submit" :disabled="loader">
-                        <span v-if="!loader">Добавить
+                        <span v-if="!loader">Отправить запрос
                          <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
                               fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -192,6 +158,7 @@
 
 
                     </button>
+
 
                     <a href="https://t.me/shelter_dpr_bot"
                        class="btn btn-link w-100 d-flex align-items-center justify-content-center">Перейти в бота
@@ -212,69 +179,69 @@ export default {
     data() {
         return {
             loader: false,
-            maxFacilities: 10,
             messageType: 0,
             message: null,
+
             form: {
-                city: null,
-                region: null,
-                address: null,
-               /* lat: null,
-                lon: null,*/
-                balance_holder: null,
-                responsible_person: null,
-                capacity: 10,
-                description: null,
-                status: 0,
-                quality: 0,
-                type: 0,
-                facility: [""],
-                rating: 1,
+                full_name: null,
+                people_count: 1,
                 phone: null,
+                description: null,
                 user_id: null,
+                rating: 1,
+                need_technical_water:false,
+                need_drinking_water:false,
+                drinking_water: 1,
+                technical_water: 1,
+
 
             }
         }
     },
     methods: {
         submit() {
-
             this.form.user_id = this.userId;
             this.loader = true
             this.message = null
             this.messageType = 0;
-            axios.post('/forms/new-shelter', this.form).then(resp => {
-                this.message = "Убежище успешно добавлено!"
+            axios.post('/forms/help-water', this.form).then(resp => {
+
+                this.message = "Заявка успешно добавлена!"
                 this.messageType = 0;
+
+                this.$refs.water.reset();
                 this.loader = false
-                this.$refs.shelter.reset();
 
                 setTimeout(() => {
                     window.location.reload()
                 }, 2000)
             }).catch(() => {
-                this.message = "Ошибка добавления убежища!"
+                this.message = "Ошибка добавления заявки!"
                 this.messageType = 1;
                 this.loader = false
             })
         },
-        addNewFacility() {
-            let find = this.form.facility.filter(item => item.trim() === "").length > 0;
+        addNewLocations() {
+            let find = this.form.locations.filter(item => item.title.trim() === "").length > 0;
 
-            if (!find && this.maxFacilities > this.form.facility.length)
-                this.form.facility.push("");
+            if (!find && this.max_locations > this.form.locations.length)
+                this.form.locations.push({
+                    title: "",
+                    city: null,
+                    address: null,
+                    phone: null,
+                    description: null,
+                    volume: 10,
+                    time_from: null,
+                    time_to: null,
+
+                });
         },
         remove(index) {
-            this.form.facility.splice(index, 1);
-        },
+            this.form.locations.splice(index, 1);
+            ;
+        }
 
     }
 }
 </script>
-<style lang="scss">
-.loader-btn {
-    width: 40px;
-    height: 25px;
-    object-fit: cover;
-}
-</style>

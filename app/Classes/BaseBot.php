@@ -189,6 +189,24 @@ abstract class BaseBot
         return $this;
     }
 
+    //отправка фото
+    public function sendPhoto($chatId, $caption, $path)
+    {
+        try {
+            $this->bot->sendPhoto([
+                "chat_id" => $chatId,
+                "photo" => $path,
+                "caption" => $caption,
+                "parse_mode" => "HTML"
+            ]);
+        } catch (\Exception $e) {
+
+        }
+
+        return $this;
+
+    }
+
     public function next($name)
     {
         foreach ($this->routes as $route) {

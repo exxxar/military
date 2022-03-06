@@ -3,10 +3,12 @@
         <div class="card">
             <div class="card-body">
                 <h4>Запрос на помощь с продуктами</h4>
-                <form v-on:submit.prevent="submit" ref="newShelter">
+                <form v-on:submit.prevent="submit" ref="foodAndGoods">
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
-                        <i class="bi bi-check-circle"></i>Все добваляемые заявки обрабатываются оператором. После обрботки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
-                        <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <i class="bi bi-check-circle"></i>Все добваляемые заявки обрабатываются оператором. После
+                        обрботки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
+                        <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button"
+                                data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
 
@@ -36,14 +38,15 @@
                         <input class="form-check-input form-check-success"
                                v-model="form.need_water"
                                id="needHelpWithWater" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpWithWater">Нужна доставка воды</label>
+                        <label class="form-check-label" for="needHelpWithWater">Нужна доставка питьевой воды</label>
                     </div>
 
                     <div class="form-check form-switch">
                         <input class="form-check-input form-check-success"
                                v-model="form.need_arrive"
                                id="needHelpWithDeliveredFood" type="checkbox" checked="">
-                        <label class="form-check-label" for="needHelpWithDeliveredFood">Нужна помощь с доставкой(перевозкой) еды </label>
+                        <label class="form-check-label" for="needHelpWithDeliveredFood">Нужна помощь с
+                            доставкой(перевозкой) еды </label>
                     </div>
 
                     <div class="form-group">
@@ -57,10 +60,13 @@
 
 
                     <div class="form-group">
-                        <h6>Сформируйте продуктовый список ({{form.food_and_goods.length}}/{{max_food_and_goods}})</h6>
+                        <h6>Сформируйте продуктовый список
+                            ({{ form.food_and_goods.length }}/{{ max_food_and_goods }})</h6>
                         <div class="row" v-for="(item,index) in form.food_and_goods">
                             <div class="col-12">
                                 <div class="form-group">
+                                    <a type="button" class="text-secondary small mb-2 w-100"
+                                       v-if="index>0" @click="remove(index,'food_and_goods')">Удалить</a>
                                     <label class="form-label" for="foodTitle">Название продукта</label>
                                     <input class="form-control" id="foodTitle" type="text" placeholder="Молоко"
                                            v-model="form.food_and_goods[index].title" required>
@@ -74,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="form-group" >
+                                <div class="form-group">
                                     <label class="form-label" for="measure">ед.
                                         изм.</label>
                                     <select class="form-select form-select-md" id="measure" name="qualityStateSelect"
@@ -105,12 +111,18 @@
                     <div class="divider divider-center-icon mt-4 border-success"><i class="bi bi-arrow-down"></i></div>
 
                     <div class="form-group">
-                        <h6>Сформируйте список мед.товаров ({{form.medical_goods.length}}/{{max_medical_goods}})</h6>
+                        <h6>Сформируйте список мед.товаров
+                            ({{ form.medical_goods.length }}/{{ max_medical_goods }})</h6>
                         <div class="row" v-for="(item,index) in form.medical_goods">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="form-label" for="medicalTitle">Название мед.изделия \ лекарства</label>
-                                    <input class="form-control" id="medicalTitle" type="text" placeholder="Аспирин \ бинт \ шприцы"
+                                    <a type="button" class="text-secondary small mb-2 w-100"
+                                       @click="remove(index,'medical_goods')">Удалить</a>
+
+                                    <label class="form-label" for="medicalTitle">Название мед.изделия \
+                                        лекарства</label>
+                                    <input class="form-control" id="medicalTitle" type="text"
+                                           placeholder="Аспирин \ бинт \ шприцы"
                                            v-model="form.medical_goods[index].title" required>
                                 </div>
                             </div>
@@ -122,10 +134,11 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="form-group" >
+                                <div class="form-group">
                                     <label class="form-label" for="medicalMeasure">ед.
                                         изм.</label>
-                                    <select class="form-select form-select-md" id="medicalMeasure" name="qualityStateSelect"
+                                    <select class="form-select form-select-md" id="medicalMeasure"
+                                            name="qualityStateSelect"
                                             v-model="form.medical_goods[index].measure"
                                             aria-label="Выберите единицы измерения">
                                         <option value="шт" selected="">шт.</option>
@@ -218,19 +231,25 @@
                     <div class="alert custom-alert-2 alert-dismissible fade  show"
                          v-bind:class="{'alert-success':messageType===0,'alert-danger':messageType===1}"
                          v-if="message" role="alert">
-                        <i class="bi bi-check-circle"></i>{{message}}
+                        <i class="bi bi-check-circle"></i>{{ message }}
                     </div>
 
                     <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
-                            type="submit">Отправить запрос
-                        <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
-                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            type="submit" :disabled="loader">
+                        <span v-if="!loader">Добавить
+                         <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
+                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                   d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
                         </svg>
+                        </span>
+                        <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
+
+
                     </button>
 
-                    <a href="https://t.me/shelter_dpr_bot" class="btn btn-link w-100 d-flex align-items-center justify-content-center">Перейти в бота
+                    <a href="https://t.me/shelter_dpr_bot"
+                       class="btn btn-link w-100 d-flex align-items-center justify-content-center">Перейти в бота
                     </a>
                 </form>
             </div>
@@ -239,10 +258,17 @@
 </template>
 <script>
 export default {
+    props: {
+        userId: {
+            type: String,
+            default: null
+        },
+    },
     data() {
         return {
-            messageType:0,
-            message:null,
+            loader: false,
+            messageType: 0,
+            message: null,
             max_food_and_goods: 10,
             max_medical_goods: 10,
             form: {
@@ -253,18 +279,15 @@ export default {
                 need_arrive: false,
                 need_water: false,
                 cannotPay: true,
-                rating:1,
-                food_and_goods:[{
-                    title:"",
-                    value:0,
-                    measure:"шт",
+                rating: 1,
+                user_id: null,
+                food_and_goods: [{
+                    title: "",
+                    value: 0,
+                    measure: "шт",
                 }],
-                medical_goods:[
-                    {
-                        title:"",
-                        value:0,
-                        measure:"шт",
-                    }
+                medical_goods: [
+
                 ],
 
 
@@ -273,25 +296,38 @@ export default {
     },
     methods: {
         submit() {
+            this.form.user_id = this.userId;
+            this.loader = true
             this.message = null
             this.messageType = 0;
-            axios.post('/api/shelters/new-shelter', this.form).then(resp => {
-                this.$refs.newShelter.reset();
-                this.message = "Убежище успешно добавлено!"
+            axios.post('/forms/need-goods-and-food', this.form).then(resp => {
+                this.message = "Заявка успешно добавлена!"
                 this.messageType = 0;
-            }).catch(()=>{
-                this.message = "Ошибка добавления убежища!"
+                this.loader = false
+                this.$refs.foodAndGoods.reset();
+
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
+
+            }).catch(() => {
+                this.message = "Ошибка добавления заявки!"
                 this.messageType = 1;
+                this.loader = false
             })
+        },
+        remove(index,part) {
+            let tmp =  eval("this.form."+part);
+            tmp.splice(index, 1);
         },
         addNewMedicalGoods() {
             let find = this.form.medical_goods.filter(item => item.title.trim() === "").length > 0;
 
             if (!find && this.max_medical_goods > this.form.medical_goods.length)
                 this.form.medical_goods.push({
-                    title:"",
-                    value:0,
-                    measure:"шт",
+                    title: "",
+                    value: 0,
+                    measure: "шт",
                 });
         },
         addNewFoodAndGoods() {
@@ -299,9 +335,9 @@ export default {
 
             if (!find && this.max_food_and_goods > this.form.food_and_goods.length)
                 this.form.food_and_goods.push({
-                    title:"",
-                    value:0,
-                    measure:"шт",
+                    title: "",
+                    value: 0,
+                    measure: "шт",
                 });
         },
 

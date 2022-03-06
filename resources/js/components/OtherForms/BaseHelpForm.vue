@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <h4>Запрос на помощь</h4>
-                <form v-on:submit.prevent="submit" ref="newShelter">
+                <form v-on:submit.prevent="submit" ref="helpForm">
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle"></i>Все добваляемые заявки обрабатываются оператором. После обрботки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
                         <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -48,6 +48,41 @@
                     </div>
 
                     <div class="divider divider-center-icon border-success"><i class="bi bi-arrow-down"></i></div>
+
+
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.need_technical_water"
+                               id="needTechnicalWater" type="checkbox">
+                        <label class="form-check-label" for="needTechnicalWater">Нужна техническая вода</label>
+                    </div>
+
+                    <div class="form-group" v-if="form.need_technical_water">
+                        <label class="form-label" for="range-technical-water">Объем технической воды, литров</label>
+                        <div class="range-with-value d-flex align-items-center">
+                            <input class="form-range" id="range-technical-water" type="range" min="0" max="100" value="2"
+                                   step="1" v-model="form.technical_water">
+                            <button class="btn btn-primary btn-sm ms-3">{{ form.technical_water }}</button>
+                        </div>
+                    </div>
+
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.need_drinking_water"
+                               id="needDrinkingWater" type="checkbox">
+                        <label class="form-check-label" for="needDrinkingWater">Нужна питьевая вода</label>
+                    </div>
+
+                    <div class="form-group" v-if="form.need_drinking_water">
+                        <label class="form-label" for="range-drinking-water">Объем питьевой воды, литров</label>
+                        <div class="range-with-value d-flex align-items-center">
+                            <input class="form-range" id="range-drinking-water" type="range" min="0" max="100" value="2"
+                                   step="1" v-model="form.drinking_water">
+                            <button class="btn btn-primary btn-sm ms-3">{{ form.drinking_water }}</button>
+                        </div>
+                    </div>
 
                     <div class="form-check form-switch">
                         <input class="form-check-input form-check-success"
@@ -115,6 +150,13 @@
                                v-model="form.need_home"
                                id="needHelpWithHome" type="checkbox" checked="">
                         <label class="form-check-label" for="needHelpWithHome">Нужно жильё или временное размещение</label>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.need_evacuation"
+                               id="needHelpEvacuation" type="checkbox" checked="">
+                        <label class="form-check-label" for="needHelpEvacuation">Нужна помощь с эвакуацией</label>
                     </div>
 
                     <div class="form-check form-switch">
@@ -249,6 +291,22 @@
                         <label class="form-check-label" for="needHelpWithSearchPeople">Нужна помощь в поиске родственников</label>
                     </div>
 
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.need_coal"
+                               id="needCoal" type="checkbox">
+                        <label class="form-check-label" for="needCoal">Нужна помощь с углём</label>
+                    </div>
+
+                    <div class="form-group" v-if="form.need_coal">
+                        <label class="form-label" for="range-technical-water">Объем необходимого угля, тонн</label>
+                        <div class="range-with-value d-flex align-items-center">
+                            <input class="form-range" id="range-coal" type="range" min="0" max="10" value="2"
+                                   step="1" v-model="form.coal">
+                            <button class="btn btn-primary btn-sm ms-3">{{ form.coal }}</button>
+                        </div>
+                    </div>
+
                     <div class="form-group mt-3 mb-3">
                         <div class="rating-card-three text-center">
                             <h6 class="mb-3">На сколько это критично для вас?</h6>
@@ -319,14 +377,21 @@
                         <i class="bi bi-check-circle"></i>{{message}}
                     </div>
 
+
                     <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
-                            type="submit">Отправить запрос
-                        <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
-                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            type="submit" :disabled="loader">
+                        <span v-if="!loader">Отправить запрос
+                         <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
+                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                   d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
                         </svg>
+                        </span>
+                        <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
+
+
                     </button>
+
 
                     <a href="https://t.me/shelter_dpr_bot" class="btn btn-link w-100 d-flex align-items-center justify-content-center">Перейти в бота
                     </a>
@@ -337,6 +402,12 @@
 </template>
 <script>
 export default {
+    props: {
+        userId: {
+            type: String,
+            default: null
+        },
+    },
     data() {
         return {
             messageType:0,
@@ -344,23 +415,33 @@ export default {
             max_food_and_goods: 10,
             max_medical_goods: 10,
             max_clothes: 20,
+            loader:false,
             form: {
                 full_name: null,
                 age: 18,
                 phone: null,
                 people_count: 2,
                 description: null,
-                need_goods: true,
-                need_psyhologist: true,
+                need_goods: false,
+                need_psyhologist: false,
                 need_home: false,
                 need_animal: false,
                 need_clothes: false,
+                need_evacuation: false,
                 need_medical_goods: false,
                 need_debris_removal: false,
                 need_arrive: false,
                 need_doctor: false,
                 cannotPay: true,
                 need_search_people: false,
+                need_coal: false,
+                coal: 1,
+
+                need_technical_water:false,
+                need_drinking_water:false,
+                drinking_water: 1,
+                technical_water: 1,
+
                 animals:null,
                 rating:1,
                 description_for_doctor: null,
@@ -376,7 +457,8 @@ export default {
                         measure:"шт",
                     }
                 ],
-                clothes:[""]
+                clothes:[""],
+                user_id: null,
 
             }
         }
@@ -385,13 +467,21 @@ export default {
         submit() {
             this.message = null
             this.messageType = 0;
-            axios.post('/api/shelters/new-shelter', this.form).then(resp => {
-                this.$refs.newShelter.reset();
-                this.message = "Убежище успешно добавлено!"
+            this.form.user_id = this.userId;
+            this.loader = true
+            axios.post('/forms/need-help', this.form).then(resp => {
+                this.$refs.helpForm.reset();
+                this.message = "Заявка успешно добавлена!"
                 this.messageType = 0;
+                this.loader = false
+                setTimeout(() => {
+                    window.location.reload()
+                }, 5000)
+
             }).catch(()=>{
-                this.message = "Ошибка добавления убежища!"
+                this.message = "Ошибка добавления зявки!"
                 this.messageType = 1;
+                this.loader = false
             })
         },
         addNewMedicalGoods() {

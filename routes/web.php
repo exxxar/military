@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Mpdf\Mpdf;
+use Telegram\Bot\FileUpload\InputFile;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,29 +19,41 @@ use Mpdf\Mpdf;
 |
 */
 
+
 Route::view('/desktop','index')->name('desktop.index');
 
 Route::prefix('/forms')->group(function (){
-    Route::view("/need-help","form.help");
+    Route::view("/need-help","forms.help");
+    Route::post("/need-help",[\App\Http\Controllers\FormHandlerController::class,"needHelpStore"]);
 
-    Route::view("/need-goods-and-food","form.goods-and-food");
-    Route::view("/need-psychologist","form.psychologist");
-    Route::view("/need-housing","form.housing");
-    Route::view("/need-transport","form.transport");
-    Route::view("/need-clothes","form.clothes");
-    Route::view("/need-medicines","form.medicines");
-    Route::view("/need-first-aid","form.first-aid");
-    Route::view("/need-work","form.work");
-    Route::view("/need-debris-removal","form.debris-removal");
+    Route::view("/new-shelter","forms.new-shelter");
+    Route::post("/new-shelter",[\App\Http\Controllers\FormHandlerController::class,"newShelterStore"]);
 
-    Route::view("/new-shelter","form.new-shelter");
-    Route::view("/new-aid-center","form.new-aid-center");
-    Route::view("/help-with-shelter","form.help-with-shelter");
-    Route::view("/can-help-1","form.can-help-1");
-    Route::view("/can-help-2","form.can-help-2");
-    Route::view("/help-with-money","form.help-with-money");
-    Route::view("/help-with-home","form.help-with-home");
-    Route::view("/help-with-car","form.help-with-car");
+    Route::view("/need-goods-and-food","forms.food-and-goods");
+    Route::post("/need-goods-and-food",[\App\Http\Controllers\FormHandlerController::class,"needGoodsAndFoodStore"]);
+
+    Route::view("/new-aid-center","forms.new-aid-center");
+    Route::post("/new-aid-center",[\App\Http\Controllers\FormHandlerController::class,"newAidCenterStore"]);
+
+    Route::view("/help-feeder","forms.help-feeder");
+    Route::post("/help-feeder",[\App\Http\Controllers\FormHandlerController::class,"helpFeederStore"]);
+
+    Route::view("/help-delivery","forms.can-delivery");
+    Route::post("/help-delivery",[\App\Http\Controllers\FormHandlerController::class,"helpDeliveryStore"]);
+
+    Route::view("/can-driver","forms.can-driver");
+    Route::post("/can-driver",[\App\Http\Controllers\FormHandlerController::class,"canDriverStore"]);
+
+    Route::view("/can-assistance","forms.can-assistance");
+    Route::post("/can-assistance",[\App\Http\Controllers\FormHandlerController::class,"canAssistanceStore"]);
+
+    Route::view("/help-water","forms.help-water");
+    Route::post("/help-water",[\App\Http\Controllers\FormHandlerController::class,"helpWithWaterStore"]);
+
+    Route::view("/help-clothes","forms.help-water");
+    Route::post("/help-clothes",[\App\Http\Controllers\FormHandlerController::class,"helpWithClothesStore"]);
+
+
 });
 
 Route::view('/{any?}','welcome')->name('mobile.index')->where('any', '.*');

@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <h4>Могу подвезти \ доставить</h4>
-                <form v-on:submit.prevent="submit" ref="newShelter">
+                <form v-on:submit.prevent="submit" ref="driver">
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle"></i>Все добваляемые заявки обрабатываются оператором. После
                         обрботки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
@@ -110,12 +110,17 @@
                     </div>
 
                     <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
-                            type="submit">Отправить запрос
-                        <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
-                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            type="submit" :disabled="loader">
+                        <span v-if="!loader">Отправить запрос
+                         <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
+                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                   d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
                         </svg>
+                        </span>
+                        <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
+
+
                     </button>
 
                     <a href="https://t.me/shelter_dpr_bot"
@@ -128,10 +133,17 @@
 </template>
 <script>
 export default {
+    props: {
+        userId: {
+            type: String,
+            default: null
+        },
+    },
     data() {
         return {
             messageType: 0,
             message: null,
+            loader: false,
 
             form: {
                 full_name: null,
@@ -142,35 +154,36 @@ export default {
                 description: null,
                 license_categories: [],
                 have_a_car: true,
-
+                user_id: null,
 
             }
         }
     },
     methods: {
         submit() {
-            console.log(this.form.license_categories)
+            this.form.user_id = this.userId;
+            this.loader = true
+
             this.message = null
             this.messageType = 0;
-            axios.post('/api/shelters/new-shelter', this.form).then(resp => {
-                this.$refs.newShelter.reset();
-                this.message = "Убежище успешно добавлено!"
+            axios.post('/forms/can-driver', this.form).then(resp => {
+
+                this.message = "Заявка успешно добавлена!"
                 this.messageType = 0;
+
+                this.loader = false
+                this.$refs.shelter.reset();
+
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
             }).catch(() => {
-                this.message = "Ошибка добавления убежища!"
+                this.message = "Ошибка добавления заявки!"
                 this.messageType = 1;
+                this.loader = false
             })
         },
 
-        addNewSkills() {
-            let find = this.form.skills.filter(item => item.title.trim() === "").length > 0;
-
-            if (!find && this.max_skills > this.form.skills.length)
-                this.form.skills.push({
-                    title: "",
-                    rating: 1
-                });
-        }
     }
 }
 </script>

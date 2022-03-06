@@ -105,34 +105,31 @@ MilitaryServiceFacade::bot()
     })
     ->addRoute("/.*Помощь и волонтерство", function ($message) {
 
+        $user_id = $this->chatId;
+
         $url = env("APP_URL");
         MilitaryServiceFacade::bot()->inlineKeyboard("Направления помощи", [
             [
-                ["text" => "\xF0\x9F\x9A\x80Добвить новое убежище", "url" => "$url/forms/new-shelter"],
+                ["text" => "\xF0\x9F\x9A\x80Добавить новое убежище", "url" => "$url/forms/new-shelter?uid=$user_id"],
             ],
             [
-                ["text" => "\xF0\x9F\x8F\xA0Добвить точку сбор гуманитарки", "url" => "$url/forms/new-aid-center"],
+                ["text" => "\xF0\x9F\x8F\xA0Добавить точку сбор гуманитарки", "url" => "$url/forms/new-aid-center?uid=$user_id"],
             ],
             [
-                ["text" => "\xE2\x98\x9DПомогу с благоустройством убежищ", "url" => "$url/forms/help-with-shelter"],
+                ["text" => "\xE2\x9C\x8AИмею полезные навыки!", "url" => "$url/forms/can-assistance?uid=$user_id"],
             ],
             [
-                ["text" => "\xE2\x9C\x8AИмею полезные навыки!", "url" => "$url/forms/can-help-1"],
+                ["text" => "\xF0\x9F\x8D\x94Могу кормить людей!", "url" => "$url/forms/help-feeder?uid=$user_id"],
             ],
-            [
-                ["text" => "\xF0\x9F\x8D\x94Моку кормить людей!", "url" => "$url/forms/can-help-2"],
-            ],
-            [
+           /* [
                 ["text" => "\xF0\x9F\x92\xB5Могу помочь деньгами", "url" => "$url/forms/help-with-money"],
+            ],*/
+
+            [
+                ["text" => "\xF0\x9F\x91\x95Могу помочь с вещами", "url" => "$url/forms/help-clothes?uid=$user_id"],
             ],
             [
-                ["text" => "\xF0\x9F\x92\xB5Могу помочь с жильём", "url" => "$url/forms/help-with-home"],
-            ],
-            [
-                ["text" => "\xF0\x9F\x91\x95Могу помочь с вещами", "url" => "$url/forms/help-with-clothes"],
-            ],
-            [
-                ["text" => "\xF0\x9F\x9A\x97Могу подвести \ доставить", "url" => "$url/forms/help-with-car"],
+                ["text" => "\xF0\x9F\x9A\x97Могу подвести \ доставить", "url" => "$url/forms/can-driver?uid=$user_id"],
             ],
 
         ]);
@@ -142,8 +139,11 @@ MilitaryServiceFacade::bot()
 
         $url = env("APP_URL");
 
+        $user_id = $this->chatId;
+
         $message = "Запрос на помощь...\n" .
             "\xF0\x9F\x8D\xB4Продукты питания\n" .
+            "\xF0\x9F\x92\xA7Доставка воды\n" .
             "\xF0\x9F\x8D\x80Психологическя помощь и поддержка!\n" .
             "\xF0\x9F\x8F\xA0Жильё или временное размещение\n".
             "\xF0\x9F\x9A\x90Помощь с проездом или доставкой\n".
@@ -151,12 +151,25 @@ MilitaryServiceFacade::bot()
             "\xF0\x9F\x92\x8AМедикаменты\n".
             "\xF0\x9F\x92\x89Мед. помощь\n".
             "\xF0\x9F\x93\x88Работа\n".
-            "\xF0\x9F\x94\xA8Разбор завалов";
+            "\xF0\x9F\x94\xA8Разбор завалов\n".
+            "\xF0\x9F\x94\xA8Ремонт эл.техники или авто";
 
-        MilitaryServiceFacade::bot()->inlineKeyboard("Запрос на помощь...", [
+        MilitaryServiceFacade::bot()->inlineKeyboard($message, [
             [
-                ["text" => "\xF0\x9F\x93\x9DМне нужна помощь", "url" => "$url/forms/need-help"],
+                ["text" => "\xF0\x9F\x93\x9DМне нужна помощь", "url" => "$url/forms/need-help?uid=$user_id"],
             ],
+            [
+                ["text" => "\xF0\x9F\x8D\xB4Мне нужны продукты или медикаменты", "url" => "$url/forms/need-goods-and-food?uid=$user_id"],
+            ],
+            [
+                ["text" => "\xF0\x9F\x8D\xB4Мне нужна вода", "url" => "$url/forms/help-water?uid=$user_id"],
+            ],
+            [
+                ["text" => "\xF0\x9F\x8D\xB4Мне нужна перевозка \ доставка", "url" => "$url/forms/help-delivery?uid=$user_id"],
+            ],
+          /*  [
+                ["text" => "\xF0\x9F\x8D\xB4Мне нужен ремонт эл. техники или авто", "url" => "$url/forms/help-delivery?uid=$user_id"],
+            ],*/
         ]);
 
 
