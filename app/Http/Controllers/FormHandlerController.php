@@ -224,7 +224,7 @@ class FormHandlerController extends Controller
 
     public function newShelterStore(Request $request)
     {
-        $title = $this->storeJson($request->toArray());
+        $title = $this->storeJson("new-shelter-",$request->toArray());
 
         $city = $request->city ?? "-";
         $region = $request->region ?? "-";
@@ -316,7 +316,7 @@ class FormHandlerController extends Controller
 
     public function needGoodsAndFoodStore(Request $request)
     {
-        $title = $this->storeJson($request->toArray());
+        $title = $this->storeJson("need-goods-",$request->toArray());
 
         $name = $request->full_name ?? "-";
         $people_count = $request->people_count ?? 1;
@@ -536,7 +536,7 @@ class FormHandlerController extends Controller
 
     public function canDriverStore(Request $request)
     {
-        $title = $this->storeJson($request->toArray());
+        $title = $this->storeJson("can-drive-",$request->toArray());
 
         $name = $request->full_name ?? "-";
         $age = $request->age ?? "-";
@@ -585,7 +585,7 @@ class FormHandlerController extends Controller
 
     public function canAssistanceStore(Request $request)
     {
-        $title = $this->storeJson($request->toArray());
+        $title = $this->storeJson("can-assist-",$request->toArray());
 
         $name = $request->full_name ?? "-";
         $age = $request->age ?? "-";
@@ -629,7 +629,7 @@ class FormHandlerController extends Controller
 
     public function helpWithWaterStore(Request $request)
     {
-        $title = $this->storeJson($request->toArray());
+        $title = $this->storeJson("need-water-",$request->toArray());
 
         $name = $request->full_name ?? "-";
         $phone = $request->phone ?? "-";
@@ -672,7 +672,7 @@ class FormHandlerController extends Controller
     public function helpWithClothesStore(Request $request)
     {
 
-        $title = $this->storeJson($request->toArray());
+        $title = $this->storeJson("clothes-",$request->toArray());
 
         $name = $request->full_name ?? "-";
         $phone = $request->phone ?? "-";
