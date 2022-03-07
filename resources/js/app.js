@@ -62,7 +62,7 @@ app.component('driver-form-component', DriverForm)
 app.component('feeder-form-component', FeederForm)
 app.component('aid-center-form-component', AidCenterForm)
 app.component('water-help-form-component', WaterForm)
-app.component('clothes-form-component', WaterForm)
+app.component('clothes-form-component', ClothesForm)
 
 
 app.component('about-page', AboutPage)
