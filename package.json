@@ -26,6 +26,7 @@
     "dependencies": {
         "@fawmi/vue-google-maps": "^0.9.4",
         "vue-recaptcha": "^2.0.1",
+        "vue-recaptcha-v3": "^2.0.1",
         "vue-router": "^4.0.12",
         "vue-the-mask": "^0.11.1",
         "vue-yandex-maps": "^0.12.3",

@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class Recaptcha implements Rule
 {
@@ -23,17 +24,19 @@ class Recaptcha implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed $value
      * @return bool
      */
     public function passes($attribute, $value)
     {
-        return Http::post(static::URL, [
+        $tmp = Http::asForm()->post(static::URL, [
             'secret' => config('services.recaptcha.secret'),
             'response' => $value,
             'remoteip' => request()->ip()
-        ])->json()['success'];
+        ])->json();
+
+        return $tmp['success'];
     }
 
     /**
@@ -43,6 +46,6 @@ class Recaptcha implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'Ошибка проверки капчи';
     }
 }

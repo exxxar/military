@@ -41,7 +41,7 @@
 
                     <div class="form-group">
                         <label class="form-label" for="inputEmail">Ваш email</label>
-                        <input class="form-control" id="inputEmail" type="text" placeholder="inbox@mail.ru"
+                        <input class="form-control" id="inputEmail" type="email" placeholder="inbox@mail.ru"
                                v-model="form.email" >
                     </div>
 
@@ -222,6 +222,17 @@
                         </button>
                     </div>
 
+                    <vue-recaptcha
+                        sitekey="6LdXNsAeAAAAAGXKzMNzpWRyRj_BZU62hfN0_dAJ"
+                        :loadRecaptchaScript="true"
+                        ref="recaptcha"
+                        type="invisible"
+                        size="invisible"
+                        @verify="onCaptchaVerified"
+                        @expired="onCaptchaExpired"
+                    >
+
+                    </vue-recaptcha>
 
                     <div class="alert custom-alert-2 alert-dismissible fade  show"
                          v-bind:class="{'alert-success':messageType===0,'alert-danger':messageType===1}"
@@ -229,7 +240,8 @@
                         <i class="bi bi-check-circle"></i>{{message}}
                     </div>
 
-                    <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
+                    <button
+                        class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
                             type="submit" :disabled="loader">
                         <span v-if="!loader">Добавить
                          <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
@@ -251,12 +263,39 @@
     </div>
 </template>
 <script>
+import { VueRecaptcha } from 'vue-recaptcha';
+
 export default {
+    components: {  'vue-recaptcha': VueRecaptcha, },
     props: {
         userId: {
             type: String,
             default: null
         },
+    },
+    watch:{
+      'form.recaptcha':function(){
+          axios.post('/forms/can-assistance', this.form).then(resp => {
+
+              this.message = "Ваши навыки нам пригодятся!Спасибо!"
+              this.messageType = 0;
+
+              this.loader = false
+              this.$refs.assistance.reset();
+
+              this.onCaptchaExpired()
+
+              window.location.href = "https://t.me/shelter_dpr_bot";
+
+              setTimeout(() => {
+                  window.location.reload()
+              }, 2000)
+          }).catch(()=>{
+              this.message = "Ошибка добавления анкеты!"
+              this.messageType = 1;
+              this.loader = false
+          })
+      }
     },
     data() {
         return {
@@ -313,35 +352,33 @@ export default {
                     }
                 ],
 
+                recaptcha: null,
+
             }
         }
     },
+
     methods: {
+
+        onCaptchaVerified: function (recaptchaToken) {
+            this.form.recaptcha = recaptchaToken
+            this.validateCaptcha = true
+
+        },
+        onCaptchaExpired: function () {
+            this.$refs.recaptcha.reset();
+        },
         submit() {
+
             this.message = null
             this.messageType = 0;
 
             this.form.user_id = this.userId;
             this.loader = true
 
-            axios.post('/forms/can-assistance', this.form).then(resp => {
+            this.$refs.recaptcha.execute();
 
-                this.message = "Ваши навыки нам пригодятся!Спасибо!"
-                this.messageType = 0;
 
-                this.loader = false
-                this.$refs.assistance.reset();
-
-                window.location.href = "https://t.me/shelter_dpr_bot";
-
-                setTimeout(() => {
-                    window.location.reload()
-                }, 2000)
-            }).catch(()=>{
-                this.message = "Ошибка добавления анкеты!"
-                this.messageType = 1;
-                this.loader = false
-            })
         },
 
         addNewSkills() {

@@ -84,12 +84,12 @@ class FormHandlerController extends Controller
         return $title;
     }
 
-    public function needHelpStore(Request $request,Recaptcha $recaptcha)
+    public function needHelpStore(Request $request, Recaptcha $recaptcha)
     {
-
         $request->validate([
             'recaptcha' => ['required', $recaptcha],
         ]);
+
 
         $title = $this->storeJson("need-help-", $request->toArray());
 
@@ -227,8 +227,12 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function newShelterStore(Request $request)
+    public function newShelterStore(Request $request, Recaptcha $recaptcha)
     {
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
+
         $title = $this->storeJson("new-shelter-",$request->toArray());
 
         $city = $request->city ?? "-";
@@ -319,8 +323,12 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function needGoodsAndFoodStore(Request $request)
+    public function needGoodsAndFoodStore(Request $request, Recaptcha $recaptcha)
     {
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
+
         $title = $this->storeJson("need-goods-",$request->toArray());
 
         $name = $request->full_name ?? "-";
@@ -389,8 +397,12 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function newAidCenterStore(Request $request)
+    public function newAidCenterStore(Request $request,Recaptcha $recaptcha)
     {
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
+
         $title = $this->storeJson("aid-center-", $request->toArray());
 
         $name = $request->full_name ?? "-";
@@ -439,8 +451,12 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function helpFeederStore(Request $request)
+    public function helpFeederStore(Request $request, Recaptcha $recaptcha)
     {
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
+
         $title = $this->storeJson("help-feeder-", $request->toArray());
 
         $name = $request->full_name ?? "-";
@@ -490,8 +506,12 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function helpDeliveryStore(Request $request)
+    public function helpDeliveryStore(Request $request, Recaptcha $recaptcha)
     {
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
+
         $title = $this->storeJson("help-delivery-", $request->toArray());
 
         $name = $request->full_name ?? "-";
@@ -539,8 +559,12 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function canDriverStore(Request $request)
+    public function canDriverStore(Request $request, Recaptcha $recaptcha)
     {
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
+
         $title = $this->storeJson("can-drive-",$request->toArray());
 
         $name = $request->full_name ?? "-";
@@ -588,8 +612,12 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function canAssistanceStore(Request $request)
+    public function canAssistanceStore(Request $request, Recaptcha $recaptcha)
     {
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
+
         $title = $this->storeJson("can-assist-",$request->toArray());
 
         $name = $request->full_name ?? "-";
@@ -672,8 +700,12 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function helpWithWaterStore(Request $request)
+    public function helpWithWaterStore(Request $request, Recaptcha $recaptcha)
     {
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
+
         $title = $this->storeJson("need-water-",$request->toArray());
 
         $name = $request->full_name ?? "-";
@@ -714,8 +746,12 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function helpWithClothesStore(Request $request)
+    public function helpWithClothesStore(Request $request, Recaptcha $recaptcha)
     {
+
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
 
         $title = $this->storeJson("clothes-",$request->toArray());
 

@@ -377,6 +377,17 @@
                         <i class="bi bi-check-circle"></i>{{message}}
                     </div>
 
+                    <vue-recaptcha
+                        sitekey="6LdXNsAeAAAAAGXKzMNzpWRyRj_BZU62hfN0_dAJ"
+                        :loadRecaptchaScript="true"
+                        ref="recaptcha"
+                        type="invisible"
+                        size="invisible"
+                        @verify="onCaptchaVerified"
+                        @expired="onCaptchaExpired"
+                    >
+
+                    </vue-recaptcha>
 
                     <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
                             type="submit" :disabled="loader">
@@ -401,11 +412,36 @@
     </div>
 </template>
 <script>
+import { VueRecaptcha } from 'vue-recaptcha';
+
 export default {
+    components: {  'vue-recaptcha': VueRecaptcha, },
     props: {
         userId: {
             type: String,
             default: null
+        },
+    },
+    watch: {
+        'form.recaptcha': function () {
+            axios.post('/forms/need-help', this.form).then(resp => {
+                this.$refs.helpForm.reset();
+                this.message = "Заявка успешно добавлена!"
+                this.messageType = 0;
+                this.loader = false
+
+                this.onCaptchaExpired()
+
+                window.location.href = "https://t.me/shelter_dpr_bot";
+                /*   setTimeout(() => {
+                       window.location.reload()
+                   }, 2000)*/
+
+            }).catch(()=>{
+                this.message = "Ошибка добавления зявки!"
+                this.messageType = 1;
+                this.loader = false
+            })
         },
     },
     data() {
@@ -460,31 +496,28 @@ export default {
                 clothes:[""],
                 user_id: null,
 
+                recaptcha: null,
+
             }
         }
     },
     methods: {
+        onCaptchaVerified: function (recaptchaToken) {
+            this.form.recaptcha = recaptchaToken
+            this.validateCaptcha = true
+
+        },
+        onCaptchaExpired: function () {
+            this.$refs.recaptcha.reset();
+        },
         submit() {
             this.message = null
             this.messageType = 0;
             this.form.user_id = this.userId;
             this.loader = true
-            axios.post('/forms/need-help', this.form).then(resp => {
-                this.$refs.helpForm.reset();
-                this.message = "Заявка успешно добавлена!"
-                this.messageType = 0;
-                this.loader = false
 
-                window.location.href = "https://t.me/shelter_dpr_bot";
-                /*   setTimeout(() => {
-                       window.location.reload()
-                   }, 2000)*/
+            this.$refs.recaptcha.execute();
 
-            }).catch(()=>{
-                this.message = "Ошибка добавления зявки!"
-                this.messageType = 1;
-                this.loader = false
-            })
         },
         addNewMedicalGoods() {
             let find = this.form.medical_goods.filter(item => item.title.trim() === "").length > 0;

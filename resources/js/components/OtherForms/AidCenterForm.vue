@@ -97,6 +97,18 @@
                         <i class="bi bi-check-circle"></i>{{ message }}
                     </div>
 
+                    <vue-recaptcha
+                        sitekey="6LdXNsAeAAAAAGXKzMNzpWRyRj_BZU62hfN0_dAJ"
+                        :loadRecaptchaScript="true"
+                        ref="recaptcha"
+                        type="invisible"
+                        size="invisible"
+                        @verify="onCaptchaVerified"
+                        @expired="onCaptchaExpired"
+                    >
+
+                    </vue-recaptcha>
+
                     <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
                             type="submit" :disabled="loader">
                         <span v-if="!loader">Добавить
@@ -120,7 +132,10 @@
     </div>
 </template>
 <script>
+import { VueRecaptcha } from 'vue-recaptcha';
+
 export default {
+    components: {  'vue-recaptcha': VueRecaptcha, },
     props: {
         userId: {
             type: String,
@@ -147,16 +162,13 @@ export default {
                 requires: [""],
 
                 user_id: null,
+                recaptcha: null,
 
             }
         }
     },
-    methods: {
-        submit() {
-            this.form.user_id = this.userId;
-            this.loader = true
-            this.message = null
-            this.messageType = 0;
+    watch: {
+        'form.recaptcha': function () {
             axios.post('/forms/new-aid-center', this.form).then(resp => {
 
                 this.message = "Точка сбора гуманитарной помощи успешно добавлена!"
@@ -165,15 +177,37 @@ export default {
                 this.loader = false
                 this.$refs.aidCenter.reset();
 
+                this.onCaptchaExpired()
+
                 window.location.href = "https://t.me/shelter_dpr_bot";
-             /*   setTimeout(() => {
-                    window.location.reload()
-                }, 2000)*/
+                /*   setTimeout(() => {
+                       window.location.reload()
+                   }, 2000)*/
             }).catch(() => {
                 this.message = "Ошибка добавления!"
                 this.messageType = 1;
                 this.loader = false
             })
+        }
+    },
+    methods: {
+
+        onCaptchaVerified: function (recaptchaToken) {
+            this.form.recaptcha = recaptchaToken
+            this.validateCaptcha = true
+
+        },
+        onCaptchaExpired: function () {
+            this.$refs.recaptcha.reset();
+        },
+        submit() {
+            this.form.user_id = this.userId;
+            this.loader = true
+            this.message = null
+            this.messageType = 0;
+
+            this.$refs.recaptcha.execute();
+
         },
         addNewRequired() {
             let find = this.form.requires.filter(item => item.trim() === "").length > 0;
