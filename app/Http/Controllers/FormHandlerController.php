@@ -6,6 +6,7 @@ use App\Facades\MilitaryServiceFacade;
 use App\Models\AidCenter;
 use App\Models\Shelter;
 use App\Models\User;
+use App\Rules\Recaptcha;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -83,8 +84,12 @@ class FormHandlerController extends Controller
         return $title;
     }
 
-    public function needHelpStore(Request $request)
+    public function needHelpStore(Request $request,Recaptcha $recaptcha)
     {
+
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
 
         $title = $this->storeJson("need-help-", $request->toArray());
 
@@ -590,6 +595,16 @@ class FormHandlerController extends Controller
         $name = $request->full_name ?? "-";
         $age = $request->age ?? "-";
         $phone = $request->phone ?? "-";
+
+        $city = $request->city ?? "-";
+        $email = $request->email ?? "-";
+        $experience = $request->experience ?? "-";
+
+        $have_a_car = $request->have_a_car ?? false;
+        $have_drive_licence= $request->have_drive_licence ?? false;
+        $needed_skills= $request->needed_skills ?? [];
+        $license_categories= $request->license_categories ?? [];
+
         $description = $request->description ?? "-";
         $user_id = $request->user_id ?? "Не указан ID пользовтеля";
 
@@ -600,11 +615,36 @@ class FormHandlerController extends Controller
             "<b>№ $title</b>\n" .
             "Имя заявителя: <b>$name</b>\n" .
             "Телефон: <b>$phone</b>\n" .
+            "Почта <b>$email</b>\n" .
+            "Город: <b>$city</b>\n" .
             "Возраст <b>$age</b>\n" .
+            "Волонтерский опыт <b>$experience</b> лет\n" .
             "Дополнительня информация: <b>$description</b>\n";
 
         if ($need_transfer)
             $message .= "Нужна доставка до места выполнения работ\n";
+
+        if ($have_drive_licence) {
+            $tmp = "";
+
+            foreach ($license_categories as $item)
+                $tmp .= "$item,";
+
+            $message .= "Имею водительские права по следующим категориям: $tmp\n";
+        }
+
+
+        if ($have_a_car)
+            $message .= "У меня есть своя машина\n";
+
+        if (count($needed_skills)>0) {
+            $tmp = "";
+
+            foreach ($needed_skills as $item)
+                $tmp .= "$item,";
+
+            $message .= "Могу быть полезен по следующим направлениям: $tmp\n";
+        }
 
         if (count($skills)) {
             $tmp = "";

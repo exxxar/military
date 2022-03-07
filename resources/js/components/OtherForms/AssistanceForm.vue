@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h4>Могу предложить свою помощь</h4>
+                <h4>Анкета помощника</h4>
                 <form v-on:submit.prevent="submit" ref="assistance">
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle"></i>Все добваляемые заявки обрабатываются оператором. После обрботки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
@@ -25,10 +25,31 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="form-label" for="inputCity">Ваш город проживания<span
+                            style="color:red;">*</span></label>
+                        <input class="form-control" id="inputCity" type="text" placeholder="г.Донецк"
+                               v-model="form.city" required>
+                    </div>
+
+
+                    <div class="form-group">
                         <label class="form-label" for="inputYourPhone">Ваш номер телефон<span
                             style="color:red;">*</span></label>
                         <input class="form-control" id="inputYourPhone" type="text" placeholder="(071) 000-00-00"
                                v-mask="['(###) ###-##-##']" v-model="form.phone" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="inputEmail">Ваш email</label>
+                        <input class="form-control" id="inputEmail" type="text" placeholder="inbox@mail.ru"
+                               v-model="form.email" >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="inputExperience">Ваш волонтерский опыт, лет<span
+                            style="color:red;">*</span></label>
+                        <input class="form-control" id="inputExperience" type="number" min="0" max="100" placeholder="5"
+                               v-model="form.experience" required>
                     </div>
 
 
@@ -46,6 +67,72 @@
                         <label class="form-check-label" for="needTransfer">Понадобится трансфер</label>
                     </div>
 
+
+
+                    <div class="form-check form-switch ">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.have_drive_licence"
+                               id="haveDriverLicence" type="checkbox">
+                        <label class="form-check-label" for="haveDriverLicence">Есть водительские права</label>
+                    </div>
+
+                    <div class="form-check form-switch " v-if="form.have_drive_licence">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.have_a_car"
+                               id="haveCar" type="checkbox">
+                        <label class="form-check-label" for="haveCar">Есть своё авто</label>
+                    </div>
+
+                    <div class="form-group" v-if="form.have_drive_licence">
+                        <label class="form-label">Категория прав</label>
+                        <div class="list-group">
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="М">М — мопеды и легкие квадроциклы
+                            </label>
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="А" checked="">А — мотоциклы
+                            </label>
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="В">В — легковые автомобили (полной массой до 3,5 т, пассажирских мест — не
+                                более 8)
+                            </label>
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="ВЕ">ВЕ — легковые автомобили с прицепом массой более 750 кг
+                            </label>
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="С">С — грузовики (с полной массой более 7,5 т)
+                            </label>
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="СЕ">СЕ — грузовики с прицепом массой более 750 кг
+                            </label>
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="D">D — автобусы (пассажирских месте — более 8)
+                            </label>
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="DE">DE — автобусы с прицепом массой более 750 кг
+                            </label>
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="TM">TM — трамваи
+                            </label>
+                            <label class="list-group-item">
+                                <input class="form-check-input me-2" type="checkbox" name="driverLicenseCategory" v-model="form.license_categories" value="TB">TB — троллейбусы
+                            </label>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="divider divider-center-icon border-success"><i class="bi bi-arrow-down"></i></div>
+                    <h6>Могли бы вы нам помочь с этими направлениями?:</h6>
+                    <div class="form-check form-switch" v-for="(item, index) in base_skills">
+                        <input class="form-check-input form-check-success"
+                               v-model="form.needed_skills"
+                               :value="item"
+                               :name="'base-skill-'+index"
+                               :id="'base-skill-'+index" type="checkbox">
+                        <label class="form-check-label" :for="'base-skill-'+index">{{item}}</label>
+                    </div>
                     <div class="divider divider-center-icon border-success"><i class="bi bi-arrow-down"></i></div>
 
 
@@ -177,13 +264,48 @@ export default {
             messageType:0,
             message:null,
             max_skills: 20,
+            base_skills:[
+                "Ремонт",
+                "Уборка",
+                "Водитель",
+                "Медик",
+                "Повар",
+                "Фотограф",
+                "Видеограф",
+                "Копирайтер",
+                "Продюсер",
+                "Переводчик",
+                "Психолог",
+                "SMM",
+                "Маркетолог",
+                "Таргетолог",
+                "Графический дизайнер",
+                "IOS разработчик",
+                "Android разработчик",
+                "Frontend разработчик",
+                "Backend разработчик",
+                "Аналитик",
+                "Юрист",
+                "Любая помощь руками",
+            ],
             form: {
                 full_name: null,
                 age: 18,
+
+                city: null,
+                email: null,
+                experience: null,
+                have_a_car: false,
+                have_drive_licence: false,
+                needed_skills:[],
+                license_categories:[],
+
                 phone: null,
                 description: null,
                 need_transfer: true,
+
                 user_id: null,
+
                 skills:[
                     {
                         title:"",
