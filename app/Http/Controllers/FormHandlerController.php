@@ -324,7 +324,7 @@ class FormHandlerController extends Controller
         $description = $request->description ?? "-";
         $need_arrive = $request->need_arrive ?? false;
         $need_water = $request->need_water ?? false;
-        $cannot_pay = $request->cannot_pay ?? false;
+        $cannot_pay = $request->cannotPay ?? false;
         $rating = $request->rating ?? 1;
         $food_and_goods = $request->food_and_goods ?? [];
         $medical_goods = $request->medical_goods ?? [];
