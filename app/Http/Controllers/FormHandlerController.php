@@ -695,9 +695,9 @@ class FormHandlerController extends Controller
             "Дополнительня информация: <b>$description</b>\n";
 
         if ($need_delivery) {
-            $message .= "Нужна помощь с доставкой: <b>$$from_address</b> - требуется вывезти отсюда\n";
+            $message .= "Нужна помощь с доставкой: <b>$from_address</b> - требуется вывезти отсюда\n";
         } else {
-            $message .= "Могу доставить вещи самостоятельно, либо - <b>$$from_address</b> - мой адрес для желающих\n";
+            $message .= "Могу доставить вещи самостоятельно, либо - <b>$from_address</b> - мой адрес для желающих\n";
         }
 
 
