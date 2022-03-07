@@ -615,7 +615,7 @@ class FormHandlerController extends Controller
                 $item_title = $item->title ?? '-';
                 $item_rating = $item->rating ?? 1;
 
-                $goods .= ($index + 1) . ") <b>" . $item_title . "</b> уровень владения " . $item_rating . " из 5 \n";
+                $tmp .= ($index + 1) . ") <b>" . $item_title . "</b> уровень владения " . $item_rating . " из 5 \n";
             }
 
             $message .= "<b>Имеющиеся навыки:</b>\n$tmp\n";
