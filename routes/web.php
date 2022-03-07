@@ -50,7 +50,7 @@ Route::prefix('/forms')->group(function (){
     Route::view("/help-water","forms.help-water");
     Route::post("/help-water",[\App\Http\Controllers\FormHandlerController::class,"helpWithWaterStore"]);
 
-    Route::view("/help-clothes","forms.help-water");
+    Route::view("/help-clothes","forms.help-clothes");
     Route::post("/help-clothes",[\App\Http\Controllers\FormHandlerController::class,"helpWithClothesStore"]);
 
 
