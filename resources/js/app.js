@@ -22,6 +22,8 @@ import FeederForm from './components/OtherForms/FeederForm'
 import AidCenterForm from './components/OtherForms/AidCenterForm'
 import WaterForm from './components/OtherForms/WaterForm'
 import ClothesForm from './components/OtherForms/ClothesForm'
+import FastMenu from './components/Base/FastMenu'
+import CardMenu from './components/Base/CardMenu'
 
 import AboutPage from './pages/About'
 import HomePage from './pages/Home'
@@ -33,6 +35,7 @@ import SheltersPage from './pages/Shelters'
 import SignUpPage from './pages/SignUp'
 import SignInPage from './pages/SignIn'
 import Screen from './pages/Screen'
+
 
 
 import router from './routes' // <---
@@ -47,6 +50,8 @@ app.component('application', App)
 app.component('header-component', Header)
 app.component('footer-component', Footer)
 app.component('side-bar-component', SideBar)
+app.component('fast-menu-component', FastMenu)
+app.component('card-menu-component', CardMenu)
 
 app.component('shelter-list-component', ShelterList)
 app.component('shelter-map-component', ShelterMap)

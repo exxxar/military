@@ -81,7 +81,7 @@
                     <div class="form-group">
                         <label class="form-label" for="range-people">Сколько людей с вами?</label>
                         <div class="range-with-value d-flex align-items-center">
-                            <input class="form-range" id="range-people" type="range" min="0" max="7" value="1"
+                            <input class="form-range" id="range-people" type="range" min="0" max="7"
                                    step="1" v-model="form.people_count">
                             <button class="btn btn-primary btn-sm ms-3">{{ form.people_count }}</button>
                         </div>

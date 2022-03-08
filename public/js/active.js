@@ -338,6 +338,41 @@ if (document.querySelectorAll(".chat-user-status-slides-wrapper").length > 0) {
     });
 }
 
+// 2.2.11 => Fast menu Slides (This code is dependent on [tiny-slider.js] plugin).
+
+if (document.querySelectorAll(".fast-menu-slides-wrapper").length > 0) {
+    var chatUserSlides = tns({
+        container: ".fast-menu-slides",
+        items: 6,
+        gutter: 8,
+        slideBy: "page",
+        autoplay: false,
+        autoplayButtonOutput: false,
+        autoplayTimeout: 5000,
+        speed: 750,
+        mouseDrag: true,
+        controls: false,
+        nav: false,
+        responsive: {
+            480: {
+                items: 7
+            },
+            576: {
+                items: 7
+            },
+            768: {
+                items: 8
+            },
+            992: {
+                items: 10
+            },
+            1200: {
+                items: 10
+            }
+        }
+    });
+}
+
 // 2.3 => Magic Grid (This code is dependent on [magic-grid.min.js] plugin).
 
 var magicGridContainer = document.querySelector("#filterContainer");
@@ -630,17 +665,17 @@ if (offlineBtn.length > 0 && onlineBtn.length > 0) {
         alertShowingId.style.display = "block";
         alertShowingId.style.backgroundColor = "#ea4c62";
         alertShowingId.innerText = "Oops! No internet connection.";
-    
+
         setTimeout(function() {
             alertShowingId.style.display = "none";
         }, 5000);
     });
-    
+
     onlineBtn[0].addEventListener("click", function(){
         alertShowingId.style.display = "block";
         alertShowingId.style.backgroundColor = "#00b894";
         alertShowingId.innerText = "Your internet connection is back.";
-    
+
         setTimeout(function() {
             alertShowingId.style.display = "none";
         }, 5000);

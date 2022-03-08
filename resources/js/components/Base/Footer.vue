@@ -5,7 +5,7 @@
             <!-- Paste your Footer Content from here -->
             <!-- =================================== -->
             <!-- Footer Content -->
-            <div class="footer-nav position-relative shadow-sm footer-style-two">
+            <div class="footer-nav position-relative footer-style-two">
                 <ul class="h-100 d-flex align-items-center justify-content-between ps-0">
                     <li>
                         <router-link to="/" tag="a">
@@ -61,3 +61,18 @@
         </div>
     </div>
 </template>
+
+<style lang="scss">
+.footer-nav-area {
+    padding: 10px;
+    height: auto;
+    background-color: transparent;
+    border-top: none;
+
+    .footer-nav {
+        border-radius: 6px;
+        box-shadow: 1px 1px 2px 1px #eaeaea;
+
+    }
+}
+</style>

@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label class="form-label" for="range-people">Для скольки людей?</label>
                         <div class="range-with-value d-flex align-items-center">
-                            <input class="form-range" id="range-people" type="range" min="0" max="10" value="2"
+                            <input class="form-range" id="range-people" type="range" min="0" max="10"
                                    step="1" v-model="form.people_count">
                             <button class="btn btn-primary btn-sm ms-3">{{ form.people_count }}</button>
                         </div>
@@ -54,7 +54,7 @@
                     <div class="form-group" v-if="form.need_technical_water">
                         <label class="form-label" for="range-technical-water">Объем технической воды, литров</label>
                         <div class="range-with-value d-flex align-items-center">
-                            <input class="form-range" id="range-technical-water" type="range" min="0" max="100" value="2"
+                            <input class="form-range" id="range-technical-water" type="range" min="0" max="100"
                                    step="1" v-model="form.technical_water">
                             <button class="btn btn-primary btn-sm ms-3">{{ form.technical_water }}</button>
                         </div>
@@ -70,7 +70,7 @@
                     <div class="form-group" v-if="form.need_drinking_water">
                         <label class="form-label" for="range-drinking-water">Объем питьевой воды, литров</label>
                         <div class="range-with-value d-flex align-items-center">
-                            <input class="form-range" id="range-drinking-water" type="range" min="0" max="100" value="2"
+                            <input class="form-range" id="range-drinking-water" type="range" min="0" max="100"
                                    step="1" v-model="form.drinking_water">
                             <button class="btn btn-primary btn-sm ms-3">{{ form.drinking_water }}</button>
                         </div>

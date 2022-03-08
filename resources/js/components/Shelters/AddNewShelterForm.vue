@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label class="form-label" for="range-with-value">Примерная вместимость</label>
                         <div class="range-with-value d-flex align-items-center">
-                            <input class="form-range" id="range-with-value" type="range" min="0" max="500" value="10"
+                            <input class="form-range" id="range-with-value" type="range" min="0" max="500"
                                    step="1" v-model="form.capacity">
                             <button class="btn btn-primary btn-sm ms-3">{{ form.capacity }}</button>
                         </div>

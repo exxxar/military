@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Title -->
-    <title>Affan - PWA Mobile HTML Template</title>
+    <title>Щит ДНР - Твоя республика в твоих руках!</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{asset('/css/rangeslider.css')}}">
     <link rel="stylesheet" href="{{asset('/css/vanilla-dataTables.min.css')}}">
     <link rel="stylesheet" href="{{asset('/css/apexcharts.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="{{asset('/style.css')}}">
     <!-- Web App Manifest -->
@@ -50,7 +51,7 @@
 <div class="internet-connection-status" id="internetStatus"></div>
 
 <div id="app">
-<!--    <application></application>-->
+    <application></application>
 </div>
 
 <script src="{{ mix('/js/app.js') }}"></script>
@@ -67,6 +68,7 @@
 <script src="{{asset('/js/magic-grid.min.js')}}"></script>
 <script src="{{asset('/js/dark-rtl.js')}}"></script>
 <script src="{{asset('/js/active.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" integrity="sha512-yFjZbTYRCJodnuyGlsKamNE/LlEaEAxSUDe5+u61mV8zzqJVFOH7TnULE2/PP/l5vKWpUNnF4VGVkXh3MjgLsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- PWA -->
 <script src="{{asset('/js/pwa.js')}}"></script>
 

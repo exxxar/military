@@ -64,7 +64,7 @@
                                 <label class="form-label" :for="'range-people'+index">Вместимость \ охват людей</label>
                                 <div class="range-with-value d-flex align-items-center">
                                     <input class="form-range" :id="'range-people'+index" type="range" min="0" max="500"
-                                           value="10"
+
                                            step="1" v-model="form.locations[index].volume">
                                     <button class="btn btn-primary btn-sm ms-3">{{
                                             form.locations[index].volume
