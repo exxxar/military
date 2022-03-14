@@ -77,7 +77,7 @@
                                 <a type="button" class="text-secondary small mb-2 w-100" v-if="index>0"
                                    @click="remove(index)">Удалить</a>
 
-                                <label class="form-label" :for="'description'+index">Дополнительня информация о
+                                <label class="form-label" :for="'description'+index">Дополнительная информация о
                                     вас</label>
                                 <textarea class="form-control" :id="'description'+index" name="description" cols="3"
                                           rows="5"

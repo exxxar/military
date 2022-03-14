@@ -639,7 +639,7 @@ class FormHandlerController extends Controller
         $need_transfer = $request->need_transfer ?? false;
         $skills = $request->skills ?? [];
 
-        $message = "<b>Заявка на перевозку \ доставку ($user_id)</b>\n" .
+        $message = "<b>Заявка волонтера ($user_id)</b>\n" .
             "<b>№ $title</b>\n" .
             "Имя заявителя: <b>$name</b>\n" .
             "Телефон: <b>$phone</b>\n" .

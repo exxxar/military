@@ -28,7 +28,7 @@
 
 
                     <div class="form-group">
-                        <label class="form-label" for="description">Дополнительня информация о вас</label>
+                        <label class="form-label" for="description">Дополнительная информация о вас</label>
                         <textarea class="form-control" id="description" name="description" cols="3" rows="5"
                                   v-model="form.description"
                                   placeholder="Описание"></textarea>

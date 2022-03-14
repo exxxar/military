@@ -5,8 +5,8 @@
                 <h4>Могу подвезти \ доставить</h4>
                 <form v-on:submit.prevent="submit" ref="driver">
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
-                        <i class="bi bi-check-circle"></i>Все добваляемые заявки обрабатываются оператором. После
-                        обрботки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
+                        <i class="bi bi-check-circle"></i>Все добавляемые заявки обрабатываются оператором. После
+                        обработки с вами свяжутся (от 1 часа до 24х часов в зависимости от загруженности)!
                         <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button"
                                 data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="description">Дополнительня информация о вас</label>
+                        <label class="form-label" for="description">Дополнительная информация о вас</label>
                         <textarea class="form-control" id="description" name="description" cols="3" rows="5"
                                   v-model="form.description"
                                   placeholder="Описание"></textarea>

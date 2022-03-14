@@ -80,7 +80,6 @@ abstract class BaseBot
         } catch (\Exception $e) {
 
         }
-
         return $this;
 
     }
