@@ -48,7 +48,7 @@ class TelegramBotHandler extends BaseBot
 
         //проверяем наличие данного пользователя по его телеграм ID. В системе может быть только 1 такой
         //пользователь. И если он есть, то мы просто возвращаем его данные.
-        $this->user = \App\User::where("telegram_chat_id", $telegram_chat_id)->first();
+        $this->user = User::where("telegram_chat_id", $telegram_chat_id)->first();
 
         //А если пользователя нет, то создаем нового пользователя
         if (is_null($this->user)) {
