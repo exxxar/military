@@ -38,6 +38,33 @@ class TelegramBotHandler extends BaseBot
         }
     }
 
+    public function createUser($from)
+    {
+
+        $telegram_chat_id = $from->id; //идентификатор чата пользователя из телеграм
+        $first_name = $from->first_name ?? null; //имя пользователя из телеграм
+        $last_name = $from->last_name ?? null; //фамилия пользователя из телеграм
+        $username = $from->username ?? null; //псевдоним пользователя
+
+        //проверяем наличие данного пользователя по его телеграм ID. В системе может быть только 1 такой
+        //пользователь. И если он есть, то мы просто возвращаем его данные.
+        $this->user = \App\User::where("telegram_chat_id", $telegram_chat_id)->first();
+
+        //А если пользователя нет, то создаем нового пользователя
+        if (is_null($this->user)) {
+            $this->user = User::create([
+                'name' => $username ?? $telegram_chat_id, //берем псевдоним пользователя,
+                // а в случае отсуствия - берем в качестве псевдонима идентификатор
+                'email' => "$telegram_chat_id@donbassit.ru", //создаем почту н основе идентификатора пользователя
+                'telegram_chat_id' => $telegram_chat_id, //задаем телеграм ID (уникальное значение)
+                'password' => bcrypt($telegram_chat_id), //генерируем пароль на основе идентификатора
+                'full_name' => "$first_name $last_name" ?? null, //заполняем имя пользовтеля
+                'radius' => 0.5 //указываем радиус поиска объектов по умолчанию.
+
+            ]);
+        }
+    }
+
     public function currentUser(){
         return $this->user;
     }
@@ -56,9 +83,25 @@ class TelegramBotHandler extends BaseBot
 
         $item = json_decode($update);
 
-        Log::info(print_r($item, true));
 
-        $message = $item->message ?? $item->edited_message ?? $item->callback_query->message;
+        //формируем сообщение из возможных вариантов входных данных
+        $message = $item->message ??
+            $item->edited_message ??
+            $item->callback_query->message ??
+            null;
+
+        //если сообщения нет, то завершаем работу
+        if (is_null($message))
+            return;
+
+        //разделяем логику получения данных об отправителе,
+        // так как данные приходят в разных частях JSON-объекта,
+        // то создадим условие, по которому будем различать откуда получать эти данные
+        if (isset($update["callback_query"]))
+            $this->createUser($item->callback_query->from);
+        else
+            $this->createUser($message->from);
+
 
         $query = $item->message->text ?? $item->callback_query->data ?? '';
 
