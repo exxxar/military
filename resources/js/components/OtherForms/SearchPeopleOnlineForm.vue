@@ -336,7 +336,7 @@ export default {
                         this.files = []
 
                         setTimeout(() => {
-                            window.location.reload()
+                            window.location.href = "https://t.me/shelter_dpr_bot"
                         }, 2000)
                     }).catch(function () {
                         this.files = []
@@ -350,7 +350,7 @@ export default {
 
                 if (this.files.length==0)
                   setTimeout(() => {
-                      window.location.reload()
+                      window.location.href = "https://t.me/shelter_dpr_bot"
                   }, 2000)
             }).catch(() => {
                 this.message = "Ошибка добавления заявки!"
