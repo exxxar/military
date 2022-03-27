@@ -3,17 +3,8 @@
         <div class="card">
             <div class="card-body">
 
+                <h4>{{ form.type ? "Добавление в Базу" : "Заявк на поиск" }}</h4>
 
-                <h4>
-                    <div class="form-check form-switch mb-2">
-                        <input class="form-check-input form-check-success"
-                               v-model="form.type"
-                               id="type" type="checkbox">
-                        <label class="form-check-label " for="type">
-                            <h5>{{ form.type ? "Добавление в Базу" : "Заявк на поиск" }}</h5>
-                        </label>
-                    </div>
-                </h4>
                 <form v-on:submit.prevent="submit" ref="people">
 
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
@@ -304,7 +295,7 @@ export default {
             type: String,
             default: null
         },
-        t: {
+        type: {
             type: String,
             default: 0
         },
@@ -407,8 +398,8 @@ export default {
             }
         }
     },
-    computed() {
-        this.form.type = this.t
+    mounted() {
+        this.form.type = this.type
     },
     methods: {
         prepareImage(file) {
