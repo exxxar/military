@@ -203,8 +203,8 @@ class PeopleController extends Controller
             "Розыскивается с <b>$searched_from</b>\n" .
             "Паспортные данные <b>$passport</b>\n" .
             "Планируемое место эвакуации <b>$evacuation_place</b>\n" .
-            "Дополнительня информация: <b>$description</b>\n";
-        "История: <b>$story</b>\n";
+            "Дополнительня информация: <b>$description</b>\n" .
+            "История: <b>$story</b>\n";
 
 
         $contacts = "";
@@ -302,33 +302,33 @@ class PeopleController extends Controller
                 MilitaryServiceFacade::bot()
                     ->sendPhoto(env("PEOPLE_LOGGER_CHANNEL"),
                         "Фото к заявке " . ($uuid ?? "не указан"),
-                        InputFile::create(storage_path('app\images') . "\\" . $imageName),
+                        InputFile::create(storage_path('app/images') . "/" . $imageName)
                     );
 
-               /* array_push($media, [
-                    "type" => "photo",
-                    "media" =>  "attach://".storage_path('app\images') . "\\" . $imageName,
-                    "caption" => "Фото к заявке " . ($uuid ?? "не указан"),
-                ]);*/
+                /* array_push($media, [
+                     "type" => "photo",
+                     "media" =>  "attach://".storage_path('app\images') . "\\" . $imageName,
+                     "caption" => "Фото к заявке " . ($uuid ?? "не указан"),
+                 ]);*/
 
                 array_push($images, $imageName);
 
             }
 
-           /* if (count($media) >= 2)
-                MilitaryServiceFacade::bot()
-                    ->sendMediaGroup(env("PEOPLE_LOGGER_CHANNEL"),
-                        json_encode($media)
-                    );
-            else {
-                MilitaryServiceFacade::bot()
-                    ->sendPhoto(env("PEOPLE_LOGGER_CHANNEL"),
-                        $media[0]["caption"],
-                        $media[0]["media"],
-                    );
-            }*/
+            /* if (count($media) >= 2)
+                 MilitaryServiceFacade::bot()
+                     ->sendMediaGroup(env("PEOPLE_LOGGER_CHANNEL"),
+                         json_encode($media)
+                     );
+             else {
+                 MilitaryServiceFacade::bot()
+                     ->sendPhoto(env("PEOPLE_LOGGER_CHANNEL"),
+                         $media[0]["caption"],
+                         $media[0]["media"],
+                     );
+             }*/
 
-           // dd($media);
+            // dd($media);
         }
 
         if (!is_null($id)) {
