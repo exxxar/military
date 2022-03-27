@@ -1,16 +1,16 @@
 models:
-   AidCenter:
+  HumanitarianAidHistory:
     id: id
-    city: string nullable
-    region: string nullable
-    address: string:400
-    phone: string:100
-    required: longtext nullable
+    index: string nullable
+    full_name: string nullable
+    passport: string nullable
     description: longtext nullable
-
-seeders: AidCenter
+    issue_at: timestamp nullable
+    deleted_at: timestamp nullable
+    created_at: timestamp
+    updated_at: timestamp
 
 controllers:
-  AidCenter:
+  HumanitarianAidHistory:
     resource: api
 

@@ -206,6 +206,21 @@ abstract class BaseBot
 
     }
 
+    public function sendMediaGroup($chatId, $media = [])
+    {
+        try {
+            $this->bot->sendMediaGroup([
+                "chat_id" => $chatId,
+                "media" => $media,
+            ]);
+        } catch (\Exception $e) {
+
+        }
+
+        return $this;
+
+    }
+
     public function next($name)
     {
         foreach ($this->routes as $route) {

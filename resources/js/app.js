@@ -1,6 +1,7 @@
 require('./bootstrap')
 
 
+
 import {createApp} from 'vue'
 import App from './Layout/App'
 import Header from './components/Base/Header'
@@ -12,6 +13,11 @@ import ShelterMap from './components/Shelters/ShelterMap'
 import ShelterCounter from './components/Shelters/ShelterCounter'
 import ShelterRegions from './components/Shelters/ShelterRegions'
 import ShelterFrom from './components/Shelters/AddNewShelterForm'
+
+import RequestPeopleForm from './components/OtherForms/RequestPeopleForm'
+import SearchPeopleForm from './components/OtherForms/SearchPeopleForm'
+import SearchPeopleOnlineForm from './components/OtherForms/SearchPeopleOnlineForm'
+import HAidForm from './components/OtherForms/HAidForm'
 
 import BaseHelpForm from './components/OtherForms/BaseHelpForm'
 import FoodAndGoodsForm from './components/OtherForms/FoodAndGoodsForm'
@@ -35,6 +41,7 @@ import SheltersPage from './pages/Shelters'
 import SignUpPage from './pages/SignUp'
 import SignInPage from './pages/SignIn'
 import Screen from './pages/Screen'
+import FunctionsPage from './pages/Functions'
 
 
 
@@ -45,6 +52,8 @@ import VueTheMask from 'vue-the-mask'
 
 
 const app = createApp({})
+
+
 
 app.component('application', App)
 app.component('header-component', Header)
@@ -68,6 +77,11 @@ app.component('feeder-form-component', FeederForm)
 app.component('aid-center-form-component', AidCenterForm)
 app.component('water-help-form-component', WaterForm)
 app.component('clothes-form-component', ClothesForm)
+app.component('h-aid-form-component', HAidForm)
+
+app.component('request-people-form-component', RequestPeopleForm)
+app.component('search-people-form-component', SearchPeopleForm)
+app.component('search-people-online-form-component', SearchPeopleOnlineForm)
 
 
 app.component('about-page', AboutPage)
@@ -80,8 +94,10 @@ app.component('regions-page', RegionsPage)
 app.component('sign-in-page', SignInPage)
 app.component('sign-up-page', SignUpPage)
 app.component('screen-page', Screen)
+app.component('functions-page', FunctionsPage)
 
 
 app.use(VueTheMask)
+
 
 app.use(store).use(router).mount('#app')

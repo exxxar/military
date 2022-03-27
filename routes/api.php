@@ -57,3 +57,8 @@ Route::post('register', [AuthController::class, 'signup']);
 Route::apiResource('assistance', AssistanceController::class);
 
 Route::apiResource('aid-center', AidCenterController::class);
+
+Route::apiResource('people', App\Http\Controllers\PeopleController::class);
+
+
+Route::apiResource('humanitarian-aid-history', App\Http\Controllers\HumanitarianAidHistoryController::class);

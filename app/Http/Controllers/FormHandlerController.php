@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Utilites\BotUtilities;
 use App\Facades\MilitaryServiceFacade;
 use App\Models\AidCenter;
 use App\Models\Shelter;
@@ -15,74 +16,9 @@ use Telegram\Bot\FileUpload\InputFile;
 
 class FormHandlerController extends Controller
 {
-    public array $priority = [];
 
-    public function __construct()
-    {
-        $this->priority = [
-            "Отсутствует приоритет",
-            "Низкая важность. Не критично.",
-            "Низкая важность. Можно потерпеть.",
-            "Средняя важность.",
-            "Высокая важность.",
-            "Очень важность. Критчино."
-        ];
+    use BotUtilities;
 
-    }
-
-    private function sendInvoice($message, $userId, $publicChatId){
-        try {
-            $mpdf = new \Mpdf\Mpdf();
-            $mpdf->WriteHTML(
-                view("pdf.document",
-                    ["message"=>$message]
-                )
-            );
-
-            $data = $mpdf->Output("invoice.pdf", "S");
-
-            \App\Facades\MilitaryServiceFacade::bot()
-                ->sendDocument($publicChatId,
-                    "Файл заявки",
-                    InputFile::createFromContents($data, "invoice.pdf"));
-
-            $user = User::query()->where("telegram_chat_id",$userId)->first();
-
-            if (!is_null($user)){
-
-                \App\Facades\MilitaryServiceFacade::bot()
-                    ->sendDocument($userId,
-                        "Ваша заявка",
-                        InputFile::createFromContents($data, "invoice.pdf"));
-            }
-        }catch (\Exception $ex){
-
-        }
-    }
-
-    protected function getPriority($rating)
-    {
-        return $rating > count($this->priority) || $rating < 0 ? "Отствует приоритет!" : $this->priority[$rating];
-    }
-
-    private function storeJson(string $prefix, array $array)
-    {
-        $date = Carbon::now();
-        $title = $prefix
-            . $date->year . "-"
-            . $date->month . "-"
-            . $date->day . "-"
-            . $date->hour . "-"
-            . $date->second . "-"
-            . $date->millisecond . "-"
-            . Str::uuid();
-
-        Storage::put($title . ".json",
-            json_encode($array)
-        );
-
-        return $title;
-    }
 
     public function needHelpStore(Request $request, Recaptcha $recaptcha)
     {
@@ -91,7 +27,7 @@ class FormHandlerController extends Controller
         ]);
 
 
-        $title = $this->storeJson("need-help-", $request->toArray());
+        $title = $this->storeJson("need-help-", Str::uuid(), $request->toArray());
 
         $name = $request->full_name ?? "-";
         $age = $request->age ?? "-";
@@ -233,7 +169,7 @@ class FormHandlerController extends Controller
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $title = $this->storeJson("new-shelter-",$request->toArray());
+        $title = $this->storeJson("new-shelter-",Str::uuid(), $request->toArray());
 
         $city = $request->city ?? "-";
         $region = $request->region ?? "-";
@@ -329,7 +265,7 @@ class FormHandlerController extends Controller
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $title = $this->storeJson("need-goods-",$request->toArray());
+        $title = $this->storeJson("need-goods-",Str::uuid(), $request->toArray());
 
         $name = $request->full_name ?? "-";
         $people_count = $request->people_count ?? 1;
@@ -397,13 +333,13 @@ class FormHandlerController extends Controller
         return response()->noContent();
     }
 
-    public function newAidCenterStore(Request $request,Recaptcha $recaptcha)
+    public function newAidCenterStore(Request $request, Recaptcha $recaptcha)
     {
         $request->validate([
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $title = $this->storeJson("aid-center-", $request->toArray());
+        $title = $this->storeJson("aid-center-",Str::uuid(), $request->toArray());
 
         $name = $request->full_name ?? "-";
         $city = $request->city ?? "-";
@@ -457,7 +393,7 @@ class FormHandlerController extends Controller
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $title = $this->storeJson("help-feeder-", $request->toArray());
+        $title = $this->storeJson("help-feeder-",Str::uuid(), $request->toArray());
 
         $name = $request->full_name ?? "-";
         $age = $request->age ?? 18;
@@ -512,7 +448,7 @@ class FormHandlerController extends Controller
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $title = $this->storeJson("help-delivery-", $request->toArray());
+        $title = $this->storeJson("help-delivery-",Str::uuid(), $request->toArray());
 
         $name = $request->full_name ?? "-";
         $people_count = $request->people_count ?? 1;
@@ -565,7 +501,7 @@ class FormHandlerController extends Controller
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $title = $this->storeJson("can-drive-",$request->toArray());
+        $title = $this->storeJson("can-drive-",Str::uuid(), $request->toArray());
 
         $name = $request->full_name ?? "-";
         $age = $request->age ?? "-";
@@ -618,7 +554,7 @@ class FormHandlerController extends Controller
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $title = $this->storeJson("can-assist-",$request->toArray());
+        $title = $this->storeJson("can-assist-",Str::uuid(), $request->toArray());
 
         $name = $request->full_name ?? "-";
         $age = $request->age ?? "-";
@@ -629,9 +565,9 @@ class FormHandlerController extends Controller
         $experience = $request->experience ?? "-";
 
         $have_a_car = $request->have_a_car ?? false;
-        $have_drive_licence= $request->have_drive_licence ?? false;
-        $needed_skills= $request->needed_skills ?? [];
-        $license_categories= $request->license_categories ?? [];
+        $have_drive_licence = $request->have_drive_licence ?? false;
+        $needed_skills = $request->needed_skills ?? [];
+        $license_categories = $request->license_categories ?? [];
 
         $description = $request->description ?? "-";
         $user_id = $request->user_id ?? "Не указан ID пользовтеля";
@@ -665,7 +601,7 @@ class FormHandlerController extends Controller
         if ($have_a_car)
             $message .= "У меня есть своя машина\n";
 
-        if (count($needed_skills)>0) {
+        if (count($needed_skills) > 0) {
             $tmp = "";
 
             foreach ($needed_skills as $item)
@@ -706,7 +642,7 @@ class FormHandlerController extends Controller
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $title = $this->storeJson("need-water-",$request->toArray());
+        $title = $this->storeJson("need-water-",Str::uuid(), $request->toArray());
 
         $name = $request->full_name ?? "-";
         $phone = $request->phone ?? "-";
@@ -753,7 +689,7 @@ class FormHandlerController extends Controller
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $title = $this->storeJson("clothes-",$request->toArray());
+        $title = $this->storeJson("clothes-",Str::uuid(), $request->toArray());
 
         $name = $request->full_name ?? "-";
         $phone = $request->phone ?? "-";

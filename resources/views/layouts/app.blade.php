@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{{asset('/css/vanilla-dataTables.min.css')}}">
     <link rel="stylesheet" href="{{asset('/css/apexcharts.css')}}">
     <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="{{asset('/style.css')}}">
+    <link rel="stylesheet" href="{{asset('/style.css')}}?version={{env("APP_VERSION","1.0.0")}}">
     <!-- Web App Manifest -->
     <link rel="manifest" href="{{asset('/manifest.json')}}">
 
@@ -53,7 +53,7 @@
     @yield("content")
 </div>
 
-<script src="{{ mix('/js/app.js') }}"></script>
+<script src="{{ mix('/js/app.js') }}?version={{env("APP_VERSION","1.0.0")}}"></script>
 <!-- All JavaScript Files -->
 <script src="{{asset('/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('/js/slideToggle.min.js')}}"></script>

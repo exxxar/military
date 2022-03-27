@@ -84,6 +84,30 @@ function getInfoByCoords($coords, $page = 0)
 }
 
 MilitaryServiceFacade::bot()
+    ->addRoute("/find_peoples|.*Жди меня - поиск людей", function ($message) {
+
+        $url = env("APP_URL");
+
+        $user_id = $this->chatId;
+
+        $message = "Запрос на поиск людей либо добавления данных о себе";
+
+        MilitaryServiceFacade::bot()->inlineKeyboard($message, [
+            [
+                ["text" => "\xF0\x9F\x94\x8EОставить запрос на поиск", "url" => "$url/forms/need-people-search-online?uid=$user_id&t=0"],
+            ],
+
+            [
+                ["text" => "\xF0\x9F\x91\xA6Добавить данные о себе", "url" => "$url/forms/need-people-search-online?uid=$user_id&t=1"],
+            ],
+
+            /*  [
+                  ["text" => "\xF0\x9F\x8D\xB4Мне нужен ремонт эл. техники или авто", "url" => "$url/forms/help-delivery?uid=$user_id"],
+              ],*/
+        ]);
+
+
+    })
     ->addRoute("/.*Скачать список", function ($message) {
 
         MilitaryServiceFacade::bot()->reply("Скачать список!");
@@ -528,7 +552,7 @@ MilitaryServiceFacade::bot()
         $aid_center_count = AidCenter::query()->select("city", "id")->get()->unique('city')->count();
 
         MilitaryServiceFacade::bot()->replyKeyboard(
-            "Главное меню. Тестовая версия. Обновлено <b>08.03.2022 03:00</b>\n
+            "Главное меню. Тестовая версия. Обновлено <b>25.03.2022 23:00</b>\n
 ⚡️Друзья, подписывайтесь на Telegram-канал Народной Дружины и будьте вкурсе последних новостей.\n
 Подписаться можно здесь👇🏻\n
 @nddnr
@@ -541,6 +565,9 @@ MilitaryServiceFacade::bot()
                 [
                     ["text" => "\xF0\x9F\x94\x8DЯ нуждаюсь"],
                     ["text" => "\xE2\x9D\xA4Помощь и волонтерство"],
+                ],
+                [
+                    ["text" => "\xF0\x9F\x91\xAAЖди меня - поиск людей"],
                 ],
                 [
                     ["text" => "\xF0\x9F\x8C\x8DДоступные регионы ($shelters_count)"],

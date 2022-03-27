@@ -1,17 +1,18 @@
 created:
-    - app/Http/Controllers/AidCenterController.php
-    - database/factories/AidCenterFactory.php
-    - database/migrations/2022_02_27_213020_create_aid_centers_table.php
-    - app/Models/AidCenter.php
-    - database/seeders/AidCenterSeeder.php
-    - tests/Feature/Http/Controllers/AidCenterControllerTest.php
-    - app/Http/Requests/AidCenterStoreRequest.php
-    - app/Http/Requests/AidCenterUpdateRequest.php
-    - app/Http/Resources/AidCenterCollection.php
-    - app/Http/Resources/AidCenterResource.php
+    - app/Http/Controllers/HumanitarianAidHistoryController.php
+    - database/factories/HumanitarianAidHistoryFactory.php
+    - database/migrations/2022_03_26_150734_create_humanitarian_aid_histories_table.php
+    - app/Models/HumanitarianAidHistory.php
+    - tests/Feature/Http/Controllers/HumanitarianAidHistoryControllerTest.php
+    - app/Http/Requests/HumanitarianAidHistoryStoreRequest.php
+    - app/Http/Requests/HumanitarianAidHistoryUpdateRequest.php
+    - app/Http/Resources/HumanitarianAidHistoryCollection.php
+    - app/Http/Resources/HumanitarianAidHistoryResource.php
 updated:
     - routes/api.php
 models:
     Shelter: { id: id, city: 'string nullable', region: 'string nullable', address: 'string:400', lat: 'double default:0', lon: 'double default:0', balance_holder: 'string nullable', responsible_person: 'string nullable', capacity: 'integer default:0', description: 'longtext nullable' }
     Assistance: { id: id, user_id: 'integer nullable', settings: 'json nullable', description: 'longtext nullable' }
     AidCenter: { id: id, city: 'string nullable', region: 'string nullable', address: 'string:400', phone: 'string:100', required: 'longtext nullable', description: 'longtext nullable' }
+    People: { id: id, uuid: uuid, fname: 'string nullable', sname: 'string nullable', tname: 'string nullable', birth: 'string nullable', age_from: 'tinyint default:0 nullable', age_to: 'tintyint default:0 nullable', sex: 'tinyint deault:0', photos: 'json nullable', phone: 'string nullable', user_id: 'id:user nullable', people_id: 'id:people nullable', city: 'string nullable', region: 'string nullable', address: 'string nullable', story: 'longtext nullable', description: 'longtext nullable', status: 'integer default:0', for: 'integer default:0', searched_from: 'timestamp nullable', is_active: 'boolean default:true', deleted_at: 'timestamp nullable', created_at: timestamp, updated_at: timestamp }
+    HumanitarianAidHistory: { id: id, index: 'string nullable', full_name: 'string nullable', passport: 'string nullable', description: 'longtext nullable', issue_at: 'timestamp nullable', deleted_at: 'timestamp nullable', created_at: timestamp, updated_at: timestamp }
