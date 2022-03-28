@@ -26,6 +26,8 @@ Route::prefix('/forms')->group(function () {
 
 
     Route::view("/need-people-search-online", "forms.people-search-online");
+    Route::view("/search-in-base", "forms.search-in-base");
+    Route::post("/search-in-base", [\App\Http\Controllers\PeopleController::class, "searchInBase"]);
     Route::post("/need-people-search-online", [\App\Http\Controllers\PeopleController::class, "needPeopleSearchOnline"]);
     Route::post("/upload-photos", [\App\Http\Controllers\PeopleController::class, "uploadPhotos"]);
 

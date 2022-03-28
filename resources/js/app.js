@@ -15,6 +15,7 @@ import ShelterRegions from './components/Shelters/ShelterRegions'
 import ShelterFrom from './components/Shelters/AddNewShelterForm'
 
 import RequestPeopleForm from './components/OtherForms/RequestPeopleForm'
+import SearchInBaseForm from './components/OtherForms/SearchInBaseForm'
 import SearchPeopleForm from './components/OtherForms/SearchPeopleForm'
 import SearchPeopleOnlineForm from './components/OtherForms/SearchPeopleOnlineForm'
 import HAidForm from './components/OtherForms/HAidForm'
@@ -80,6 +81,7 @@ app.component('clothes-form-component', ClothesForm)
 app.component('h-aid-form-component', HAidForm)
 
 app.component('request-people-form-component', RequestPeopleForm)
+app.component('search-in-base-form-component', SearchInBaseForm)
 app.component('search-people-form-component', SearchPeopleForm)
 app.component('search-people-online-form-component', SearchPeopleOnlineForm)
 

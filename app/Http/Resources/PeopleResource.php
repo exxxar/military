@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PeopleResource extends JsonResource
@@ -46,7 +47,7 @@ class PeopleResource extends JsonResource
 
             'is_active' => $this->is_active,
             'deleted_at' => $this->deleted_at,
-            'created_at' => $this->created_at,
+            'created_at' =>Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_at' => $this->updated_at,
         ];
     }

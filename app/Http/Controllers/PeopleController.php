@@ -8,9 +8,11 @@ use App\Exports\ShelterExport;
 use App\Facades\MilitaryServiceFacade;
 use App\Http\Requests\PeopleStoreRequest;
 use App\Http\Requests\PeopleUpdateRequest;
+use App\Http\Resources\HumanitarianAidHistoryCollection;
 use App\Http\Resources\PeopleCollection;
 use App\Http\Resources\PeopleResource;
 use App\Imports\HAidHistoryImport;
+use App\Models\HumanitarianAidHistory;
 use App\Models\People;
 use App\Rules\Recaptcha;
 use Carbon\Carbon;
@@ -87,6 +89,50 @@ class PeopleController extends Controller
 
         return Excel::download(new PeopleExport(), 'people.xlsx');
     }
+
+    public function searchInBase(Request $request)
+    {
+
+        $fname = $request->fname ?? null;
+        $sname = $request->sname ?? null;
+        $tname = $request->tname ?? null;
+        $uuid = $request->uuid ?? null;
+
+        $peoples = People::query();
+
+        if (!is_null($fname))
+            $peoples = $peoples->where("fname", $fname);
+
+        if (!is_null($sname))
+            $peoples = $peoples->where("sname", $sname);
+
+        if (!is_null($tname))
+            $peoples = $peoples->where("tname", $tname);
+
+        if (!is_null($uuid))
+            $peoples = $peoples->orWhere("uuid", $uuid);
+
+        $peoples = $peoples
+            ->orderBy("created_at","desc")
+            ->take(10)
+            ->get();
+
+        $search = $request->search ?? "$tname $fname $sname";
+
+
+        $aid = HumanitarianAidHistory::query()
+            ->where("full_name", "like","%$search%")
+            ->orWhere("passport","like","%$search%")
+            ->orderBy("issue_at","desc")
+            ->take(10)
+            ->get();
+
+        return response()->json([
+            "peoples"=>new PeopleCollection($peoples),
+            "aids"=>new HumanitarianAidHistoryCollection($aid)
+        ]);
+    }
+
 
     public function searchPeople(Request $request)
     {

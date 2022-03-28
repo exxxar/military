@@ -101,6 +101,10 @@ MilitaryServiceFacade::bot()
                 ["text" => "\xF0\x9F\x91\xA6Добавить данные о себе", "url" => "$url/forms/need-people-search-online?uid=$user_id&t=1"],
             ],
 
+            [
+                ["text" => "\xF0\x9F\x93\x83Поиск человека по базе", "url" => "$url/forms/search-in-base?uid=$user_id&t=1"],
+            ],
+
             /*  [
                   ["text" => "\xF0\x9F\x8D\xB4Мне нужен ремонт эл. техники или авто", "url" => "$url/forms/help-delivery?uid=$user_id"],
               ],*/
