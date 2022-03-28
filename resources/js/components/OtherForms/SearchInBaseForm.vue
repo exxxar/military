@@ -120,26 +120,28 @@ export default {
             }
         }
     },
-    'form.recaptcha': function (){
-        axios.post('/forms/search-in-base', this.form).then(resp => {
+    watch: {
+        'form.recaptcha': function () {
+            axios.post('/forms/search-in-base', this.form).then(resp => {
 
-            this.message = "Поиск прошел успешно"
-            this.messageType = 0;
-
-
-            this.loader = false
-
-            this.peoples = resp.data.peoples.data
-            this.history = resp.data.aids.data
-
-            this.onCaptchaExpired()
+                this.message = "Поиск прошел успешно"
+                this.messageType = 0;
 
 
-        }).catch(() => {
-            this.message = "Ошибка поиска"
-            this.messageType = 1;
-            this.loader = false
-        })
+                this.loader = false
+
+                this.peoples = resp.data.peoples.data
+                this.history = resp.data.aids.data
+
+                this.onCaptchaExpired()
+
+
+            }).catch(() => {
+                this.message = "Ошибка поиска"
+                this.messageType = 1;
+                this.loader = false
+            })
+        },
     },
     methods: {
         onCaptchaVerified: function (recaptchaToken) {
