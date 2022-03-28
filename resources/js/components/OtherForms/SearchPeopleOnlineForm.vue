@@ -3,7 +3,16 @@
         <div class="card">
             <div class="card-body">
 
+
                 <h4>{{ form.type ? "Добавление в Базу" : "Заявк на поиск" }}</h4>
+
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input form-check-success"
+                           v-model="need_simple"
+                           id="need_simple" type="checkbox">
+                    <label class="form-check-label" for="need_simple">Упрощенная форма</label>
+                </div>
+
 
                 <form v-on:submit.prevent="submit" ref="people">
 
@@ -99,7 +108,7 @@
                         </div>
                     </div>
 
-                    <div class="form-check form-switch mb-2">
+                    <div class="form-check form-switch mb-2" v-if="!need_simple">
 
                         <input class="form-check-input form-check-success"
                                v-model="form.sex"
@@ -107,7 +116,7 @@
                         <label class="form-check-label" for="sex">{{ form.sex ? "Женщина" : "Мужчина" }}</label>
                     </div>
 
-                    <div class="form-check form-switch mb-2" v-if="form.type==0">
+                    <div class="form-check form-switch mb-2" v-if="form.type==0&&!need_simple" >
 
                         <input class="form-check-input form-check-success"
                                v-model="dont_know_age"
@@ -116,7 +125,7 @@
                                for="dontKnow">{{ dont_know_age ? "Я не знаю возраст" : "Я знаю возраст" }}</label>
                     </div>
 
-                    <div class="form-group" v-if="dont_know_age==false">
+                    <div class="form-group" v-if="dont_know_age==false&&!need_simple">
                         <label class="form-label" for="inputBirthday">Дата рождения</label>
                         <input class="form-control form-control-clicked" id="inputBirthday"
                                v-model="form.birth"
@@ -124,7 +133,7 @@
                     </div>
 
 
-                    <div class="form-group" v-if="form.type==1">
+                    <div class="form-group" v-if="form.type==1&&!need_simple">
                         <label class="form-label" for="inputPhoenixNum">Номер феникс</label>
                         <input class="form-control" id="inputPhoenixNum" type="text"
                                placeholder="(071) 000-00-00"
@@ -132,7 +141,7 @@
                                v-model="form.phoenix_num">
                     </div>
 
-                    <div class="form-group" v-if="form.type==1">
+                    <div class="form-group" v-if="form.type==1&&!need_simple">
                         <label class="form-label" for="inputEmail">Ваша почта</label>
                         <input class="form-control" id="inputEmail" type="email"
                                placeholder="test@gmail.com"
@@ -140,7 +149,7 @@
                     </div>
 
 
-                    <div class="form-group" v-if="form.type==0&&dont_know_age==true">
+                    <div class="form-group" v-if="form.type==0&&dont_know_age==true&&!need_simple">
                         <label class="form-label" for="inputAge">Выглядит на возраст</label>
                         <div class="row">
                             <div class="col-6">
@@ -173,7 +182,7 @@
                                v-model="form.region">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" v-if="!need_simple">
                         <h6>Контактная информцаия ({{ form.phones.length }}/{{ max_phones }})</h6>
                         <div v-for="(item,index) in form.phones">
                             <a type="button" class="text-secondary small mb-2 w-100"
@@ -210,7 +219,7 @@
                                                    v-mask="['(###) ###-##-##']" v-model="form.phone" required>
                                         </div>-->
 
-                    <div class="form-group">
+                    <div class="form-group" v-if="!need_simple">
                         <label class="form-label" for="story">История человека</label>
                         <textarea class="form-control" id="story" name="story" cols="3" rows="5"
                                   v-model="form.story"
@@ -231,14 +240,14 @@
                                type="datetime-local">
                     </div>
 
-                    <div class="form-group" v-if="form.type==1">
+                    <div class="form-group" v-if="form.type==1&&!need_simple">
                         <label class="form-label" for="passport">Паспортные данные</label>
                         <textarea class="form-control" id="passport" name="passport" cols="3" rows="5"
                                   v-model="form.passport"
                                   placeholder="Серия и номер пспорта или другого документа"></textarea>
                     </div>
 
-                    <div class="form-group" v-if="form.type==1">
+                    <div class="form-group" v-if="form.type==1&&!need_simple">
                         <label class="form-label" for="evacuationPlace">Планируемое место эвакуации</label>
                         <input class="form-control" id="evacuationPlace" type="text" placeholder="г. Ростов"
                                v-model="form.evacuation_place">
@@ -369,6 +378,7 @@ export default {
             max_phones: 20,
             dont_know_age: false,
             have_a_photo: false,
+            need_simple: true,
             form: {
                 fname: null,
                 sname: null,
