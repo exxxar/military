@@ -94,15 +94,15 @@ MilitaryServiceFacade::bot()
 
         MilitaryServiceFacade::bot()->inlineKeyboard($message, [
             [
-                ["text" => "\xF0\x9F\x94\x8EОставить запрос на поиск", "url" => "$url/forms/need-people-search-online?uid=$user_id&t=0"],
+                ["text" => "\xF0\x9F\x94\x8EОставить запрос на поиск", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=0"],
             ],
 
             [
-                ["text" => "\xF0\x9F\x91\xA6Добавить данные о себе", "url" => "$url/forms/need-people-search-online?uid=$user_id&t=1"],
+                ["text" => "\xF0\x9F\x91\xA6Добавить данные о себе", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=1"],
             ],
 
             [
-                ["text" => "\xF0\x9F\x93\x83Поиск человека по базе", "url" => "$url/forms/search-in-base?uid=$user_id&t=1"],
+                ["text" => "\xF0\x9F\x93\x83Поиск человека по базе", "url" => "$url/forms/search-in-base?uid=$user_id"],
             ],
 
             /*  [

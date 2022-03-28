@@ -82,15 +82,26 @@
                     </li>
                 </ul>
 
+                <vue-recaptcha
+                    sitekey="6LdXNsAeAAAAAGXKzMNzpWRyRj_BZU62hfN0_dAJ"
+                    :loadRecaptchaScript="true"
+                    ref="recaptcha"
+                    type="invisible"
+                    size="invisible"
+                    @verify="onCaptchaVerified"
+                    @expired="onCaptchaExpired"
+                >
+                </vue-recaptcha>
             </div>
         </div>
     </div>
 </template>
 <script>
 
-import FileDownload from "js-file-download";
+import { VueRecaptcha } from 'vue-recaptcha';
 
 export default {
+    components: {  'vue-recaptcha': VueRecaptcha, },
     data() {
         return {
             loader: false,
@@ -105,11 +116,40 @@ export default {
                 tname: null,
                 uuid: null,
 
+                recaptcha:null
             }
         }
     },
-    methods: {
+    'form.recaptcha': function (){
+        axios.post('/forms/search-in-base', this.form).then(resp => {
 
+            this.message = "Поиск прошел успешно"
+            this.messageType = 0;
+
+
+            this.loader = false
+
+            this.peoples = resp.data.peoples.data
+            this.history = resp.data.aids.data
+
+            this.onCaptchaExpired()
+
+
+        }).catch(() => {
+            this.message = "Ошибка поиска"
+            this.messageType = 1;
+            this.loader = false
+        })
+    },
+    methods: {
+        onCaptchaVerified: function (recaptchaToken) {
+            this.form.recaptcha = recaptchaToken
+            this.validateCaptcha = true
+
+        },
+        onCaptchaExpired: function () {
+            this.$refs.recaptcha.reset();
+        },
         search() {
             this.form.user_id = this.userId;
             this.loader = true
@@ -117,25 +157,9 @@ export default {
             this.messageType = 0;
 
 
-            /*  this.$refs.recaptcha.execute();*/
-
-            axios.post('/forms/search-in-base', this.form).then(resp => {
-
-                this.message = "Поиск прошел успешно"
-                this.messageType = 0;
+            this.$refs.recaptcha.execute();
 
 
-                this.loader = false
-
-                this.peoples = resp.data.peoples.data
-                this.history = resp.data.aids.data
-
-
-            }).catch(() => {
-                this.message = "Ошибка поиска"
-                this.messageType = 1;
-                this.loader = false
-            })
 
 
         },

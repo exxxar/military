@@ -25,7 +25,7 @@ Route::view('/desktop', 'index')->name('desktop.index');
 Route::prefix('/forms')->group(function () {
 
 
-    Route::view("/need-people-search-online", "forms.people-search-online");
+    Route::view("/need-people-search-request", "forms.people-search-online");
     Route::view("/search-in-base", "forms.search-in-base");
     Route::post("/search-in-base", [\App\Http\Controllers\PeopleController::class, "searchInBase"]);
     Route::post("/need-people-search-online", [\App\Http\Controllers\PeopleController::class, "needPeopleSearchOnline"]);

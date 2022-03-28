@@ -90,8 +90,11 @@ class PeopleController extends Controller
         return Excel::download(new PeopleExport(), 'people.xlsx');
     }
 
-    public function searchInBase(Request $request)
+    public function searchInBase(Request $request, Recaptcha $recaptcha)
     {
+        $request->validate([
+            'recaptcha' => ['required', $recaptcha],
+        ]);
 
         $fname = $request->fname ?? null;
         $sname = $request->sname ?? null;
