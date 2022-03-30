@@ -372,11 +372,14 @@ MilitaryServiceFacade::bot()
             MilitaryServiceFacade::bot()->reply("Обратитесь за помощью в https://vk.com/nddnr");
 
             $user = MilitaryServiceFacade::bot()->currentUser();
+
+            $name = $user->full_name ?? $user->name ?? "-";
+
             MilitaryServiceFacade::bot()->sendMessage(env("PEOPLE_LOGGER_CHANNEL"),
-                "#сообщение_народная_дружина\n
-                        Сообщение от пользователя:\n
-                        ID: $user->telegram_chat_id \n
-                        Сообщение: $text");
+                "#сообщение_народная_дружина\n".
+                        "Сообщение от пользователя:\n".
+                        "От: $user->telegram_chat_id ($name)\n".
+                        "Сообщение: $text");
         }
 
         //MilitaryServiceFacade::bot()->reply("Методов не обнаружено!");
