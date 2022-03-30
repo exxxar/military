@@ -13,6 +13,7 @@ use App\Http\Resources\HumanitarianAidHistoryResource;
 use App\Http\Resources\PeopleCollection;
 use App\Imports\DeviceImport;
 use App\Imports\HAidHistoryImport;
+use App\Imports\PeopleAndAidImport;
 use App\Models\HumanitarianAidHistory;
 use App\Models\People;
 use Carbon\Carbon;
@@ -93,8 +94,9 @@ class HumanitarianAidHistoryController extends Controller
 
             $destinationPath = storage_path('app/public');
             $file->move($destinationPath, $file->getClientOriginalName());
-
-            Excel::import(new HAidHistoryImport(), storage_path('app/public/') . $file->getClientOriginalName());
+            ini_set('memory_limit','2560M');
+            ini_set('max_execution_time', 1200);
+            Excel::import(new PeopleAndAidImport(), storage_path('app/public/') . $file->getClientOriginalName());
 
 
             return response()->noContent();

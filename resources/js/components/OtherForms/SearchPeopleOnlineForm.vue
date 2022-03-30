@@ -182,10 +182,11 @@
                                v-model="form.region">
                     </div>
 
-                    <div class="form-group" v-if="!need_simple">
+                    <div class="form-group">
                         <h6>Контактная информцаия ({{ form.phones.length }}/{{ max_phones }})</h6>
                         <div v-for="(item,index) in form.phones">
                             <a type="button" class="text-secondary small mb-2 w-100"
+                               v-if="index>0"
                                @click="remove(index)">Удалить</a>
                             <div class="form-group">
                                 <label class="form-label" :for="'phone'+index">Номер телефона \ Почта <span
@@ -388,7 +389,12 @@ export default {
                 age_to: null,
                 sex: 0,
                 photos: [],
-                phones: [],
+                phones: [
+                    {
+                        phone: "",
+                        description: null,
+                    }
+                ],
                 city: null,
                 region: null,
                 address: null,

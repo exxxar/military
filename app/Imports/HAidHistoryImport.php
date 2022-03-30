@@ -33,6 +33,8 @@ class HAidHistoryImport implements OnEachRow
             $issue_at = null;
         }
 
+
+
         $hAid = HumanitarianAidHistory::create([
             'id'=>$row[0] ?? '-',
             'index' => $row[1] ?? '-',

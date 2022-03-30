@@ -1,7 +1,12 @@
 <?php
 
 use App\Exports\ShelterExport;
+use App\Models\HumanitarianAidHistory;
+use App\Models\People;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -19,6 +24,33 @@ use Telegram\Bot\FileUpload\InputFile;
 |
 */
 
+Route::get("/test-test", function (){
+
+  /*  ini_set('memory_limit','2560M');
+    ini_set('max_execution_time', 1200);
+    $tmp = json_decode(Storage::get("Base2022-3-30-10-12-758-e9631c87-f500-43cc-9211-149e8e1340d7.json"));
+    foreach ($tmp as $item){
+        $item = (object)$item;
+        $haid = new HumanitarianAidHistory();
+        $haid->full_name = $item->tname." ".$item->sname." ".$item->fname;
+        $haid->passport = $item->passport;
+        $haid->description = "-";
+        $haid->issue_at = $item->issue_at;
+        $haid->save();
+
+        $people = new People();
+        $people->uuid = Str::uuid();
+        $people->fname = $item->fname;
+        $people->sname = $item->sname;
+        $people->tname = $item->tname;
+        $people->type = 1;
+        $people->passport = $item->passport;
+        $people->save();
+    }*/
+
+
+
+});
 
 Route::view('/desktop', 'index')->name('desktop.index');
 
@@ -40,7 +72,7 @@ Route::prefix('/forms')->group(function () {
         Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
 
         Route::post("/find-people", [\App\Http\Controllers\PeopleController::class, "searchPeople"]);
-     });
+    });
 
     Route::view("/h-aid", "forms.h-aid");
     Route::post("/h-aid", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "hAidAdd"]);

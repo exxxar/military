@@ -3,7 +3,7 @@
     <side-bar-component/>
     <home-page/>
     <footer-component/>-->
-<!--    <functions-page/>-->
+    <functions-page/>
     <div class="container">
         <div class="card">
             <div class="card-body">
