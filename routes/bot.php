@@ -610,10 +610,10 @@ MilitaryServiceFacade::bot()
 ");
         MilitaryServiceFacade::bot()->inlineKeyboard("https://vk.com/nddnr По вопросам помощи обращаться по ссылке!", [
             [
-                "text" => "\xF0\x9F\x93\x9DГруппа Народной Дружины в ВК", "url" => "https://vk.com/nddnr"
+                ["text" => "\xF0\x9F\x93\x9DГруппа Народной Дружины в ВК", "url" => "https://vk.com/nddnr"]
             ],
             [
-                "text" => "\xF0\x9F\x93\x9EЧат с оператором онлайн", "url" => "https://tawk.to/chat/6244a9950bfe3f4a87708849/1fve3csou"
+                ["text" => "\xF0\x9F\x93\x9EЧат с оператором онлайн", "url" => "https://tawk.to/chat/6244a9950bfe3f4a87708849/1fve3csou"]
             ]
         ]);
     })
