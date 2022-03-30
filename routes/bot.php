@@ -149,9 +149,9 @@ MilitaryServiceFacade::bot()
             [
                 ["text" => "\xF0\x9F\x8D\x94Могу кормить людей!", "url" => "$url/forms/help-feeder?uid=$user_id"],
             ],
-           /* [
-                ["text" => "\xF0\x9F\x92\xB5Могу помочь деньгами", "url" => "$url/forms/help-with-money"],
-            ],*/
+            /* [
+                 ["text" => "\xF0\x9F\x92\xB5Могу помочь деньгами", "url" => "$url/forms/help-with-money"],
+             ],*/
 
             [
                 ["text" => "\xF0\x9F\x91\x95Могу помочь с вещами", "url" => "$url/forms/help-clothes?uid=$user_id"],
@@ -173,13 +173,13 @@ MilitaryServiceFacade::bot()
             "\xF0\x9F\x8D\xB4Продукты питания\n" .
             "\xF0\x9F\x92\xA7Доставка воды\n" .
             "\xF0\x9F\x8D\x80Психологическя помощь и поддержка!\n" .
-            "\xF0\x9F\x8F\xA0Жильё или временное размещение\n".
-            "\xF0\x9F\x9A\x90Помощь с проездом или доставкой\n".
-            "\xF0\x9F\x93\xA6Одежда\n".
-            "\xF0\x9F\x92\x8AМедикаменты\n".
-            "\xF0\x9F\x92\x89Мед. помощь\n".
-            "\xF0\x9F\x93\x88Работа\n".
-            "\xF0\x9F\x94\xA8Разбор завалов\n".
+            "\xF0\x9F\x8F\xA0Жильё или временное размещение\n" .
+            "\xF0\x9F\x9A\x90Помощь с проездом или доставкой\n" .
+            "\xF0\x9F\x93\xA6Одежда\n" .
+            "\xF0\x9F\x92\x8AМедикаменты\n" .
+            "\xF0\x9F\x92\x89Мед. помощь\n" .
+            "\xF0\x9F\x93\x88Работа\n" .
+            "\xF0\x9F\x94\xA8Разбор завалов\n" .
             "\xF0\x9F\x94\xA8Ремонт эл.техники или авто";
 
         MilitaryServiceFacade::bot()->inlineKeyboard($message, [
@@ -195,9 +195,9 @@ MilitaryServiceFacade::bot()
             [
                 ["text" => "Нужна перевозка", "url" => "$url/forms/help-delivery?uid=$user_id"],
             ],
-          /*  [
-                ["text" => "\xF0\x9F\x8D\xB4Мне нужен ремонт эл. техники или авто", "url" => "$url/forms/help-delivery?uid=$user_id"],
-            ],*/
+            /*  [
+                  ["text" => "\xF0\x9F\x8D\xB4Мне нужен ремонт эл. техники или авто", "url" => "$url/forms/help-delivery?uid=$user_id"],
+              ],*/
         ]);
 
 
@@ -370,8 +370,14 @@ MilitaryServiceFacade::bot()
 
         } else {
             MilitaryServiceFacade::bot()->reply("Обратитесь за помощью в https://vk.com/nddnr");
-        }
 
+            $user = MilitaryServiceFacade::bot()->currentUser();
+            MilitaryServiceFacade::bot()->sendMessage(env("PEOPLE_LOGGER_CHANNEL"),
+                "#сообщение_народная_дружина\n
+                        Сообщение от пользователя:\n
+                        ID: $user->telegram_chat_id \n
+                        Сообщение: $text");
+        }
 
         //MilitaryServiceFacade::bot()->reply("Методов не обнаружено!");
 
@@ -596,7 +602,14 @@ MilitaryServiceFacade::bot()
 Надеемся, оно Вам не пригодится 🙃\n
 <b>Дежурная часть МГБ: 071-300-19-81, 062-301-85-38, 062-340-62-99</b>
 ");
-        MilitaryServiceFacade::bot()->reply("https://vk.com/nddnr По вопросам помощи обращаться по ссылке!");
+        MilitaryServiceFacade::bot()->replyKeyboard("https://vk.com/nddnr По вопросам помощи обращаться по ссылке!", [
+            [
+                "title" => "\xF0\x9F\x93\x9DГруппа Народной Дружины в ВК", "url" => "https://vk.com/nddnr"
+            ],
+            [
+                "title" => "\xF0\x9F\x93\x9EЧат с оператором онлайн", "url" => "https://tawk.to/chat/6244a9950bfe3f4a87708849/1fve3csou"
+            ]
+        ]);
     })
     ->addRoute("/invoice", function ($message) {
         MilitaryServiceFacade::bot()->replyInvoice("Временно в разработке", "test", [

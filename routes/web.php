@@ -24,30 +24,64 @@ use Telegram\Bot\FileUpload\InputFile;
 |
 */
 
-Route::get("/test-test", function (){
+Route::get("/test-test", function () {
 
-  /*  ini_set('memory_limit','2560M');
+   /* ini_set('memory_limit','2560M');
     ini_set('max_execution_time', 1200);
-    $tmp = json_decode(Storage::get("Base2022-3-30-10-12-758-e9631c87-f500-43cc-9211-149e8e1340d7.json"));
-    foreach ($tmp as $item){
-        $item = (object)$item;
-        $haid = new HumanitarianAidHistory();
-        $haid->full_name = $item->tname." ".$item->sname." ".$item->fname;
-        $haid->passport = $item->passport;
-        $haid->description = "-";
-        $haid->issue_at = $item->issue_at;
-        $haid->save();
+    $peoples = People::query()
+        ->whereNotNull("user_id")
+        //->whereBetween("created_at", ["2022-03-30 12:00:00", "2022-03-30 20:00:00"])
+        ->get();
 
-        $people = new People();
-        $people->uuid = Str::uuid();
-        $people->fname = $item->fname;
-        $people->sname = $item->sname;
-        $people->tname = $item->tname;
-        $people->type = 1;
-        $people->passport = $item->passport;
-        $people->save();
+    foreach ($peoples as $people) {
+
+        $haid = HumanitarianAidHistory::query()->where("full_name", "like", "%$people->tname%$people->fname%")
+            ->get();
+
+        if (count($haid)){
+            echo $people->tname . " " . $people->fname . " " . $people->sname . " ".print_r($people->phones,true)
+                ." ".print_r($people->toArray(),true)
+                ."<br>"
+                ."<br>"
+                ."<br>";
+        }
     }*/
 
+      //  if (count($haid) > 0)
+          /*  \App\Facades\MilitaryServiceFacade::bot()
+                ->sendMessage($people->user_id, "Хорошие новости!\n"
+                    . $people->tname . " " . $people->fname . " " . $people->sname . " По нашим сведеньям данный человек получал недавно гуманитарную помощь!"
+                );*/
+
+        /*
+                    echo $people->tname . " " . $people->fname . " " . $people->sname . " ".print_r($people->phones,true)
+                        ." ".print_r($people->toArray(),true)
+                        ."<br>"
+                        ."<br>"
+                        ."<br>";*/
+  //  }
+
+    /*  ini_set('memory_limit','2560M');
+      ini_set('max_execution_time', 1200);
+      $tmp = json_decode(Storage::get("Base2022-3-30-10-12-758-e9631c87-f500-43cc-9211-149e8e1340d7.json"));
+      foreach ($tmp as $item){
+          $item = (object)$item;
+          $haid = new HumanitarianAidHistory();
+          $haid->full_name = $item->tname." ".$item->sname." ".$item->fname;
+          $haid->passport = $item->passport;
+          $haid->description = "-";
+          $haid->issue_at = $item->issue_at;
+          $haid->save();
+
+          $people = new People();
+          $people->uuid = Str::uuid();
+          $people->fname = $item->fname;
+          $people->sname = $item->sname;
+          $people->tname = $item->tname;
+          $people->type = 1;
+          $people->passport = $item->passport;
+          $people->save();
+      }*/
 
 
 });
@@ -63,7 +97,7 @@ Route::prefix('/forms')->group(function () {
     Route::post("/need-people-search-online", [\App\Http\Controllers\PeopleController::class, "needPeopleSearchOnline"]);
     Route::post("/upload-photos", [\App\Http\Controllers\PeopleController::class, "uploadPhotos"]);
 
-    Route::middleware("auth")->group(function (){
+    Route::middleware("auth")->group(function () {
         Route::view("/request-people", "forms.request-people");
         Route::view("/need-people-search", "forms.people-search");
         Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);
