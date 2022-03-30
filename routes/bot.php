@@ -593,12 +593,15 @@ MilitaryServiceFacade::bot()
                 [
                     ["text" => "\xF0\x9F\x9A\xA8Центры гуманитарной помощи ($aid_center_count)"],
                 ],
+                [
+                    ["text" => "\xF0\x9F\x93\x9EКонсультация онлайн"],
+                ],
                 /*[
                     ["text" => "\xF0\x9F\x92\xB3Разработчикам на кофе"],
                 ]*/
             ]);
     }, "start")
-    ->addRoute("/help", function ($message) {
+    ->addRoute("/help|.*Консультация онлайн", function ($message) {
         MilitaryServiceFacade::bot()->reply("Здравствуйте!\n
 Приветствуем Вас в чат-боте <b>НД ДНР</b>, который покажет адреса бомбоубежищ.\n
 В скором времени будет запущено приложение, работающее в оффлайн-режиме.\n
@@ -607,10 +610,10 @@ MilitaryServiceFacade::bot()
 ");
         MilitaryServiceFacade::bot()->replyKeyboard("https://vk.com/nddnr По вопросам помощи обращаться по ссылке!", [
             [
-                "title" => "\xF0\x9F\x93\x9DГруппа Народной Дружины в ВК", "url" => "https://vk.com/nddnr"
+                "text" => "\xF0\x9F\x93\x9DГруппа Народной Дружины в ВК", "url" => "https://vk.com/nddnr"
             ],
             [
-                "title" => "\xF0\x9F\x93\x9EЧат с оператором онлайн", "url" => "https://tawk.to/chat/6244a9950bfe3f4a87708849/1fve3csou"
+                "text" => "\xF0\x9F\x93\x9EЧат с оператором онлайн", "url" => "https://tawk.to/chat/6244a9950bfe3f4a87708849/1fve3csou"
             ]
         ]);
     })
