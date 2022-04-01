@@ -115,7 +115,7 @@ Route::prefix('/forms')->group(function () {
     Route::post("/need-people-search-online", [\App\Http\Controllers\PeopleController::class, "needPeopleSearchOnline"]);
     Route::post("/upload-photos", [\App\Http\Controllers\PeopleController::class, "uploadPhotos"]);
 
-   // Route::middleware("auth")->group(function () {
+    Route::middleware("auth")->group(function () {
         Route::view("/request-people", "forms.request-people");
         Route::view("/need-people-search", "forms.people-search");
         Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);
@@ -124,7 +124,7 @@ Route::prefix('/forms')->group(function () {
         Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
 
         Route::post("/find-people", [\App\Http\Controllers\PeopleController::class, "searchPeople"]);
-   // });
+    });
 
     Route::view("/h-aid", "forms.h-aid");
     Route::post("/h-aid", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "hAidAdd"]);

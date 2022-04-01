@@ -25,7 +25,7 @@ class PeopleAndAidImport implements OnEachRow
     public function __construct()
     {
         $date = Carbon::now();
-        $this->title = "Base"
+        $this->title = "Base2-"
             . $date->year . "-"
             . $date->month . "-"
             . $date->day . "-"
@@ -52,21 +52,15 @@ class PeopleAndAidImport implements OnEachRow
             return;
 
 
-
-        try {
-
-            $issue_at = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8]))->toDateTimeString();
-
-        } catch (\Exception $e) {
-            $issue_at = null;
-        }
+        $issue_at = "2022-03-27 10:00:00";
 
         if (Storage::exists($this->title.".json"))
         {
-            $tname =  $row[1]??"";
-            $sname =  $row[2]??"";
-            $fname =  $row[3]??"";
-            $passport = $row[5] ?? "-";
+            $tmp = explode(" ",$row[1]);
+            $tname =  $tmp[1]??"";
+            $sname =  $tmp[2]??"";
+            $fname =  $tmp[3]??"";
+            $passport = $row[2] ?? "-";
 
             $tmp = json_decode(Storage::get($this->title.".json"));
 
