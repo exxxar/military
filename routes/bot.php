@@ -392,7 +392,8 @@ MilitaryServiceFacade::bot()
                 $tmp = "";
 
                 foreach ($hAids as $index=>$item){
-                    $tmp .= ($index+1)."# ".$item->full_name." (дата выдачи гум. помощи $item->issue_at)\n";
+                    $tmp .= ($index+1)."# ".$item->full_name." ("
+                        .\Carbon\Carbon::parse($item->issue_at)->toDateString().")\n";
                 }
 
                 MilitaryServiceFacade::bot()->reply(
@@ -404,7 +405,7 @@ MilitaryServiceFacade::bot()
             }
 
             if (!$find){
-                MilitaryServiceFacade::bot()->reply("Обратитесь за помощью в https://vk.com/nddnr");
+                MilitaryServiceFacade::bot()->reply("По вашему запросу ничего не обнаружено! Обратитесь за помощью в https://vk.com/nddnr");
             }
 
         }
