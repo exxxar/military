@@ -216,9 +216,9 @@ class PeopleController extends Controller
         if ($request->handler_type == 0)
             return $mpdf->Output("person-$uuid.pdf", "I");
 
-        $fname = $request->fname ?? "-";
-        $sname = $request->sname ?? "-";
-        $tname = $request->tname ?? "-";
+        $fname = $request->fname ?? "";
+        $sname = $request->sname ?? "";
+        $tname = $request->tname ?? "";
         $birth = $request->birth ?? "-";
         $age_from = $request->age_from ?? "-";
         $age_to = $request->age_to ?? "-";
@@ -273,6 +273,25 @@ class PeopleController extends Controller
             ->sendMessage(env("PEOPLE_LOGGER_CHANNEL"),
                 $message
             );
+
+        $hAids = HumanitarianAidHistory::query()
+            ->where("full_name", "like", "%$tname%$fname%$sname")
+            ->take(30)
+            ->get();
+
+        if (count($hAids)) {
+            $tmp = "";
+
+            foreach ($hAids as $index => $item) {
+                $tmp .= ($index + 1) . "# " . $item->full_name . " ("
+                    . \Carbon\Carbon::parse($item->issue_at)->toDateString() . ")\n";
+            }
+
+            MilitaryServiceFacade::bot()->reply(
+                "В нашей базе есть некоторые совпадения, возможно это те люди, которых вы ищите:\n$tmp"
+            );
+
+        }
 
         $this->sendInvoice($message, $user_id, env("PEOPLE_LOGGER_CHANNEL"));
 
