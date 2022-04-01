@@ -275,12 +275,17 @@ class PeopleController extends Controller
             );
 
         $hAids = HumanitarianAidHistory::query()
-            ->where("full_name", "like", "%$tname%$fname%$sname")
-            ->take(30)
+            ->where("full_name", "like", "%$tname%$fname%$sname%")
+            ->orWhere("full_name", "like", "%$tname%$fname%")
+            ->orWhere("full_name", "like", "%$tname%")
             ->get();
 
         if (count($hAids)) {
             $tmp = "";
+
+            $count = $hAids->count();
+
+            $hAids = $hAids->take(30);
 
             foreach ($hAids as $index => $item) {
                 $tmp .= ($index + 1) . "# " . $item->full_name . " ("
@@ -288,7 +293,7 @@ class PeopleController extends Controller
             }
 
             MilitaryServiceFacade::bot()->reply(
-                "В нашей базе есть некоторые совпадения, возможно это те люди, которых вы ищите:\n$tmp"
+                "В нашей базе есть некоторые совпадения ($count совпадений), возможно это те люди, которых вы ищите:\n$tmp"
             );
 
         }

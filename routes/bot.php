@@ -386,11 +386,14 @@ MilitaryServiceFacade::bot()
 
             $find = false;
             $hAids = HumanitarianAidHistory::query()->where("full_name", "like", "%$text%")
-                ->take(30)
                 ->get();
 
             if (count($hAids)) {
                 $tmp = "";
+
+                $count = $hAids->count();
+
+                $hAids = $hAids->take(30);
 
                 foreach ($hAids as $index => $item) {
                     $tmp .= ($index + 1) . "# " . $item->full_name . " ("
@@ -398,7 +401,7 @@ MilitaryServiceFacade::bot()
                 }
 
                 MilitaryServiceFacade::bot()->reply(
-                    "В нашей базе есть некоторые совпадения, возможно это те люди, которых вы ищите:\n$tmp"
+                    "В нашей базе есть некоторые совпадения ($count совпадений), возможно это те люди, которых вы ищите:\n$tmp"
                 );
 
                 $find = true;
