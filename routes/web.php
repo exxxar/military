@@ -84,6 +84,24 @@ Route::get("/test-test", function () {
       }*/
 
 
+    ini_set('memory_limit','2560M');
+    ini_set('max_execution_time', 1200);
+
+
+  /*  $users = \App\Models\User::query()->get();
+
+    foreach ($users as $user){
+        \App\Facades\MilitaryServiceFacade::bot()
+            ->sendMessage($user->telegram_chat_id,
+            "❔Что происходит в Мариуполе на сегодняшний день
+❔Как живут люди, пострадавшие в ходе украинской агрессии❔С какими испытаниями столкнулись местные жители и как они находят пути решения проблем
+❔Какую посильную помощь оказывает гуманитарный центр
+❔И что за волонтёры в городе❔
+
+☝🏻На эти и многие другие вопросы вы найдёте ответ подписавшись на Telegram-канал — @center_er"
+            );
+    }*/
+
 });
 
 Route::view('/desktop', 'index')->name('desktop.index');
@@ -97,7 +115,7 @@ Route::prefix('/forms')->group(function () {
     Route::post("/need-people-search-online", [\App\Http\Controllers\PeopleController::class, "needPeopleSearchOnline"]);
     Route::post("/upload-photos", [\App\Http\Controllers\PeopleController::class, "uploadPhotos"]);
 
-    Route::middleware("auth")->group(function () {
+   // Route::middleware("auth")->group(function () {
         Route::view("/request-people", "forms.request-people");
         Route::view("/need-people-search", "forms.people-search");
         Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);
@@ -106,7 +124,7 @@ Route::prefix('/forms')->group(function () {
         Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
 
         Route::post("/find-people", [\App\Http\Controllers\PeopleController::class, "searchPeople"]);
-    });
+   // });
 
     Route::view("/h-aid", "forms.h-aid");
     Route::post("/h-aid", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "hAidAdd"]);

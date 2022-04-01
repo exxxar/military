@@ -3,6 +3,7 @@
 use App\Exports\ShelterExport;
 use App\Facades\MilitaryServiceFacade;
 use App\Models\AidCenter;
+use App\Models\HumanitarianAidHistory;
 use App\Models\Shelter;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
@@ -84,7 +85,7 @@ function getInfoByCoords($coords, $page = 0)
 }
 
 MilitaryServiceFacade::bot()
-    ->addRoute("/find_peoples|.*Жди меня - поиск людей", function ($message) {
+    ->addRoute("/find_peoples|.*Жди меня - поиск людей|.*Поиск.*|.*Найти человека", function ($message) {
 
         $url = env("APP_URL");
 
@@ -369,7 +370,7 @@ MilitaryServiceFacade::bot()
 
 
         } else {
-            MilitaryServiceFacade::bot()->reply("Обратитесь за помощью в https://vk.com/nddnr");
+
 
             $user = MilitaryServiceFacade::bot()->currentUser();
 
@@ -380,7 +381,34 @@ MilitaryServiceFacade::bot()
                         "Сообщение от пользователя:\n".
                         "От: $user->telegram_chat_id ($name)\n".
                         "Сообщение: $text");
+
+
+            $find = false;
+            $hAids = HumanitarianAidHistory::query()->where("full_name", "like", "%$text%")
+                ->take(30)
+                ->get();
+
+            if (count($hAids)){
+                $tmp = "";
+
+                foreach ($hAids as $index=>$item){
+                    $tmp .= ($index+1)."# ".$item->full_name." (дата выдачи гум. помощи $item->issue_at)\n";
+                }
+
+                MilitaryServiceFacade::bot()->reply(
+                    "В нашей базе есть некоторые совпадения, возможно это те люди, которых вы ищите:\n$tmp"
+                );
+
+                $find = true;
+
+            }
+
+            if (!$find){
+                MilitaryServiceFacade::bot()->reply("Обратитесь за помощью в https://vk.com/nddnr");
+            }
+
         }
+
 
         //MilitaryServiceFacade::bot()->reply("Методов не обнаружено!");
 
@@ -559,13 +587,13 @@ MilitaryServiceFacade::bot()
     ->addRoute("/next ([0-9a-zA-Z=]+) ([0-9a-zA-Z=]+)", function ($message, $command, $region, $page) {
         MilitaryServiceFacade::bot()->reply("Следующий регион! $command $region $page");
     })
-    ->addRoute("/start", function ($message) {
+    ->addRoute("/start|.*Меню|.*menu", function ($message) {
 
         $shelters_count = Shelter::query()->select("city", "id")->get()->unique('city')->count();
         $aid_center_count = AidCenter::query()->select("city", "id")->get()->unique('city')->count();
 
         MilitaryServiceFacade::bot()->replyKeyboard(
-            "Главное меню. Тестовая версия. Обновлено <b>30.03.2022 23:00</b>\n
+            "Главное меню. Тестовая версия. Обновлено <b>01.04.2022 10:30</b>\n
 ⚡️Друзья, подписывайтесь на Telegram-канал Народной Дружины и будьте вкурсе последних новостей.\n
 Подписаться можно здесь👇🏻\n
 @nddnr

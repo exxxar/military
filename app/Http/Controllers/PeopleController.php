@@ -169,7 +169,10 @@ class PeopleController extends Controller
         $mpdf = new \Mpdf\Mpdf();
         $mpdf->WriteHTML(
             view("pdf.people",
-                ["peoples" => People::query()->get()
+                ["peoples" => People::query()
+                    ->take(500)
+                    ->skip(0)
+                    ->where("type",0)->get()
                 ]
             )
         );

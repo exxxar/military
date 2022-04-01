@@ -14,8 +14,11 @@ class PeopleExport implements FromView
 
     public function view(): View
     {
-        return view('exports.people', [
-            'peoples' => People::query()->where("is_active", true)->select(
+        return view('exports.people-simple', [
+            'peoples' => People::query()
+                    ->where("type",0)
+                   // ->whereBetween("created_at",["2022-03-30 09:00:00","2022-03-31 23:59:59"])
+                    ->where("is_active", true)->select(
                     "id",
                     'uuid',
                     'fname',
