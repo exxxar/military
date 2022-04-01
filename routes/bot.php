@@ -376,11 +376,12 @@ MilitaryServiceFacade::bot()
 
             $name = $user->full_name ?? $user->name ?? "-";
 
-            MilitaryServiceFacade::bot()->sendMessage(env("PEOPLE_LOGGER_CHANNEL"),
-                "#сообщение_народная_дружина\n".
-                        "Сообщение от пользователя:\n".
-                        "От: $user->telegram_chat_id ($name)\n".
-                        "Сообщение: $text");
+            if (mb_strlen(trim($text)) > 0)
+                MilitaryServiceFacade::bot()->sendMessage(env("PEOPLE_LOGGER_CHANNEL"),
+                    "#сообщение_народная_дружина\n" .
+                    "Сообщение от пользователя:\n" .
+                    "От: $user->telegram_chat_id ($name)\n" .
+                    "Сообщение: $text");
 
 
             $find = false;
@@ -388,12 +389,12 @@ MilitaryServiceFacade::bot()
                 ->take(30)
                 ->get();
 
-            if (count($hAids)){
+            if (count($hAids)) {
                 $tmp = "";
 
-                foreach ($hAids as $index=>$item){
-                    $tmp .= ($index+1)."# ".$item->full_name." ("
-                        .\Carbon\Carbon::parse($item->issue_at)->toDateString().")\n";
+                foreach ($hAids as $index => $item) {
+                    $tmp .= ($index + 1) . "# " . $item->full_name . " ("
+                        . \Carbon\Carbon::parse($item->issue_at)->toDateString() . ")\n";
                 }
 
                 MilitaryServiceFacade::bot()->reply(
@@ -404,7 +405,7 @@ MilitaryServiceFacade::bot()
 
             }
 
-            if (!$find){
+            if (!$find) {
                 MilitaryServiceFacade::bot()->reply("По вашему запросу ничего не обнаружено! Обратитесь за помощью в https://vk.com/nddnr");
             }
 
