@@ -6,6 +6,7 @@ use App\Models\HumanitarianAidHistory;
 use App\Models\People;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -187,6 +188,7 @@ Route::prefix('/forms')->group(function () {
     Route::view("/need-people-search-request", "forms.people-search-online");
     Route::view("/search-in-base", "forms.search-in-base");
     Route::get("/send-message/{id?}", function ($id = null){
+
         return view("forms.send-message",compact("id"));
     });
     Route::post("/send-message", [\App\Http\Controllers\MessageController::class, "sendMessage"]);

@@ -358,16 +358,9 @@ MilitaryServiceFacade::bot()
 
         $url = env("APP_URL");
 
-        $hAid = HumanitarianAidHistory::query()->where("full_name", $full_name)->first();
-
-        $id = null;
-
-        if (!is_null($hAid))
-            $id = $hAid->id;
-
         $keyboard = [
             [
-                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message/$id"],
+                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message/$people->id?by=people"],
                 ["text" => "\xE2\x9D\xA4Есть инфо", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=1"],
             ],
 

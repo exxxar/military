@@ -434,28 +434,59 @@ class PeopleController extends Controller
         ]);
 
 
-        $hAid = HumanitarianAidHistory::query()->where("id", $request->id)->first();
+        if ($request->type=="haids") {
+            $hAid = HumanitarianAidHistory::query()->where("id", $request->id)->first();
 
-        if (is_null($hAid))
+            if (is_null($hAid))
+                return response()->json([
+                    "fname" => "",
+                    "sname" => "",
+                    "tname" => "",
+                    "passport" => "",
+                ]);
+
+            $tmp = explode(" ", $hAid->full_name);
+
+            $tname = $tmp[0] ?? "";
+            $fname = $tmp[1] ?? "";
+            $sname = $tmp[2] ?? "";
+
             return response()->json([
-                "fname" => "",
-                "sname" => "",
-                "tname" => "",
-                "passport" => "",
+                "fname" => $fname,
+                "sname" => $sname,
+                "tname" => $tname,
+                "passport" => $hAid->passport??"",
             ]);
+        }
 
-        $tmp = explode(" ", $hAid->full_name);
 
-        $tname = $tmp[0] ?? "";
-        $fname = $tmp[1] ?? "";
-        $sname = $tmp[2] ?? "";
+        if ($request->type=="people") {
+            $people = People::query()->where("id", $request->id)->first();
+
+
+            if (is_null($people))
+                return response()->json([
+                    "fname" => "",
+                    "sname" => "",
+                    "tname" => "",
+                    "passport" => "",
+                ]);
+
+            return response()->json([
+                "fname" => $people->fname??"",
+                "sname" => $people->sname??"",
+                "tname" => $people->tname??"",
+                "passport" => $people->passport??"",
+            ]);
+        }
 
         return response()->json([
-            "fname" => $fname,
-            "sname" => $sname,
-            "tname" => $tname,
-            "passport" => $hAid->passport??"",
+            "fname" => "",
+            "sname" => "",
+            "tname" => "",
+            "passport" => "",
         ]);
+
     }
 
     public function getPhoto(Request $request, $path){

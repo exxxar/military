@@ -115,7 +115,7 @@ export default {
         },
         type: {
             type: String,
-            default: 0
+            default: 'haids'
         },
     },
     data() {
@@ -130,6 +130,7 @@ export default {
                 sname: null,
                 tname: null,
                 identity: null,
+                type: null,
 
                 recaptcha: null
             }
@@ -184,6 +185,7 @@ export default {
         },
         sendMessage() {
             this.form.user_id = this.userId;
+            this.form.type = this.type;
             this.loader = true
             this.message = null
             this.messageType = 0;
