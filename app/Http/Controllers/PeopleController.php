@@ -434,7 +434,7 @@ class PeopleController extends Controller
         ]);
 
 
-        if ($request->type=="haids") {
+        if ($request->type=="haids"||!isset($request->type)) {
             $hAid = HumanitarianAidHistory::query()->where("id", $request->id)->first();
 
             if (is_null($hAid))

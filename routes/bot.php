@@ -391,6 +391,9 @@ MilitaryServiceFacade::bot()
         if (gettype($people->photos) == "string")
             $photos = json_decode($people->photos);
 
+
+        Log::info("count photos=>".count($photos));
+
         if (count($photos) == 0)
             MilitaryServiceFacade::bot()->inlineKeyboard($message, $keyboard);
 
@@ -405,7 +408,6 @@ MilitaryServiceFacade::bot()
             $media = [];
 
             foreach ($photos as $index => $photo) {
-                Log::info("https://shelte-dpr.ru/people-photo/" . $photo);
                 array_push($media, [
                     "type" => "photo",
                     "media" => "https://shelte-dpr.ru/people-photo/" . $photo,

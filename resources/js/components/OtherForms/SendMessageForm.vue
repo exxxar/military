@@ -176,7 +176,7 @@ export default {
             if (this.userId == null)
                 return
 
-            axios.get("/forms/load-user-by-id?id=" + this.userId).then(resp=>{
+            axios.get("/forms/load-user-by-id?id=" + this.userId+"&type="+this.type).then(resp=>{
                 this.form.fname = resp.data.fname
                 this.form.sname = resp.data.sname
                 this.form.tname = resp.data.tname
