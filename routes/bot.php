@@ -358,7 +358,7 @@ MilitaryServiceFacade::bot()
 
         $url = env("APP_URL");
 
-        $hAid = HumanitarianAidHistory::query()->where("full_name",$full_name)->first();
+        $hAid = HumanitarianAidHistory::query()->where("full_name", $full_name)->first();
 
         $id = null;
 
@@ -376,7 +376,12 @@ MilitaryServiceFacade::bot()
             ],
         ];
 
-        $photos = $people->photos;
+        $photos = [];
+        if (gettype($people->photos) == "array")
+            $photos = $people->photos;
+        if (gettype($people->photos) == "string")
+            $photos = json_decode($people->photos);
+
         if (count($photos) == 0)
             MilitaryServiceFacade::bot()->inlineKeyboard($message, $keyboard);
 
@@ -496,7 +501,6 @@ MilitaryServiceFacade::bot()
                 $count = $hAids->count();
 
                 $hAids = $hAids->take(30);
-
 
 
                 foreach ($hAids as $index => $item) {
