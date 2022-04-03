@@ -371,15 +371,15 @@ MilitaryServiceFacade::bot()
 
         $photos = $people->photos;
         if (count($photos) == 0)
-            MilitaryServiceFacade::bot()->replyKeyboard($message, $keyboard);
+            MilitaryServiceFacade::bot()->inlineKeyboard($message, $keyboard);
 
-        if (count($photos) >= 1)
+        if (count($photos) == 1)
             MilitaryServiceFacade::bot()->replyPhoto($message,
                 "https://shelte-dpr.ru/people-photo/" . $photos[0],
                 $keyboard
             );
 
-    /*    if (count($photos) > 1) {
+        if (count($photos) > 1) {
 
             $media = [];
 
@@ -395,9 +395,9 @@ MilitaryServiceFacade::bot()
             MilitaryServiceFacade::bot()
                 ->sendMediaGroup($user_id,
                     $media
-                )->replyKeyboard($message, $keyboard);
+                )->inlineKeyboard($message, $keyboard);
 
-        }*/
+        }
 
         switch ($type) {
             case 0:
