@@ -95,9 +95,7 @@ MilitaryServiceFacade::bot()
 
         MilitaryServiceFacade::bot()->inlineKeyboard($message, [
             [
-                ["text" => "\x31\xE2\x83\xA3Все", "callback_data" => "/circular_search 2"],
-                ["text" => "\x32\xE2\x83\xA3Найденные", "callback_data" => "/circular_search 1"],
-                ["text" => "\x33\xE2\x83\xA3Не найденные", "callback_data" => "/circular_search 0"],
+                ["text" => "\xF0\x9F\x8E\xB2Просмотр заявок", "callback_data" => "/start_circular_search"],
             ],
             [
                 ["text" => "\xF0\x9F\x94\x8EОставить запрос на поиск", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=0"],
@@ -306,6 +304,29 @@ MilitaryServiceFacade::bot()
             ]
         );
     }, "settings")
+    ->addRoute("/start_circular_search", function ($message){
+
+        $message = "Мы по очереди будем покзывать Вам анкеты пользователей!" .
+            "Кто-то из них уже вышел на связь, а о ком-то еще нет никакой информации." .
+            "Просматривая анкеты Вы можете найти знакомых Вам людей и сообщить о них информацию" .
+            "или связаться с ними по средствм текстового письма.";
+
+        MilitaryServiceFacade::bot()->inlineKeyboard($message, [
+            [
+                ["text" => "\x31\xE2\x83\xA3Все заявки", "callback_data" => "/circular_search 2"],
+            ],
+
+            [
+                ["text" => "\x32\xE2\x83\xA3Только найденные", "callback_data" => "/circular_search 1"],
+            ],
+
+            [
+                ["text" => "\x33\xE2\x83\xA3Только не найденные", "callback_data" => "/circular_search 0"],
+            ],
+
+        ]);
+
+    })
     ->addRoute("/circular_search ([0-9]{1})", function ($message, $command, $type) {
 
         $user = MilitaryServiceFacade::bot()->currentUser();
@@ -317,11 +338,7 @@ MilitaryServiceFacade::bot()
             $user->save();
         }
 
-        MilitaryServiceFacade::bot()->reply("Мы по очереди будем покзывать Вам анкеты пользователей!" .
-            "Кто-то из них уже вышел на связь, а о ком-то еще нет никакой информации." .
-            "Просматривая анкеты Вы можете найти знакомых Вам людей и сообщить о них информацию" .
-            "или связаться с ними по средствм текстового письма."
-        );
+        $type = intval($type)??2;
 
         switch ($type) {
             case 0:
@@ -349,7 +366,6 @@ MilitaryServiceFacade::bot()
 
         $invoice_type = $people->type == 0 ? "заявка на поиск" : "вышел на связь";
         $full_name = ($people->tname ?? "") . " " . ($people->fname ?? "") . " " . ($people->sname ?? "");
-
 
         $user_id = $this->chatId;
 
@@ -389,6 +405,7 @@ MilitaryServiceFacade::bot()
             $media = [];
 
             foreach ($photos as $index => $photo) {
+                Log::info("https://shelte-dpr.ru/people-photo/" . $photo);
                 array_push($media, [
                     "type" => "photo",
                     "media" => "https://shelte-dpr.ru/people-photo/" . $photo,
@@ -399,7 +416,7 @@ MilitaryServiceFacade::bot()
 
             MilitaryServiceFacade::bot()
                 ->sendMediaGroup($user_id,
-                    $media
+                    json_encode($media)
                 )->inlineKeyboard($message, $keyboard);
 
         }
