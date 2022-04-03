@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\MilitaryServiceFacade;
 use App\Http\Requests\MessageStoreRequest;
 use App\Http\Requests\MessageUpdateRequest;
 use App\Http\Resources\MessageCollection;
@@ -92,6 +93,12 @@ class MessageController extends Controller
             "sms" => $sms,
             "h_user_id"=>$h_user_id
         ]);
+
+        MilitaryServiceFacade::bot()->sendMessage(env("PEOPLE_LOGGER_CHANNEL"),
+            "#письмо_на_фронт_народная_дружина\n" .
+            "Сообщение для пользователя:\n" .
+            "Кому: $tname $fname $sname ($identity)\n" .
+            "Сообщение: $sms");
 
         return response()->noContent();
     }
