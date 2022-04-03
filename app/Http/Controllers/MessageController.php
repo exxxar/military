@@ -83,12 +83,14 @@ class MessageController extends Controller
         $sname = $request->sname ?? "";
         $tname = $request->tname ?? "";
         $sms = $request->sms ?? "";
+        $h_user_id = $request->user_id ?? null;
 
 
         Message::create([
             "full_name" => "$tname $fname $sname",
             "identity" => $identity,
             "sms" => $sms,
+            "h_user_id"=>$h_user_id
         ]);
 
         return response()->noContent();

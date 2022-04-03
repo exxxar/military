@@ -493,7 +493,7 @@ MilitaryServiceFacade::bot()
 
 
                 foreach ($hAids as $index => $item) {
-                    $bId = base64_encode($item->id);
+                    $bId = $item->id;
 
                     $tmp .= ($index + 1) . "# " . $item->full_name . " (гум. помощь "
                         . \Carbon\Carbon::parse($item->issue_at)->toDateString() . ") <a href='https://shelter-dpr.ru/forms/send-message?id=$bId'>\xF0\x9F\x93\xA7Оставить записку</a>\n";
