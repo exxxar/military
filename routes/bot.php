@@ -399,11 +399,12 @@ MilitaryServiceFacade::bot()
 
         if (count($photos) == 1) {
             MilitaryServiceFacade::bot()->replyPhoto("test",
-                "https://shelter-dpr.ru/people-photo/" . $photos[0]
+                \Telegram\Bot\FileUpload\InputFile::create( "https://shelter-dpr.ru/people-photo/" . trim($photos[0]))
+
             );
 
             MilitaryServiceFacade::bot()->replyPhoto("test",
-                "https://shelter-dpr.ru/people-photo/ 525a003d-ee5c-4536-ba57-8aa07e7e24e3.jpg"
+                \Telegram\Bot\FileUpload\InputFile::create("https://shelter-dpr.ru/people-photo/525a003d-ee5c-4536-ba57-8aa07e7e24e3.jpg")
             );
 
         }
