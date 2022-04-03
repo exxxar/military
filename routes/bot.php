@@ -353,11 +353,17 @@ MilitaryServiceFacade::bot()
                 break;
         }
 
-        $people = \App\Models\People::query()
+        $people = \App\Models\People::query();
+
+        if ($type==0||$type==1)
+            $people = $people->where("type", $type);
+
+        $people = $people
             ->orderBy("created_at", "ASC")
             ->take(1)
             ->offset($offset)
             ->first();
+        
 
         if (is_null($people)) {
             MilitaryServiceFacade::bot()->reply("К сожалению что-то пошло не так... мы работаем над этим!");
@@ -403,7 +409,7 @@ MilitaryServiceFacade::bot()
                 $keyboard
             );
         }
-        
+
         switch ($type) {
             case 0:
                 $user->current_people_index_type_0++;
