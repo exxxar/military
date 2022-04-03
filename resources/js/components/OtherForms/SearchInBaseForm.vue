@@ -65,14 +65,15 @@
                 <div v-if="peoples.length>0" class="single-search-result mb-3 border-bottom pb-3"
                      v-for="(item, index) in peoples">
                     <h6 class="text-truncate mb-1">
-                        {{index+1}}# {{ item.tname }} {{ item.fname }} {{ item.sname }}
+                        {{ index + 1 }}# {{ item.tname }} {{ item.fname }} {{ item.sname }}
                     </h6>
-                    <p>(добавлен  {{ item.created_at }})</p>
+                    <p>(добавлен {{ item.created_at }})</p>
                     <span class="badge bg-primary" v-if="item.type==0">заявка на поиск</span>
                     <span class="badge bg-success" v-if="item.type==1">вышел на связь</span>
                     <a class="text-truncate mb-2 d-block fz-12 text-decoration-underline"
-                            :href="'/forms/pdf/download?uuid='+item.uuid" target="_blank">Открыть pdf документ</a>
-                    <a :href="'/forms/send-message/'+item.id+'?uid='+userId+'&by=people'" target="_blank">Оставить записку</a>
+                       :href="'/forms/pdf/download?uuid='+item.uuid" target="_blank">Открыть pdf документ</a>
+                    <a :href="'/forms/send-message/'+item.id+'?uid='+userId+'&by=people'" target="_blank">Оставить
+                        записку</a>
                 </div>
 
                 <ul class="list-group" v-if="history.length>0">
@@ -81,7 +82,8 @@
 
 
                     <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
-                        <i class="bi bi-check-circle"></i>В данном блоке отображаются только те люди, которые вышли на сязь и получили гум. помощь (и которым оказана помощь вообще).
+                        <i class="bi bi-check-circle"></i>В данном блоке отображаются только те люди, которые вышли на
+                        сязь и получили гум. помощь (и которым оказана помощь вообще).
                         Для свяни с ними им можно отправить короткое текстовое сообщение.
                         <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button"
                                 data-bs-dismiss="alert" aria-label="Close"></button>
@@ -92,7 +94,8 @@
                         @click="fill(item)"
                         v-for="(item, index) in history"
                     >
-                        {{ item.full_name }} <a :href="'/forms/send-message/'+item.id+'?uid='+userId" target="_blank">Оставить записку</a><span class="badge bg-primary rounded-pill">{{ item.issue_at }}</span>
+                        {{ item.full_name }} <a :href="'/forms/send-message/'+item.id+'?uid='+userId" target="_blank">Оставить
+                        записку</a><span class="badge bg-primary rounded-pill">{{ item.issue_at }}</span>
                     </li>
                 </ul>
 
@@ -112,14 +115,17 @@
 </template>
 <script>
 
-import { VueRecaptcha } from 'vue-recaptcha';
+import {VueRecaptcha} from 'vue-recaptcha';
 
 export default {
-    components: {  'vue-recaptcha': VueRecaptcha, },
-    userId: {
-        type: String,
-        default: null
-    },
+    components: {'vue-recaptcha': VueRecaptcha,},
+    props: {
+        userId: {
+            type: String,
+            default: null
+        }
+    }
+    ,
     data() {
         return {
             loader: false,
@@ -134,7 +140,7 @@ export default {
                 tname: null,
                 uuid: null,
 
-                recaptcha:null
+                recaptcha: null
             }
         }
     },
@@ -178,8 +184,6 @@ export default {
 
 
             this.$refs.recaptcha.execute();
-
-
 
 
         },
