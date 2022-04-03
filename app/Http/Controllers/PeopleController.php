@@ -500,7 +500,7 @@ class PeopleController extends Controller
         }
 
 
-        $myFile = storage_path("app\\images\\".$path);
+        $myFile = storage_path("app/images/".$path);
         $headers = ['Content-Type: image/jpeg'];
 
         return response()->file($myFile,  $headers);
