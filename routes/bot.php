@@ -397,10 +397,17 @@ MilitaryServiceFacade::bot()
         if (count($photos) == 0)
             MilitaryServiceFacade::bot()->inlineKeyboard($message, $keyboard);
 
-        if (count($photos) == 1)
-            MilitaryServiceFacade::bot()->replyPhoto($message,
-                "https://shelte-dpr.ru/people-photo/" . $photos[0]
+        if (count($photos) == 1) {
+            MilitaryServiceFacade::bot()->replyPhoto("test",
+                "https://shelter-dpr.ru/people-photo/" . $photos[0]
             );
+
+            MilitaryServiceFacade::bot()->replyPhoto("test",
+                "https://shelter-dpr.ru/people-photo/ 525a003d-ee5c-4536-ba57-8aa07e7e24e3.jpg"
+            );
+
+        }
+
 
         if (count($photos) > 1) {
 
@@ -409,7 +416,7 @@ MilitaryServiceFacade::bot()
             foreach ($photos as $index => $photo) {
                 array_push($media, [
                     "type" => "photo",
-                    "media" => "https://shelte-dpr.ru/people-photo/" . $photo,
+                    "media" => "https://shelter-dpr.ru/people-photo/" . $photo,
                     "caption" => "Фото #$index",
                 ]);
             }
