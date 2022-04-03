@@ -48,7 +48,7 @@
                             <textarea class="form-control" id="identify"
                                       placeholder="Дополнительная идентификация"
                                       maxlength="255"
-                                      v-model="form.identity" required>
+                                      v-model="form.identity">
                             </textarea>
                         </div>
 
