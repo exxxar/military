@@ -306,7 +306,7 @@ MilitaryServiceFacade::bot()
             ]
         );
     }, "settings")
-    ->addRoute("/circular_search ([()0-9])", function ($message, $command, $type) {
+    ->addRoute("/circular_search ([0-9]{1})", function ($message, $command, $type) {
 
         $user = MilitaryServiceFacade::bot()->currentUser();
 
