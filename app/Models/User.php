@@ -24,6 +24,9 @@ class User extends Authenticatable
         'password',
         'full_name',
         'phone',
+        "current_people_index_all",
+        "current_people_index_type_0",
+        "current_people_index_type_1",
         'radius'
     ];
 

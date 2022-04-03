@@ -20,6 +20,11 @@ abstract class BaseBot
         return $this->sendMessage($this->chatId, $message);
     }
 
+    public function replyPhoto($caption, $path, $keyboard = [])
+    {
+        return $this->sendPhoto($this->chatId, $caption, $path, $keyboard);
+    }
+
     public function replyEditInlineKeyboard($messageId, $keyboard)
     {
         return $this->editInlineKeyboard($this->chatId, $messageId, $keyboard);
@@ -189,14 +194,17 @@ abstract class BaseBot
     }
 
     //отправка фото
-    public function sendPhoto($chatId, $caption, $path)
+    public function sendPhoto($chatId, $caption, $path, $keyboard = [])
     {
         try {
             $this->bot->sendPhoto([
                 "chat_id" => $chatId,
                 "photo" => $path,
                 "caption" => $caption,
-                "parse_mode" => "HTML"
+                "parse_mode" => "HTML",
+                'reply_markup' => json_encode([
+                    'inline_keyboard' => $keyboard,
+                ])
             ]);
         } catch (\Exception $e) {
 

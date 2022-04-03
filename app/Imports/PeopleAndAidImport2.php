@@ -17,7 +17,7 @@ use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Row;
 
-class PeopleAndAidImport implements OnEachRow
+class PeopleAndAidImport2 implements OnEachRow
 {
 
     private $title;
@@ -45,7 +45,7 @@ class PeopleAndAidImport implements OnEachRow
         $rowIndex = $row->getIndex();
         $row = $row->toArray();
 
-        if ($rowIndex < 4)
+        if ($rowIndex < 3)
             return null;
 
         if ($row[0] == '')
@@ -57,9 +57,9 @@ class PeopleAndAidImport implements OnEachRow
         if (Storage::exists($this->title.".json"))
         {
             $tmp = explode(" ",$row[1]);
-            $tname =  $tmp[1]??"";
+            $tname =  $tmp[0]??"";
+            $fname =  $tmp[1]??"";
             $sname =  $tmp[2]??"";
-            $fname =  $tmp[3]??"";
             $passport = $row[2] ?? "-";
 
             $tmp = json_decode(Storage::get($this->title.".json"));

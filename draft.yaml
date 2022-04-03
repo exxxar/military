@@ -1,16 +1,14 @@
 models:
-  HumanitarianAidHistory:
+  Message:
     id: id
-    index: string nullable
     full_name: string nullable
-    passport: string nullable
-    description: longtext nullable
-    issue_at: timestamp nullable
-    deleted_at: timestamp nullable
+    sms: longtext nullable
+    identify: string nullable
+    h_user_id: integer nullable
     created_at: timestamp
     updated_at: timestamp
 
 controllers:
-  HumanitarianAidHistory:
+  Message:
     resource: api
 

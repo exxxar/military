@@ -95,6 +95,11 @@ MilitaryServiceFacade::bot()
 
         MilitaryServiceFacade::bot()->inlineKeyboard($message, [
             [
+                ["text" => "\x31\xE2\x83\xA3Все", "callback_data" => "/circular_search 2"],
+                ["text" => "\x32\xE2\x83\xA3Найденные", "callback_data" => "/circular_search 1"],
+                ["text" => "\x33\xE2\x83\xA3Не найденные", "callback_data" => "/circular_search 0"],
+            ],
+            [
                 ["text" => "\xF0\x9F\x94\x8EОставить запрос на поиск", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=0"],
             ],
 
@@ -301,22 +306,112 @@ MilitaryServiceFacade::bot()
             ]
         );
     }, "settings")
-    ->addRoute("/.*Показать список", function ($message) {
+    ->addRoute("/circular_search ([()0-9])", function ($message, $command, $type) {
 
-        MilitaryServiceFacade::bot()->reply("Показать список!");
+        $user = MilitaryServiceFacade::bot()->currentUser();
 
-        $schelters = \App\Models\Shelter::query()->get();
+        if (is_null($user->current_people_index_all)) {
+            $user->current_people_index_all = 0;
+            $user->current_people_index_type_0 = 0;
+            $user->current_people_index_type_1 = 0;
+            $user->save();
+        }
 
-        if (empty($schelters)) {
-            MilitaryServiceFacade::bot()->reply("Список убежищ пуст!");
+        MilitaryServiceFacade::bot()->reply("Мы по очереди будем покзывать Вам анкеты пользователей!" .
+            "Кто-то из них уже вышел на связь, а о ком-то еще нет никакой информации." .
+            "Просматривая анкеты Вы можете найти знакомых Вам людей и сообщить о них информацию" .
+            "или связаться с ними по средствм текстового письма."
+        );
+
+        switch ($type) {
+            case 0:
+                $offset = $user->current_people_index_type_0;
+                break;
+            case 1:
+                $offset = $user->current_people_index_type_1;
+                break;
+            default:
+            case 2:
+                $offset = $user->current_people_index_all;
+                break;
+        }
+
+        $people = \App\Models\People::query()
+            ->orderBy("created_at", "ASC")
+            ->take(1)
+            ->offset($offset)
+            ->first();
+
+        if (is_null($people)) {
+            MilitaryServiceFacade::bot()->reply("К сожалению что-то пошло не так... мы работаем над этим!");
             return;
         }
 
-        $tmp = "";
-        foreach ($schelters as $schelter)
-            $tmp .= "<a href='http://www.example.com/'>inline URL</a>";
+        $type = $people->type == 0 ? "заявка на поиск" : "вышел на связь";
+        $full_name = ($people->tname ?? "") . " " . ($people->fname ?? "") . " " . ($people->sname ?? "");
+        $id = base64_encode($people->id);
 
-        MilitaryServiceFacade::bot()->reply($tmp);
+        $user_id = $this->chatId;
+
+        $message = "Статус заявки: <b>$type</b>\n" .
+            "Ф.И.О.: <b>$full_name</b>";
+
+        $url = env("APP_URL");
+
+        $keyboard = [
+            [
+                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message?id=$id"],
+                ["text" => "\xE2\x9D\xA4Есть инфо", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=1"],
+            ],
+
+            [
+                ["text" => "\xF0\x9F\x94\x8EСледующая заявка", "callback_data" => "/circular_search $type"],
+            ],
+        ];
+
+        $photos = json_decode($people->photos);
+        if (count($photos) == 0)
+            MilitaryServiceFacade::bot()->replyKeyboard($message, $keyboard);
+
+        if (count($photos) == 1)
+            MilitaryServiceFacade::bot()->replyPhoto($message,
+                "https://shelte-dpr.ru/people-photo/" . $photos[0],
+                $keyboard
+            );
+
+        if (count($photos) > 1) {
+
+            $media = [];
+
+            foreach ($photos as $index => $photo) {
+                array_push($media, [
+                    "type" => "photo",
+                    "media" => "https://shelte-dpr.ru/people-photo/" . $photo,
+                    "caption" => "Фото #$index",
+                ]);
+            }
+
+
+            MilitaryServiceFacade::bot()
+                ->sendMediaGroup($user_id,
+                    json_encode($media)
+                )->replyKeyboard($message, $keyboard);
+
+        }
+
+        switch ($type) {
+            case 0:
+                $user->current_people_index_type_0++;
+                break;
+            case 1:
+                $user->current_people_index_type_1++;
+                break;
+            default:
+            case 2:
+                $user->current_people_index_all++;
+                break;
+        }
+        $user->save();
     })
     ->addRoute("/.*Разработчикам на кофе", function ($message) {
         MilitaryServiceFacade::bot()->inlineKeyboard("А вот тут вы сможете пожертвовать для разработчиков на кофе:)", [
@@ -396,8 +491,9 @@ MilitaryServiceFacade::bot()
                 $hAids = $hAids->take(30);
 
                 foreach ($hAids as $index => $item) {
-                    $tmp .= ($index + 1) . "# " . $item->full_name . " ("
-                        . \Carbon\Carbon::parse($item->issue_at)->toDateString() . ")\n";
+                    $tmp .= ($index + 1) . "# " . $item->full_name . " (гум. помощь "
+                        . \Carbon\Carbon::parse($item->issue_at)->toDateString() . ") <a href='https://shelter-dpr.ru/send-message?id=" .
+                        base64_encode($item->id) . "'>\xF0\x9F\x93\xA7Оставить записку</a>\n";
                 }
 
                 MilitaryServiceFacade::bot()->reply(
@@ -598,10 +694,21 @@ MilitaryServiceFacade::bot()
         $aid_center_count = AidCenter::query()->select("city", "id")->get()->unique('city')->count();
 
         MilitaryServiceFacade::bot()->replyKeyboard(
-            "Главное меню. Тестовая версия. Обновлено <b>01.04.2022 10:30</b>\n
+            "Главное меню. Тестовая версия. Обновлено <b>03.04.2022 23:30</b>\n
 ⚡️Друзья, подписывайтесь на Telegram-канал Народной Дружины и будьте вкурсе последних новостей.\n
 Подписаться можно здесь👇🏻\n
 @nddnr
+
+Обновление:
+\xF0\x9F\x93\x8D база найденных людей ~30 000 человек
+\xF0\x9F\x93\x8D поиск по фамилии через сообщение боту (напишите, Иванов в чат для примера)
+\xF0\x9F\x93\x8D отправка короткого текстового письма человеку
+\xF0\x9F\x93\x8D при добавлении заявки на поиск авоматическое оповещение заявителя в случае если человек есть в базе
+\xF0\x9F\x93\x8D раздел справочной инфорамцией
+\xF0\x9F\x93\x8D раздел контаков с оператором
+\xF0\x9F\x93\x8D изменен механизм поиска людей
+
+Мы работаем для вас и ежедневно обновляем базу найденных людей!
 ",
 
             [
@@ -629,6 +736,9 @@ MilitaryServiceFacade::bot()
                 [
                     ["text" => "\xF0\x9F\x93\x9EКонсультация онлайн"],
                 ],
+                [
+                    ["text" => "\xF0\x9F\x93\x96Справочник"],
+                ],
                 /*[
                     ["text" => "\xF0\x9F\x92\xB3Разработчикам на кофе"],
                 ]*/
@@ -649,6 +759,12 @@ MilitaryServiceFacade::bot()
                 ["text" => "\xF0\x9F\x93\x9EЧат с оператором онлайн", "url" => "https://tawk.to/chat/6244a9950bfe3f4a87708849/1fve3csou"]
             ]
         ]);
+    })
+    ->addRoute("/help|.*Справочник", function ($message) {
+        MilitaryServiceFacade::bot()->reply("Полезная информация:
+https://telegra.ph/Kak-vesti-sebya-v-zone-boevyh-dejstvij-04-03
+");
+
     })
     ->addRoute("/invoice", function ($message) {
         MilitaryServiceFacade::bot()->replyInvoice("Временно в разработке", "test", [

@@ -16,6 +16,8 @@ use App\Models\HumanitarianAidHistory;
 use App\Models\People;
 use App\Rules\Recaptcha;
 use Carbon\Carbon;
+use http\Message;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -116,7 +118,7 @@ class PeopleController extends Controller
             $peoples = $peoples->orWhere("uuid", $uuid);
 
         $peoples = $peoples
-            ->orderBy("created_at","desc")
+            ->orderBy("created_at", "desc")
             ->take(10)
             ->get();
 
@@ -124,15 +126,15 @@ class PeopleController extends Controller
 
 
         $aid = HumanitarianAidHistory::query()
-            ->where("full_name", "like","%$search%")
-            ->orWhere("passport","like","%$search%")
-            ->orderBy("issue_at","desc")
+            ->where("full_name", "like", "%$search%")
+            ->orWhere("passport", "like", "%$search%")
+            ->orderBy("issue_at", "desc")
             ->take(10)
             ->get();
 
         return response()->json([
-            "peoples"=>new PeopleCollection($peoples),
-            "aids"=>new HumanitarianAidHistoryCollection($aid)
+            "peoples" => new PeopleCollection($peoples),
+            "aids" => new HumanitarianAidHistoryCollection($aid)
         ]);
     }
 
@@ -172,7 +174,7 @@ class PeopleController extends Controller
                 ["peoples" => People::query()
                     ->take(500)
                     ->skip(0)
-                    ->where("type",0)->get()
+                    ->where("type", 0)->get()
                 ]
             )
         );
@@ -288,7 +290,7 @@ class PeopleController extends Controller
             $hAids = $hAids->take(30);
 
             foreach ($hAids as $index => $item) {
-                $tmp .= ($index + 1) . "# " . $item->full_name . " ("
+                $tmp .= ($index + 1) . "# " . $item->full_name . " (гум. помощь "
                     . \Carbon\Carbon::parse($item->issue_at)->toDateString() . ")\n";
             }
 
@@ -421,6 +423,56 @@ class PeopleController extends Controller
 
 
         return response()->noContent();
+
+    }
+
+
+    public function loadUserById(Request $request)
+    {
+        $request->validate([
+            "id" => "required"
+        ]);
+
+        $id = base64_decode($request->id);
+
+        $hAid = HumanitarianAidHistory::query()->where("id", $id)->first();
+
+        if (is_null($hAid))
+            return response()->json([
+                "fname" => "",
+                "sname" => "",
+                "tname" => "",
+            ]);
+
+        $tmp = explode(" ", $hAid->full_name);
+
+        $tname = $tmp[0] ?? "";
+        $fname = $tmp[1] ?? "";
+        $sname = $tmp[2] ?? "";
+
+        return response()->json([
+            "fname" => $fname,
+            "sname" => $sname,
+            "tname" => $tname,
+        ]);
+    }
+
+    public function getPhoto(Request $request, $path){
+
+
+        if (  !Storage::exists("images/$path")) {
+            $myFile = public_path("noavatar.png");
+            $headers = ['Content-Type: image/png'];
+
+            return response()->file($myFile,  $headers);
+        }
+
+
+        $myFile = storage_path("app\\images\\".$path);
+        $headers = ['Content-Type: image/jpeg'];
+
+        return response()->file($myFile,  $headers);
+
 
     }
 }

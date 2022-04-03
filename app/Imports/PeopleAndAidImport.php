@@ -2,8 +2,6 @@
 
 namespace App\Imports;
 
-use App\Enums\ModelType;
-use App\Models\Boundary;
 use App\Models\HumanitarianAidHistory;
 use App\Models\People;
 use Carbon\Carbon;
@@ -15,30 +13,19 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterImport;
+use Maatwebsite\Excel\Events\BeforeImport;
 use Maatwebsite\Excel\Row;
+use PhpOffice\PhpSpreadsheet\Exception;
 
-class PeopleAndAidImport implements OnEachRow
+class PeopleAndAidImport implements OnEachRow, WithEvents
 {
 
     private $title;
 
-    public function __construct()
-    {
-        $date = Carbon::now();
-        $this->title = "Base"
-            . $date->year . "-"
-            . $date->month . "-"
-            . $date->day . "-"
-            . $date->hour . "-"
-            . $date->second . "-"
-            . $date->millisecond . "-"
-            . Str::uuid();
+    private $tmp = [];
 
-        Storage::put($this->title . ".json",
-            json_encode([])
-        );
-
-    }
 
     public function onRow(Row $row)
     {
@@ -55,57 +42,60 @@ class PeopleAndAidImport implements OnEachRow
 
         try {
 
-            $issue_at = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8]))->toDateTimeString();
-
-        } catch (\Exception $e) {
-            $issue_at = null;
-        }
-
-        if (Storage::exists($this->title.".json"))
-        {
-            $tname =  $row[1]??"";
-            $sname =  $row[2]??"";
-            $fname =  $row[3]??"";
-            $passport = $row[5] ?? "-";
-
-            $tmp = json_decode(Storage::get($this->title.".json"));
-
-            $obj = [
-                "tname"=>$tname,
-                "sname"=>$sname,
-                "fname"=>$fname,
-                "passport"=>$passport,
-                "issue_at"=>$issue_at,
-            ];
-            array_push($tmp, $obj);
-
-            Storage::put($this->title . ".json",
-                json_encode($tmp)
-            );
+            if (gettype($row[8])=="integer")
+            $issue_at = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8]))->toDateString();
+            else {
+                $issue_at = Carbon::now()->toDateString();
+            }
+        } catch (Exception $e) {
 
         }
 
 
+        $tname = $row[1] ?? "";
+        $fname = $row[2] ?? "";
+        $sname = $row[3] ?? "";
+        $passport = $row[5] ?? "-";
 
-   /*     $people = new People();
-        $people->uuid = Str::uuid();
-        $people->fname = $fname;
-        $people->sname = $sname;
-        $people->tname = $tname;
-        $people->type = 1;
-        $people->passport = $passport;
-        $people->save();
+        $obj = [
+            "tname" => trim($tname),
+            "sname" => trim($sname),
+            "fname" => trim($fname),
+            "passport" => $passport,
+            "issue_at" => $issue_at,
+        ];
 
 
-        $haid = new HumanitarianAidHistory();
-        $haid->full_name = "$tname $fname $sname";
-        $haid->passport =  $passport;
-        $haid->description = "-";
-        $haid->issue_at = $issue_at;
-        $haid->save();
+        array_push($this->tmp, $obj);
 
-        Log::info(print_r($haid->toArray(), true));*/
 
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            // Handle by a closure.
+
+            BeforeImport::class => function (BeforeImport $event) {
+                $date = Carbon::now();
+                $this->title = "Base1"
+                    . $date->year . "-"
+                    . $date->month . "-"
+                    . $date->day . "-"
+                    . $date->hour . "-"
+                    . $date->second . "-"
+                    . $date->millisecond . "-"
+                    . Str::uuid();
+
+            },
+            AfterImport::class => function (AfterImport $event) {
+                Storage::put($this->title . ".json",
+                    json_encode($this->tmp)
+                );
+            },
+
+
+        ];
 
     }
 }

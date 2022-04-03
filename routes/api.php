@@ -62,3 +62,6 @@ Route::apiResource('people', App\Http\Controllers\PeopleController::class);
 
 
 Route::apiResource('humanitarian-aid-history', App\Http\Controllers\HumanitarianAidHistoryController::class);
+
+
+Route::apiResource('message', App\Http\Controllers\MessageController::class);

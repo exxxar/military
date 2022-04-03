@@ -1,13 +1,13 @@
 created:
-    - app/Http/Controllers/HumanitarianAidHistoryController.php
-    - database/factories/HumanitarianAidHistoryFactory.php
-    - database/migrations/2022_03_26_150734_create_humanitarian_aid_histories_table.php
-    - app/Models/HumanitarianAidHistory.php
-    - tests/Feature/Http/Controllers/HumanitarianAidHistoryControllerTest.php
-    - app/Http/Requests/HumanitarianAidHistoryStoreRequest.php
-    - app/Http/Requests/HumanitarianAidHistoryUpdateRequest.php
-    - app/Http/Resources/HumanitarianAidHistoryCollection.php
-    - app/Http/Resources/HumanitarianAidHistoryResource.php
+    - app/Http/Controllers/MessageController.php
+    - database/factories/MessageFactory.php
+    - database/migrations/2022_04_03_164121_create_messages_table.php
+    - app/Models/Message.php
+    - tests/Feature/Http/Controllers/MessageControllerTest.php
+    - app/Http/Requests/MessageStoreRequest.php
+    - app/Http/Requests/MessageUpdateRequest.php
+    - app/Http/Resources/MessageCollection.php
+    - app/Http/Resources/MessageResource.php
 updated:
     - routes/api.php
 models:
@@ -16,3 +16,4 @@ models:
     AidCenter: { id: id, city: 'string nullable', region: 'string nullable', address: 'string:400', phone: 'string:100', required: 'longtext nullable', description: 'longtext nullable' }
     People: { id: id, uuid: uuid, fname: 'string nullable', sname: 'string nullable', tname: 'string nullable', birth: 'string nullable', age_from: 'tinyint default:0 nullable', age_to: 'tintyint default:0 nullable', sex: 'tinyint deault:0', photos: 'json nullable', phone: 'string nullable', user_id: 'id:user nullable', people_id: 'id:people nullable', city: 'string nullable', region: 'string nullable', address: 'string nullable', story: 'longtext nullable', description: 'longtext nullable', status: 'integer default:0', for: 'integer default:0', searched_from: 'timestamp nullable', is_active: 'boolean default:true', deleted_at: 'timestamp nullable', created_at: timestamp, updated_at: timestamp }
     HumanitarianAidHistory: { id: id, index: 'string nullable', full_name: 'string nullable', passport: 'string nullable', description: 'longtext nullable', issue_at: 'timestamp nullable', deleted_at: 'timestamp nullable', created_at: timestamp, updated_at: timestamp }
+    Message: { id: id, full_name: 'string nullable', sms: 'longtext nullable', identify: 'string nullable', h_user_id: 'integer nullable', created_at: timestamp, updated_at: timestamp }

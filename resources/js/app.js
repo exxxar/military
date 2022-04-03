@@ -19,6 +19,7 @@ import SearchInBaseForm from './components/OtherForms/SearchInBaseForm'
 import SearchPeopleForm from './components/OtherForms/SearchPeopleForm'
 import SearchPeopleOnlineForm from './components/OtherForms/SearchPeopleOnlineForm'
 import HAidForm from './components/OtherForms/HAidForm'
+import SendMessageForm from './components/OtherForms/SendMessageForm'
 
 import BaseHelpForm from './components/OtherForms/BaseHelpForm'
 import FoodAndGoodsForm from './components/OtherForms/FoodAndGoodsForm'
@@ -79,6 +80,7 @@ app.component('aid-center-form-component', AidCenterForm)
 app.component('water-help-form-component', WaterForm)
 app.component('clothes-form-component', ClothesForm)
 app.component('h-aid-form-component', HAidForm)
+app.component('send-message-form-component', SendMessageForm)
 
 app.component('request-people-form-component', RequestPeopleForm)
 app.component('search-in-base-form-component', SearchInBaseForm)

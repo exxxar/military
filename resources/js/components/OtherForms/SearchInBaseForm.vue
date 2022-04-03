@@ -12,6 +12,13 @@
                 <div class="search-form-wrapper">
                     <p class="mb-2 fz-12">Найдено {{ peoples.length }} результатов поиска</p>
                     <small>В поиск выдает последние 10 записей</small>
+
+                    <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle"></i>В данном блоке отображены заявки, которые есть в системе.
+                        <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button"
+                                data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
                     <!-- Search Form -->
                     <form class="mb-3 pb-4 border-bottom" v-on:submit.prevent="search">
                         <div class="form-group mb-2">
@@ -66,6 +73,8 @@
                         {{index+1}}# {{ item.tname }} {{ item.fname }} {{ item.sname }}
                     </h6>
                     <p>(добавлен  {{ item.created_at }})</p>
+                    <span class="badge bg-primary" v-if="item.type==0">заявка на поиск</span>
+                    <span class="badge bg-success" v-if="item.type==1">вышел на связь</span>
                     <a class="text-truncate mb-2 d-block fz-12 text-decoration-underline"
                             :href="'/forms/pdf/download?uuid='+item.uuid" target="_blank">Открыть pdf документ</a>
                 </div>
@@ -73,12 +82,21 @@
                 <ul class="list-group" v-if="history.length>0">
                     <h3>Информация по выдаче гумманитарной помощи</h3>
                     <small>В поиск выдает последние 10 записей</small>
+
+
+                    <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle"></i>В данном блоке отображаются только те люди, которые вышли на сязь и получили гум. помощь (и которым оказана помощь вообще).
+                        Для свяни с ними им можно отправить короткое текстовое сообщение.
+                        <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button"
+                                data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
                     <li class="list-group-item d-flex align-items-center justify-content-between"
                         :key="index"
                         @click="fill(item)"
                         v-for="(item, index) in history"
                     >
-                        {{ item.full_name }}<span class="badge bg-primary rounded-pill">{{ item.issue_at }}</span>
+                        {{ item.full_name }} <a href="/forms/send-message" target="_blank">Оставить записку</a><span class="badge bg-primary rounded-pill">{{ item.issue_at }}</span>
                     </li>
                 </ul>
 
