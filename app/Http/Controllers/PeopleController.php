@@ -433,15 +433,15 @@ class PeopleController extends Controller
             "id" => "required"
         ]);
 
-        $id = base64_decode($request->id);
 
-        $hAid = HumanitarianAidHistory::query()->where("id", $id)->first();
+        $hAid = HumanitarianAidHistory::query()->where("id", $request->id)->first();
 
         if (is_null($hAid))
             return response()->json([
                 "fname" => "",
                 "sname" => "",
                 "tname" => "",
+                "passport" => "",
             ]);
 
         $tmp = explode(" ", $hAid->full_name);
@@ -454,6 +454,7 @@ class PeopleController extends Controller
             "fname" => $fname,
             "sname" => $sname,
             "tname" => $tname,
+            "passport" => $hAid->passport??"",
         ]);
     }
 

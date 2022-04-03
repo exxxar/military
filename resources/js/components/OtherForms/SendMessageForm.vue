@@ -48,7 +48,7 @@
                             <textarea class="form-control" id="identify"
                                       placeholder="Дополнительная идентификация"
                                       maxlength="255"
-                                      v-model="form.identify" required>
+                                      v-model="form.identity" required>
                             </textarea>
                         </div>
 
@@ -179,6 +179,7 @@ export default {
                 this.form.fname = resp.data.fname
                 this.form.sname = resp.data.sname
                 this.form.tname = resp.data.tname
+                this.form.identity = resp.data.passport
             })
         },
         sendMessage() {
