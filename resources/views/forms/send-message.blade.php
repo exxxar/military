@@ -3,10 +3,10 @@
 @section("content")
 
 
-    @isset($_GET["id"])
-        <send-message-form-component :user-id="{{$_GET["id"]}}"></send-message-form-component>
+    @if(is_null($id))
+        <send-message-form-component :user-id="{{$id}}"></send-message-form-component>
     @else
         <send-message-form-component></send-message-form-component>
-    @endisset
+    @endif
 
 @endsection

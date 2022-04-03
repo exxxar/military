@@ -96,7 +96,7 @@
                         @click="fill(item)"
                         v-for="(item, index) in history"
                     >
-                        {{ item.full_name }} <a href="/forms/send-message" target="_blank">Оставить записку</a><span class="badge bg-primary rounded-pill">{{ item.issue_at }}</span>
+                        {{ item.full_name }} <a :href="'/forms/send-message/'+item.id" target="_blank">Оставить записку</a><span class="badge bg-primary rounded-pill">{{ item.issue_at }}</span>
                     </li>
                 </ul>
 
