@@ -72,6 +72,7 @@
                     <span class="badge bg-success" v-if="item.type==1">вышел на связь</span>
                     <a class="text-truncate mb-2 d-block fz-12 text-decoration-underline"
                             :href="'/forms/pdf/download?uuid='+item.uuid" target="_blank">Открыть pdf документ</a>
+                    <a :href="'/forms/send-message/'+item.id+'?uid='+userId+'&by=people'" target="_blank">Оставить записку</a>
                 </div>
 
                 <ul class="list-group" v-if="history.length>0">
@@ -91,7 +92,7 @@
                         @click="fill(item)"
                         v-for="(item, index) in history"
                     >
-                        {{ item.full_name }} <a :href="'/forms/send-message/'+item.id+'?uid='+uId" target="_blank">Оставить записку</a><span class="badge bg-primary rounded-pill">{{ item.issue_at }}</span>
+                        {{ item.full_name }} <a :href="'/forms/send-message/'+item.id+'?uid='+userId" target="_blank">Оставить записку</a><span class="badge bg-primary rounded-pill">{{ item.issue_at }}</span>
                     </li>
                 </ul>
 
