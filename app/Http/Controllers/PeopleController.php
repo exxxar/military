@@ -144,7 +144,7 @@ class PeopleController extends Controller
             $name = $user->full_name ?? $user->name ?? "-";
 
             MilitaryServiceFacade::bot()->sendMessage($user_id,
-                "#поиск_по_базе_народная_дружина\n" .
+                "#поиск_по_базе\n" .
                 "От: $name ($user->telegram_chat_id)".
                 "Кого: $search\n");
         }

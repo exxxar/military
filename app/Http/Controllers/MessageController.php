@@ -113,9 +113,9 @@ class MessageController extends Controller
             $name = $user->full_name ?? $user->name ?? "-";
 
             MilitaryServiceFacade::bot()->sendMessage($user_id,
-                "#письмо_на_фронт_народная_дружина\n" .
-                "Сообщение для пользователя:\n" .
-                "От: $name ($user->telegram_chat_id)".
+                "Ваше письмо успешно добавлено в список на отправку\n" .
+                "#письмо_на_фронт\n" .
+                "От: $name ($user->telegram_chat_id)\n".
                 "Кому: $tname $fname $sname ($identity)\n" .
                 "Сообщение: $sms");
         }

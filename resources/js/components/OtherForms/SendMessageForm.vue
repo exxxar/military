@@ -20,7 +20,7 @@
                     </div>
 
                     <!-- Search Form -->
-                    <form class="mb-3 pb-4 border-bottom" v-on:submit.prevent="sendMessage">
+                    <form class="mb-3 pb-4 border-bottom" v-on:submit.prevent="sendMessage" ref="message">
                         <div class="form-group mb-2">
                             <label for="tname">Фамилия<span
                                 style="color:red;">*</span></label>
@@ -151,6 +151,8 @@ export default {
                 this.loader = false
 
                 this.onCaptchaExpired()
+
+                this.$refs.message.reset();
 
                 setTimeout(()=>{
                     window.location.href = "https://t.me/shelter_dpr_bot"
