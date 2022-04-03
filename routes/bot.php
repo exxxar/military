@@ -363,7 +363,7 @@ MilitaryServiceFacade::bot()
             ->take(1)
             ->offset($offset)
             ->first();
-        
+
 
         if (is_null($people)) {
             MilitaryServiceFacade::bot()->reply("К сожалению что-то пошло не так... мы работаем над этим!");
@@ -396,9 +396,6 @@ MilitaryServiceFacade::bot()
             $photos = $people->photos;
         if (gettype($people->photos) == "string")
             $photos = json_decode($people->photos);
-
-
-        Log::info("count photos=>".count($photos)." ".print_r($photos,true));
 
         if (count($photos) == 0)
             MilitaryServiceFacade::bot()->inlineKeyboard($message, $keyboard);
