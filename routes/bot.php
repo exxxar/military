@@ -349,7 +349,7 @@ MilitaryServiceFacade::bot()
 
         $type = $people->type == 0 ? "заявка на поиск" : "вышел на связь";
         $full_name = ($people->tname ?? "") . " " . ($people->fname ?? "") . " " . ($people->sname ?? "");
-        $id = $people->id;
+
 
         $user_id = $this->chatId;
 
@@ -357,6 +357,13 @@ MilitaryServiceFacade::bot()
             "Ф.И.О.: <b>$full_name</b>";
 
         $url = env("APP_URL");
+
+        $hAid = HumanitarianAidHistory::query()->where("full_name",$full_name)->first();
+
+        $id = null;
+        
+        if (!is_null($hAid))
+            $id = $hAid->id;
 
         $keyboard = [
             [
