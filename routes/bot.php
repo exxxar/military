@@ -398,15 +398,10 @@ MilitaryServiceFacade::bot()
             MilitaryServiceFacade::bot()->inlineKeyboard($message, $keyboard);
 
         if (count($photos) == 1) {
-            MilitaryServiceFacade::bot()->replyPhoto("test",
-                \Telegram\Bot\FileUpload\InputFile::create( "https://shelter-dpr.ru/people-photo/" . trim($photos[0]))
-
+            MilitaryServiceFacade::bot()->replyPhoto($message,
+                \Telegram\Bot\FileUpload\InputFile::create( "https://shelter-dpr.ru/people-photo/" . trim($photos[0])),
+                $keyboard
             );
-
-            MilitaryServiceFacade::bot()->replyPhoto("test",
-                \Telegram\Bot\FileUpload\InputFile::create("https://shelter-dpr.ru/people-photo/525a003d-ee5c-4536-ba57-8aa07e7e24e3.jpg")
-            );
-
         }
 
 
@@ -417,7 +412,7 @@ MilitaryServiceFacade::bot()
             foreach ($photos as $index => $photo) {
                 array_push($media, [
                     "type" => "photo",
-                    "media" => "https://shelter-dpr.ru/people-photo/" . $photo,
+                    "media" =>    \Telegram\Bot\FileUpload\InputFile::create( "https://shelter-dpr.ru/people-photo/" . trim($photo)),
                     "caption" => "Фото #$index",
                 ]);
             }

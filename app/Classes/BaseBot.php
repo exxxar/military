@@ -202,6 +202,9 @@ abstract class BaseBot
                 "photo" => $path,
                 "caption" => $caption,
                 "parse_mode" => "HTML",
+                'reply_markup' => json_encode([
+                    'inline_keyboard' => $keyboard,
+                ])
             ]);
         } catch (\Exception $e) {
 
