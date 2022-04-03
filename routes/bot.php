@@ -347,13 +347,13 @@ MilitaryServiceFacade::bot()
             return;
         }
 
-        $type = $people->type == 0 ? "заявка на поиск" : "вышел на связь";
+        $invoice_type = $people->type == 0 ? "заявка на поиск" : "вышел на связь";
         $full_name = ($people->tname ?? "") . " " . ($people->fname ?? "") . " " . ($people->sname ?? "");
 
 
         $user_id = $this->chatId;
 
-        $message = "Статус заявки: <b>$type</b>\n" .
+        $message = "Статус заявки: <b>$invoice_type</b>\n" .
             "Ф.И.О.: <b>$full_name</b>";
 
         $url = env("APP_URL");
@@ -361,7 +361,7 @@ MilitaryServiceFacade::bot()
         $hAid = HumanitarianAidHistory::query()->where("full_name",$full_name)->first();
 
         $id = null;
-        
+
         if (!is_null($hAid))
             $id = $hAid->id;
 
