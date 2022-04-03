@@ -1,6 +1,7 @@
 <?php
 
 use App\Exports\ShelterExport;
+use App\Facades\MilitaryServiceFacade;
 use App\Imports\PeopleAndAidImport;
 use App\Models\HumanitarianAidHistory;
 use App\Models\People;
@@ -28,12 +29,15 @@ use Telegram\Bot\FileUpload\InputFile;
 */
 
 Route::get("/test-3", function () {
-
+/*
     ini_set('memory_limit', '7560M');
     ini_set('max_execution_time', 1223200);
     Excel::import(new PeopleAndAidImport(), storage_path('app/') . "3.xls");
 
-    return "test";
+    return "test";*/
+
+
+
 
 });
 Route::get("/test-test", function () {
@@ -73,7 +77,7 @@ Route::get("/test-test", function () {
                     ."<br>";*/
     //  }
 
-    ini_set('memory_limit', '2560M');
+    /*ini_set('memory_limit', '2560M');
     ini_set('max_execution_time', 226200);
     $tmp = json_decode(Storage::get("Base12022-4-2-19-4-886-b9097ac3-9362-43fe-87bf-a88daed7584f.json"));
     foreach ($tmp as $item) {
@@ -108,7 +112,7 @@ Route::get("/test-test", function () {
         $people->tname = $item->tname ?? "";
         $people->type = 1;
         $people->passport = $item->passport;
-        $people->save();
+        $people->save();*/
 
         /* $people = People::query()->where("fname", $item->sname)
              ->where("sname", $item->sname)
@@ -138,7 +142,7 @@ Route::get("/test-test", function () {
            }*/
 
 
-    }
+   // }
 
 
     /*

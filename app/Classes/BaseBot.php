@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 
+use Illuminate\Support\Facades\Log;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
@@ -219,10 +220,10 @@ abstract class BaseBot
         try {
             $this->bot->sendMediaGroup([
                 "chat_id" => $chatId,
-                "media" => $media,
+                "media" => json_encode($media),
             ]);
         } catch (\Exception $e) {
-
+            Log::info($e);
         }
 
         return $this;
