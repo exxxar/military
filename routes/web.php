@@ -192,7 +192,6 @@ Route::prefix('/forms')->group(function () {
     Route::view("/need-people-search-request", "forms.people-search-online");
     Route::view("/search-in-base", "forms.search-in-base");
     Route::get("/send-message/{id?}", function ($id = null){
-
         return view("forms.send-message",compact("id"));
     });
     Route::post("/send-message", [\App\Http\Controllers\MessageController::class, "sendMessage"]);

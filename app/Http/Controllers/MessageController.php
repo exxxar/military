@@ -8,6 +8,7 @@ use App\Http\Requests\MessageUpdateRequest;
 use App\Http\Resources\MessageCollection;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
+use App\Models\User;
 use App\Rules\Recaptcha;
 use Illuminate\Http\Request;
 
@@ -84,21 +85,41 @@ class MessageController extends Controller
         $sname = $request->sname ?? "";
         $tname = $request->tname ?? "";
         $sms = $request->sms ?? "";
-        $h_user_id = $request->user_id ?? null;
+        $person_id = $request->person_id ?? null;
+        $user_id = $request->user_id ?? null;
 
 
         Message::create([
             "full_name" => "$tname $fname $sname",
             "identity" => $identity,
             "sms" => $sms,
-            "h_user_id"=>$h_user_id
+            "h_user_id" => $person_id
         ]);
+
 
         MilitaryServiceFacade::bot()->sendMessage(env("PEOPLE_LOGGER_CHANNEL"),
             "#письмо_на_фронт_народная_дружина\n" .
             "Сообщение для пользователя:\n" .
+            "От:\n" .
             "Кому: $tname $fname $sname ($identity)\n" .
             "Сообщение: $sms");
+
+        if (!is_null($user_id)) {
+            $user = User::query()->where("telegram_chat_id",$user_id)->first();
+
+            if (is_null($user))
+                return response()->noContent();
+
+            $name = $user->full_name ?? $user->name ?? "-";
+
+            MilitaryServiceFacade::bot()->sendMessage($user_id,
+                "#письмо_на_фронт_народная_дружина\n" .
+                "Сообщение для пользователя:\n" .
+                "От: $name ($user->telegram_chat_id)".
+                "Кому: $tname $fname $sname ($identity)\n" .
+                "Сообщение: $sms");
+        }
+
 
         return response()->noContent();
     }

@@ -382,7 +382,7 @@ MilitaryServiceFacade::bot()
 
         $keyboard = [
             [
-                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message/$people->id?by=people"],
+                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message/$people->id?by=people&uid=$user_id"],
                 ["text" => "\xE2\x9D\xA4Есть инфо", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=1"],
             ],
 
@@ -503,7 +503,7 @@ MilitaryServiceFacade::bot()
                     $bId = $item->id;
 
                     $tmp .= ($index + 1) . "# " . $item->full_name . " (гум. помощь "
-                        . \Carbon\Carbon::parse($item->issue_at)->toDateString() . ")\n<a href='https://shelter-dpr.ru/forms/send-message/$bId'>\xF0\x9F\x93\xA7Оставить записку</a>\n";
+                        . \Carbon\Carbon::parse($item->issue_at)->toDateString() . ")\n<a href='https://shelter-dpr.ru/forms/send-message/$bId?uid=$user->telegram_chat_id'>\xF0\x9F\x93\xA7Оставить записку</a>\n";
                 }
 
                 MilitaryServiceFacade::bot()->reply(

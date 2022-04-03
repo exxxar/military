@@ -113,6 +113,10 @@ export default {
             type: String,
             default: null
         },
+        personId: {
+            type: String,
+            default: null
+        },
         dataType: {
             type: String,
             default: 'haids'
@@ -176,7 +180,7 @@ export default {
             if (this.userId == null)
                 return
 
-            axios.get("/forms/load-user-by-id?id=" + this.userId+"&type="+this.dataType).then(resp=>{
+            axios.get("/forms/load-user-by-id?id=" + this.personId+"&type="+this.dataType).then(resp=>{
                 this.form.fname = resp.data.fname
                 this.form.sname = resp.data.sname
                 this.form.tname = resp.data.tname
@@ -185,6 +189,7 @@ export default {
         },
         sendMessage() {
             this.form.user_id = this.userId;
+            this.form.person_id = this.personId;
             this.form.type = this.type;
             this.loader = true
             this.message = null
