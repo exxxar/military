@@ -199,6 +199,7 @@ Route::prefix('/forms')->group(function () {
     Route::post("/search-in-base", [\App\Http\Controllers\PeopleController::class, "searchInBase"]);
     Route::post("/need-people-search-online", [\App\Http\Controllers\PeopleController::class, "needPeopleSearchOnline"]);
     Route::post("/upload-photos", [\App\Http\Controllers\PeopleController::class, "uploadPhotos"]);
+    Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
 
     Route::middleware("auth")->group(function () {
         Route::view("/request-people", "forms.request-people");
@@ -206,8 +207,6 @@ Route::prefix('/forms')->group(function () {
         Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);
         Route::get("/excel/export-people", [\App\Http\Controllers\PeopleController::class, "exportExcelPeople"]);
         Route::get("/pdf/export-people", [\App\Http\Controllers\PeopleController::class, "exportPdfPeople"]);
-        Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
-
         Route::post("/find-people", [\App\Http\Controllers\PeopleController::class, "searchPeople"]);
     });
 

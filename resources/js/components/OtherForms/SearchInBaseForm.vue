@@ -13,11 +13,6 @@
                     <p class="mb-2 fz-12">Найдено {{ peoples.length }} результатов поиска</p>
                     <small>В поиск выдает последние 10 записей</small>
 
-                    <div class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert">
-                        <i class="bi bi-check-circle"></i>В данном блоке отображены заявки, которые есть в системе.
-                        <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button"
-                                data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
 
                     <!-- Search Form -->
                     <form class="mb-3 pb-4 border-bottom" v-on:submit.prevent="search">
