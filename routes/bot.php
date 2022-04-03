@@ -392,15 +392,14 @@ MilitaryServiceFacade::bot()
             $photos = json_decode($people->photos);
 
 
-        Log::info("count photos=>".count($photos));
+        Log::info("count photos=>".count($photos)." ".print_r($photos,true));
 
         if (count($photos) == 0)
             MilitaryServiceFacade::bot()->inlineKeyboard($message, $keyboard);
 
         if (count($photos) == 1)
             MilitaryServiceFacade::bot()->replyPhoto($message,
-                "https://shelte-dpr.ru/people-photo/" . $photos[0],
-                $keyboard
+                "https://shelte-dpr.ru/people-photo/" . $photos[0]
             );
 
         if (count($photos) > 1) {
