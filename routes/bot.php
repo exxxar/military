@@ -349,7 +349,7 @@ MilitaryServiceFacade::bot()
 
         $type = $people->type == 0 ? "заявка на поиск" : "вышел на связь";
         $full_name = ($people->tname ?? "") . " " . ($people->fname ?? "") . " " . ($people->sname ?? "");
-        $id = base64_encode($people->id);
+        $id = $people->id;
 
         $user_id = $this->chatId;
 
@@ -360,7 +360,7 @@ MilitaryServiceFacade::bot()
 
         $keyboard = [
             [
-                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message?id=$id"],
+                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message/$id"],
                 ["text" => "\xE2\x9D\xA4Есть инфо", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=1"],
             ],
 
@@ -369,7 +369,7 @@ MilitaryServiceFacade::bot()
             ],
         ];
 
-        $photos = json_decode($people->photos);
+        $photos = $people->photos;
         if (count($photos) == 0)
             MilitaryServiceFacade::bot()->replyKeyboard($message, $keyboard);
 
