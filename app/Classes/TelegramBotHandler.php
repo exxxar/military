@@ -14,28 +14,7 @@ class TelegramBotHandler extends BaseBot
     {
         $this->bot = new Api(env("TELEGRAM_BOT_TOKEN"));
 
-
         //$this->bot->setWebhook(['url' => 'https://api.telegram.org/bot482400672:AAEZu9rGFZfbMOwrqCghI9cR4JhUAf_4xjQ/setWebhook?url=https://9324-109-254-191-71.ngrok.io']);
-
-        $response = $this->bot->getMe();
-
-        $botId = $response->getId();
-        $firstName = $response->getFirstName();
-        $username = $response->getUsername();
-
-
-        $this->user = User::query()->where("telegram_chat_id", $botId)->first();
-
-        if (is_null($this->user)) {
-            $this->user = User::query()->create([
-                'name' => $username ?? $firstName ?? null,
-                'email' => "$botId@donbassit.ru",
-                'telegram_chat_id' => $botId,
-                'password' => bcrypt($botId),
-                'full_name' => $firstName ?? null
-
-            ]);
-        }
     }
 
     public function createUser($from)

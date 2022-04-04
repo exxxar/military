@@ -304,7 +304,7 @@ MilitaryServiceFacade::bot()
             ]
         );
     }, "settings")
-    ->addRoute("/start_circular_search", function ($message){
+    ->addRoute("/start_circular_search", function ($message) {
 
         $message = "Мы по очереди будем покзывать Вам анкеты пользователей! " .
             "Кто-то из них уже вышел на связь, а о ком-то еще нет никакой информации." .
@@ -338,7 +338,7 @@ MilitaryServiceFacade::bot()
             $user->save();
         }
 
-        $type = intval($type)??2;
+        $type = intval($type) ?? 2;
 
         switch ($type) {
             case 0:
@@ -355,7 +355,7 @@ MilitaryServiceFacade::bot()
 
         $people = \App\Models\People::query();
 
-        if ($type==0||$type==1)
+        if ($type == 0 || $type == 1)
             $people = $people->where("type", $type);
 
         $people = $people
@@ -402,7 +402,7 @@ MilitaryServiceFacade::bot()
 
         if (count($photos) >= 1) {
             MilitaryServiceFacade::bot()->replyPhoto($message,
-                \Telegram\Bot\FileUpload\InputFile::create( "https://shelter-dpr.ru/people-photo/" . trim($photos[0])),
+                \Telegram\Bot\FileUpload\InputFile::create("https://shelter-dpr.ru/people-photo/" . trim($photos[0])),
                 $keyboard
             );
         }
@@ -718,7 +718,7 @@ MilitaryServiceFacade::bot()
 \xF0\x9F\x93\x8D раздел контаков с оператором
 \xF0\x9F\x93\x8D изменен механизм поиска людей
 
-Мы работаем для вас и ежедневно обновляем базу найденных людей!
+мы работаем для вас и ежедневно обновляем базу найденных людей!
 ",
 
             [

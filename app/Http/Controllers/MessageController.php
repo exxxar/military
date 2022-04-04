@@ -100,7 +100,6 @@ class MessageController extends Controller
         MilitaryServiceFacade::bot()->sendMessage(env("PEOPLE_LOGGER_CHANNEL"),
             "#письмо_на_фронт_народная_дружина\n" .
             "Сообщение для пользователя:\n" .
-            "От:\n" .
             "Кому: $tname $fname $sname ($identity)\n" .
             "Сообщение: $sms");
 
