@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Utilites\BotUtilities;
+use App\Exports\MessagesExport;
 use App\Exports\PeopleExport;
 use App\Exports\ShelterExport;
 use App\Facades\MilitaryServiceFacade;
@@ -86,6 +87,13 @@ class PeopleController extends Controller
     }
 
 
+    public function exportExcelMessages()
+    {
+        //Excel::store(new PeopleExport(), 'people.xlsx');
+
+        return Excel::download(new MessagesExport(), 'messages.xlsx');
+    }
+
     public function exportExcelPeople()
     {
         //Excel::store(new PeopleExport(), 'people.xlsx');
@@ -103,8 +111,6 @@ class PeopleController extends Controller
         $sname = $request->sname ?? null;
         $tname = $request->tname ?? null;
         $uuid = $request->uuid ?? null;
-
-      ;
 
         $peoples = People::query();
 
@@ -134,7 +140,6 @@ class PeopleController extends Controller
             ->orderBy("issue_at", "desc")
             ->take(10)
             ->get();
-        
 
         return response()->json([
             "peoples" => new PeopleCollection($peoples),

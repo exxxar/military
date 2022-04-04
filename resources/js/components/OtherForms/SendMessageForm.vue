@@ -48,7 +48,7 @@
                             <textarea class="form-control" id="identify"
                                       placeholder="Дополнительная идентификация"
                                       maxlength="255"
-                                      v-model="form.identity">
+                                      v-model="form.identify">
                             </textarea>
                         </div>
 
@@ -133,7 +133,7 @@ export default {
                 fname: null,
                 sname: null,
                 tname: null,
-                identity: null,
+                identify: null,
                 type: null,
 
                 recaptcha: null
@@ -186,7 +186,7 @@ export default {
                 this.form.fname = resp.data.fname
                 this.form.sname = resp.data.sname
                 this.form.tname = resp.data.tname
-                this.form.identity = resp.data.passport
+                this.form.identify = resp.data.passport
             })
         },
         sendMessage() {

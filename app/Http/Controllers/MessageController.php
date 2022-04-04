@@ -80,7 +80,7 @@ class MessageController extends Controller
             'recaptcha' => ['required', $recaptcha],
         ]);
 
-        $identity = $request->identity ?? "";
+        $identify= $request->identify ?? "";
         $fname = $request->fname ?? "";
         $sname = $request->sname ?? "";
         $tname = $request->tname ?? "";
@@ -91,7 +91,7 @@ class MessageController extends Controller
 
         Message::create([
             "full_name" => "$tname $fname $sname",
-            "identity" => $identity,
+            "identify" => $identify,
             "sms" => $sms,
             "h_user_id" => $person_id
         ]);

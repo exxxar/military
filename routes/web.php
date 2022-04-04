@@ -200,6 +200,7 @@ Route::prefix('/forms')->group(function () {
     Route::post("/need-people-search-online", [\App\Http\Controllers\PeopleController::class, "needPeopleSearchOnline"]);
     Route::post("/upload-photos", [\App\Http\Controllers\PeopleController::class, "uploadPhotos"]);
     Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
+    Route::get("/messages/export", [\App\Http\Controllers\PeopleController::class, "exportExcelMessages"]);
 
     Route::middleware("auth")->group(function () {
         Route::view("/request-people", "forms.request-people");
