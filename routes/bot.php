@@ -498,7 +498,6 @@ MilitaryServiceFacade::bot()
 
                 $hAids = $hAids->take(30);
 
-
                 foreach ($hAids as $index => $item) {
                     $bId = $item->id;
 

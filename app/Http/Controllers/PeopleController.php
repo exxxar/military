@@ -104,7 +104,7 @@ class PeopleController extends Controller
         $tname = $request->tname ?? null;
         $uuid = $request->uuid ?? null;
 
-        $user_id = $request->user_id??null;
+      ;
 
         $peoples = People::query();
 
@@ -134,20 +134,7 @@ class PeopleController extends Controller
             ->orderBy("issue_at", "desc")
             ->take(10)
             ->get();
-
-        if (!is_null($user_id)) {
-            $user = User::query()->where("telegram_chat_id",$user_id)->first();
-
-            if (is_null($user))
-                return response()->noContent();
-
-            $name = $user->full_name ?? $user->name ?? "-";
-
-            MilitaryServiceFacade::bot()->sendMessage($user_id,
-                "#поиск_по_базе\n" .
-                "От: $name ($user->telegram_chat_id)".
-                "Кого: $search\n");
-        }
+        
 
         return response()->json([
             "peoples" => new PeopleCollection($peoples),
