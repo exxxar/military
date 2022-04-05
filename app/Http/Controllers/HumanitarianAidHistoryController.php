@@ -92,14 +92,14 @@ class HumanitarianAidHistoryController extends Controller
 
     public function import(Request $request){
 
-            $file = $request->file('file');
+         /*   $file = $request->file('file');
 
             $destinationPath = storage_path('app/public');
             $file->move($destinationPath, $file->getClientOriginalName());
             ini_set('memory_limit','7560M');
             ini_set('max_execution_time', 1223200);
             Excel::import(new PeopleAndAidImport(), storage_path('app/public/') . $file->getClientOriginalName());
-
+*/
 
             return response()->noContent();
 
