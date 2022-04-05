@@ -28,18 +28,7 @@ use Telegram\Bot\FileUpload\InputFile;
 |
 */
 
-Route::get("/test-3", function () {
-/*
-    ini_set('memory_limit', '7560M');
-    ini_set('max_execution_time', 1223200);
-    Excel::import(new PeopleAndAidImport(), storage_path('app/') . "3.xls");
 
-    return "test";*/
-
-
-
-
-});
 Route::get("/test-test", function () {
 
     /* ini_set('memory_limit','2560M');
@@ -167,7 +156,7 @@ Route::get("/test-test", function () {
     /*  ini_set('memory_limit','2560M');
       ini_set('max_execution_time', 1200);*/
 
-
+/*
       $users = \App\Models\User::query()->get();
 
       foreach ($users as $user){
@@ -183,7 +172,7 @@ Route::get("/test-test", function () {
   05.04 - 06.04 будут вывешены отправленные сообщения в Мариуполе
   "
               );
-      }
+      }*/
 
 });
 
@@ -212,13 +201,14 @@ Route::prefix('/forms')->group(function () {
         Route::get("/excel/export-people", [\App\Http\Controllers\PeopleController::class, "exportExcelPeople"]);
         Route::get("/pdf/export-people", [\App\Http\Controllers\PeopleController::class, "exportPdfPeople"]);
         Route::post("/find-people", [\App\Http\Controllers\PeopleController::class, "searchPeople"]);
+
+        Route::post("/h-aid-import", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "import"]);
+        Route::get("/h-aid-export", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "export"]);
+        Route::post("/h-aid-search", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "search"]);
     });
 
     Route::view("/h-aid", "forms.h-aid");
     Route::post("/h-aid", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "hAidAdd"]);
-    Route::post("/h-aid-import", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "import"]);
-    Route::get("/h-aid-export", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "export"]);
-    Route::post("/h-aid-search", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "search"]);
 
     Route::view("/need-help", "forms.help");
     Route::post("/need-help", [\App\Http\Controllers\FormHandlerController::class, "needHelpStore"]);

@@ -19,6 +19,8 @@ class Message extends Model
         'sms',
         'identify',
         'h_user_id',
+        'user_id',
+        'send_at',
     ];
 
     /**
@@ -31,4 +33,8 @@ class Message extends Model
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp',
     ];
+
+    public function user(){
+        return$this->hasOne(User::class,"id","user_id");
+    }
 }
