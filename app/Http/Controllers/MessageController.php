@@ -86,7 +86,7 @@ class MessageController extends Controller
         $tname = $request->tname ?? "";
         $sms = $request->sms ?? "";
         $person_id = $request->person_id ?? null;
-        $user_id = $request->user_id ?? null;
+        //$user_id = $request->user_id ?? null;
 
 
         Message::create([
@@ -100,10 +100,10 @@ class MessageController extends Controller
         MilitaryServiceFacade::bot()->sendMessage(env("PEOPLE_LOGGER_CHANNEL"),
             "#письмо_на_фронт_народная_дружина\n" .
             "Сообщение для пользователя:\n" .
-            "Кому: $tname $fname $sname ($identity)\n" .
+            "Кому: $tname $fname $sname ($identify)\n" .
             "Сообщение: $sms");
 
-        if (!is_null($user_id)) {
+      /*  if (!is_null($user_id)) {
             $user = User::query()->where("telegram_chat_id",$user_id)->first();
 
             if (is_null($user))
@@ -115,9 +115,9 @@ class MessageController extends Controller
                 "Ваше письмо успешно добавлено в список на отправку\n" .
                 "#письмо_на_фронт\n" .
                 "От: $name ($user->telegram_chat_id)\n".
-                "Кому: $tname $fname $sname ($identity)\n" .
+                "Кому: $tname $fname $sname ($identify)\n" .
                 "Сообщение: $sms");
-        }
+        }*/
 
 
         return response()->noContent();
