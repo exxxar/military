@@ -179,7 +179,7 @@ export default {
             this.$refs.recaptcha.reset();
         },
         loadUserById() {
-            if (this.userId == null)
+            if (this.personId == null)
                 return
 
             axios.get("/forms/load-user-by-id?id=" + this.personId+"&type="+this.dataType).then(resp=>{

@@ -371,12 +371,9 @@ class PeopleController extends Controller
         $images = [];
         if ($request->images) {
 
-            $media = [];
             foreach ($request->images as $key => $image) {
                 $imageName = Str::uuid() . '.' . $image->extension();
                 $image->storeAs('images', $imageName);
-
-                //  dd(storage_path('app\images') . "$imageName");
 
                 $uuid = "-";
 
@@ -392,30 +389,11 @@ class PeopleController extends Controller
                         InputFile::create(storage_path('app/images') . "/" . $imageName)
                     );
 
-                /* array_push($media, [
-                     "type" => "photo",
-                     "media" =>  "attach://".storage_path('app\images') . "\\" . $imageName,
-                     "caption" => "Фото к заявке " . ($uuid ?? "не указан"),
-                 ]);*/
-
                 array_push($images, $imageName);
 
             }
 
-            /* if (count($media) >= 2)
-                 MilitaryServiceFacade::bot()
-                     ->sendMediaGroup(env("PEOPLE_LOGGER_CHANNEL"),
-                         json_encode($media)
-                     );
-             else {
-                 MilitaryServiceFacade::bot()
-                     ->sendPhoto(env("PEOPLE_LOGGER_CHANNEL"),
-                         $media[0]["caption"],
-                         $media[0]["media"],
-                     );
-             }*/
 
-            // dd($media);
         }
 
         if (!is_null($id)) {
@@ -429,7 +407,6 @@ class PeopleController extends Controller
             $person->photos = json_encode($images);
             $person->save();
         }
-
 
         return response()->noContent();
 
