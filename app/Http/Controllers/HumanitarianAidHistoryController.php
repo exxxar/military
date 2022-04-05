@@ -20,6 +20,7 @@ use App\Models\HumanitarianAidHistory;
 use App\Models\People;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -84,46 +85,51 @@ class HumanitarianAidHistoryController extends Controller
         return response()->noContent();
     }
 
-    public function export(Request $request){
+    public function export(Request $request)
+    {
         return Excel::download(new HAidHistoryExport(), 'h-aid.xlsx');
     }
 
 
+    public function import(Request $request)
+    {
 
-    public function import(Request $request){
+        $file = $request->file('file');
 
-         /*   $file = $request->file('file');
-
-            $destinationPath = storage_path('app/public');
-            $file->move($destinationPath, $file->getClientOriginalName());
-            ini_set('memory_limit','7560M');
-            ini_set('max_execution_time', 1223200);
-            Excel::import(new PeopleAndAidImport(), storage_path('app/public/') . $file->getClientOriginalName());
-*/
-
+        if (is_null($file))
             return response()->noContent();
+
+        $destinationPath = storage_path('app/public');
+        $file->move($destinationPath, $file->getClientOriginalName());
+        ini_set('memory_limit', '7560M');
+        ini_set('max_execution_time', 1223200);
+        Excel::import(new PeopleAndAidImport(), storage_path('app/public/') . $file->getClientOriginalName());
+
+
+        return response()->noContent();
 
     }
 
-    public function hAidAdd(Request $request){
+    public function hAidAdd(Request $request)
+    {
 
-            $uuid = Str::uuid();
-            $title = $this->storeJson("h-aid-", $uuid, $request->toArray());
+        $uuid = Str::uuid();
+        $title = $this->storeJson("h-aid-", $uuid, $request->toArray());
 
-            $tmp = (object)$request->all();
+        $tmp = (object)$request->all();
 
-            try {
-                $tmp->issue_at = !is_null($tmp->issue_at) ?
-                    Carbon::parse($tmp->issue_at)->toDateTimeString(): null;
+        try {
+            $tmp->issue_at = !is_null($tmp->issue_at) ?
+                Carbon::parse($tmp->issue_at)->toDateTimeString() : null;
 
-            } catch (\Exception  $e) {
-                $tmp->issue_at = null;
-            }
+        } catch (\Exception  $e) {
+            $tmp->issue_at = null;
+        }
 
 
-            HumanitarianAidHistory::create((array)$tmp);
+        HumanitarianAidHistory::create((array)$tmp);
 
-            return response()->noContent();
+        return response()->noContent();
 
 
     }
@@ -132,15 +138,15 @@ class HumanitarianAidHistoryController extends Controller
     {
 
         $request->validate([
-           "search"=>"required"
+            "search" => "required"
         ]);
         $search = $request->search ?? null;
 
 
         $aid = HumanitarianAidHistory::query()
-            ->where("full_name", "like","%$search%")
-            ->orWhere("passport","like","%$search%")
-            ->orderBy("issue_at","desc")
+            ->where("full_name", "like", "%$search%")
+            ->orWhere("passport", "like", "%$search%")
+            ->orderBy("issue_at", "desc")
             ->take(10)
             ->get();
 
