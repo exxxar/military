@@ -208,10 +208,12 @@ Route::prefix('/forms')->group(function () {
         Route::post("/h-aid-import", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "import"]);
         Route::get("/h-aid-export", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "export"]);
         Route::post("/h-aid-search", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "search"]);
+
+        Route::view("/h-aid", "forms.h-aid");
+        Route::post("/h-aid", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "hAidAdd"]);
     });
 
-    Route::view("/h-aid", "forms.h-aid");
-    Route::post("/h-aid", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "hAidAdd"]);
+
 
     Route::view("/need-help", "forms.help");
     Route::post("/need-help", [\App\Http\Controllers\FormHandlerController::class, "needHelpStore"]);
