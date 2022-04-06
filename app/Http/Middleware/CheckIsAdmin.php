@@ -27,7 +27,7 @@ class CheckIsAdmin
 
         if (!$user->is_admin) {
             session()->flash('warning', 'У вас нет прав администратора');
-            return redirect()->route('catalog');//здесь был index
+            return redirect()->back();//здесь был index
         }
 
         return $next($request);
