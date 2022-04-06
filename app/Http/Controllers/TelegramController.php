@@ -8,6 +8,7 @@ use Azate\LaravelTelegramLoginAuth\Contracts\Telegram\NotAllRequiredAttributesEx
 use Azate\LaravelTelegramLoginAuth\Contracts\Validation\Rules\ResponseOutdatedException;
 use Azate\LaravelTelegramLoginAuth\Contracts\Validation\Rules\SignatureException;
 use Azate\LaravelTelegramLoginAuth\TelegramLoginAuth;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Api;
@@ -24,15 +25,19 @@ class TelegramController extends Controller
         try {
             $user = $telegramLoginAuth->validateWithError($request);
 
-            Log::info(print_r($user,true));
+            Log::info(print_r($user->toArray(),true));
+            Log::info($user->getId());
+            Log::info($user->getFirstName());
+            Log::info($user->getLastName());
+            Log::info($user->getPhotoUrl());
         } catch(NotAllRequiredAttributesException $e) {
-            // ...
+            Log::info($e->getMessage());
         } catch(SignatureException $e) {
-            // ...
+            Log::info($e->getMessage());
         } catch(ResponseOutdatedException $e) {
-            // ...
+            Log::info($e->getMessage());
         } catch(Exception $e) {
-            // ...
+            Log::info($e->getMessage());
         }
 
         Log::info("Test");
