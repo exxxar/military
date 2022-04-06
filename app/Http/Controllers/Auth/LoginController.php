@@ -45,22 +45,5 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function handleTelegramCallback(TelegramLoginAuth $telegramLoginAuth, Request $request)
-    {
-        try {
-            $user = $telegramLoginAuth->validateWithError($request);
 
-            Log::info(print_r($user,true));
-        } catch(NotAllRequiredAttributesException $e) {
-            // ...
-        } catch(SignatureException $e) {
-            // ...
-        } catch(ResponseOutdatedException $e) {
-            // ...
-        } catch(Exception $e) {
-            // ...
-        }
-
-        // ...
-    }
 }
