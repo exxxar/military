@@ -30,7 +30,9 @@
     <link rel="stylesheet" href="{{asset('/css/rangeslider.css')}}">
     <link rel="stylesheet" href="{{asset('/css/vanilla-dataTables.min.css')}}">
     <link rel="stylesheet" href="{{asset('/css/apexcharts.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="{{asset('/style.css')}}">
     <!-- Web App Manifest -->
@@ -53,7 +55,18 @@
 <div class="internet-connection-status" id="internetStatus"></div>
 
 @if (!Auth::check())
-    <script async src="https://telegram.org/js/telegram-widget.js?18" data-telegram-login="shelter_dpr_bot" data-size="large" data-auth-url="https://shelter-dpr.ru/telegram/callback" data-request-access="write"></script>
+    <div class="page-content-wrapper py-3">
+        <div class="container">
+            <div class="card">
+                <div class="card-body d-flex justify-content-center">
+                    <script async src="https://telegram.org/js/telegram-widget.js?18"
+                            data-telegram-login="shelter_dpr_bot" data-size="large"
+                            data-auth-url="https://shelter-dpr.ru/telegram/callback"
+                            data-request-access="write"></script>
+                </div>
+            </div>
+        </div>
+    </div>
 @endif
 
 <div id="app">
@@ -74,7 +87,9 @@
 <script src="{{asset('/js/magic-grid.min.js')}}"></script>
 <script src="{{asset('/js/dark-rtl.js')}}"></script>
 <script src="{{asset('/js/active.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" integrity="sha512-yFjZbTYRCJodnuyGlsKamNE/LlEaEAxSUDe5+u61mV8zzqJVFOH7TnULE2/PP/l5vKWpUNnF4VGVkXh3MjgLsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"
+        integrity="sha512-yFjZbTYRCJodnuyGlsKamNE/LlEaEAxSUDe5+u61mV8zzqJVFOH7TnULE2/PP/l5vKWpUNnF4VGVkXh3MjgLsg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- PWA -->
 <script src="{{asset('/js/pwa.js')}}"></script>
 

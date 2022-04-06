@@ -28,9 +28,9 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function (){
 
 Route::get('shelters/regions', [ShelterController::class, 'regions']);
 Route::get('shelters/search', [ShelterController::class, 'search']);
-Route::post('shelters/new-shelter', [ShelterController::class, 'newShelter']);
+/*Route::post('shelters/new-shelter', [ShelterController::class, 'newShelter']);
 Route::get('shelters/download/excel', [ShelterController::class, 'downloadExcel']);
-Route::get('shelters/download/pdf', [ShelterController::class, 'downloadPdf']);
+Route::get('shelters/download/pdf', [ShelterController::class, 'downloadPdf']);*/
 
 
 /*
@@ -51,7 +51,7 @@ Route::get('shelters/download/pdf', [ShelterController::class, 'downloadPdf']);
 
 Route::apiResource("shelters", ShelterController::class);
 
-Route::post('login', [AuthController::class, 'signin']);
+/*Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
 
 
@@ -65,4 +65,4 @@ Route::apiResource('people', App\Http\Controllers\PeopleController::class);
 Route::apiResource('humanitarian-aid-history', App\Http\Controllers\HumanitarianAidHistoryController::class);
 
 
-Route::apiResource('message', App\Http\Controllers\MessageController::class);
+Route::apiResource('message', App\Http\Controllers\MessageController::class);*/

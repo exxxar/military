@@ -242,8 +242,6 @@ Route::prefix('/forms')->group(function () {
 
     Route::view("/help-clothes", "forms.help-clothes");
     Route::post("/help-clothes", [\App\Http\Controllers\FormHandlerController::class, "helpWithClothesStore"]);
-
-
 });
 
 Route::any('/telegram/callback', [\App\Http\Controllers\TelegramController::class, "handleTelegramCallback"] );
@@ -253,7 +251,3 @@ Route::get("/people-photo/{path}", [\App\Http\Controllers\PeopleController::clas
 
 Route::view('/{any?}', 'welcome')->name('mobile.index')->where('any', '.*');
 
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
