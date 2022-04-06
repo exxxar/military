@@ -47,7 +47,7 @@ class TelegramController extends Controller
 
             $credentials = [
                 "email"=>$user->email,
-                "password"=>$user->getId()
+                "password"=>$user->telegram_chat_id
             ];
 
             $msg = $user->is_admin?"Администратор":"Пользователь";
@@ -55,7 +55,7 @@ class TelegramController extends Controller
             MilitaryServiceFacade::bot()->sendMessage($user->telegram_chat_id,"Уважаемый $msg! Вы успешно авторизовались на сайте!");
 
             if (Auth::attempt($credentials)) {
-                return redirect()->back();
+                return redirect()->route("mobile.index");
             }
 
         } catch(NotAllRequiredAttributesException $e) {
