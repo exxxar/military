@@ -37,8 +37,10 @@
     <link rel="manifest" href="{{asset('/manifest.json')}}">
 
     @if(\Illuminate\Support\Facades\Auth::check())
-        <meta name="current-user" content="{{\Illuminate\Support\Facades\Auth::user()}}">
+        <meta name="user" content="{{ App\Models\User::self() }}"/>
     @endif
+
+
 </head>
 <body>
 <!-- Preloader -->
@@ -50,8 +52,9 @@
 <!-- # This code for showing internet connection status -->
 <div class="internet-connection-status" id="internetStatus"></div>
 
-<script async src="https://telegram.org/js/telegram-widget.js?18" data-telegram-login="shelter_dpr_bot" data-size="large" data-auth-url="https://shelter-dpr.ru/telegram/callback" data-request-access="write"></script>
-
+@if (!Auth::check())
+    <script async src="https://telegram.org/js/telegram-widget.js?18" data-telegram-login="shelter_dpr_bot" data-size="large" data-auth-url="https://shelter-dpr.ru/telegram/callback" data-request-access="write"></script>
+@endif
 
 <div id="app">
     <application></application>

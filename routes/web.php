@@ -197,7 +197,7 @@ Route::prefix('/forms')->group(function () {
     Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
     Route::get("/messages/export", [\App\Http\Controllers\PeopleController::class, "exportExcelMessages"]);
 
-    Route::middleware("auth")->group(function () {
+    Route::middleware(["auth","admin"])->group(function () {
         Route::view("/request-people", "forms.request-people");
         Route::view("/need-people-search", "forms.people-search");
         Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);

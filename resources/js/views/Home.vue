@@ -1,10 +1,7 @@
 <template>
-<!--    <header-component/>
-    <side-bar-component/>
-    <home-page/>
-    <footer-component/>-->
+
     <functions-page/>
-    <div class="container">
+<!--    <div class="container">
         <div class="card">
             <div class="card-body">
 
@@ -35,5 +32,5 @@
                 <p class="mb-0">It's operates secure data networks protected by industry-standard firewalls and password protection systems. Our security and privacy policies are periodically reviewed and enhanced as necessary, and only authorized individuals have access to the information provided by our Clients.</p>
             </div>
         </div>
-    </div>
+    </div>-->
 </template>
