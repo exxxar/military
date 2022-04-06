@@ -4,6 +4,7 @@ use App\Exports\ShelterExport;
 use App\Facades\MilitaryServiceFacade;
 use App\Models\AidCenter;
 use App\Models\HumanitarianAidHistory;
+use App\Models\People;
 use App\Models\Shelter;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
@@ -94,6 +95,9 @@ MilitaryServiceFacade::bot()
         $message = "Запрос на поиск людей либо добавления данных о себе";
 
         MilitaryServiceFacade::bot()->inlineKeyboard($message, [
+            [
+                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message?uid=$user_id"],
+            ],
             [
                 ["text" => "\xF0\x9F\x8E\xB2Просмотр заявок", "callback_data" => "/start_circular_search"],
             ],
@@ -306,6 +310,19 @@ MilitaryServiceFacade::bot()
     }, "settings")
     ->addRoute("/start_circular_search", function ($message) {
 
+        $user = MilitaryServiceFacade::bot()->currentUser();
+
+        if (is_null($user->current_people_index_all)) {
+            $user->current_people_index_all = 0;
+            $user->current_people_index_type_0 = 0;
+            $user->current_people_index_type_1 = 0;
+            $user->save();
+        }
+
+        $not_found_count = People::query()->where("type", 0)->count();
+        $found_count = People::query()->where("type", 1)->count();
+        $all_count = $not_found_count + $found_count;
+
         $message = "Мы по очереди будем покзывать Вам анкеты пользователей! " .
             "Кто-то из них уже вышел на связь, а о ком-то еще нет никакой информации." .
             "Просматривая анкеты Вы можете найти знакомых Вам людей и сообщить о них информацию " .
@@ -313,15 +330,15 @@ MilitaryServiceFacade::bot()
 
         MilitaryServiceFacade::bot()->inlineKeyboard($message, [
             [
-                ["text" => "\x31\xE2\x83\xA3Все заявки", "callback_data" => "/circular_search 2"],
+                ["text" => "\x31\xE2\x83\xA3Все заявки ($user->current_people_index_all / $all_count)", "callback_data" => "/circular_search 2"],
             ],
 
             [
-                ["text" => "\x32\xE2\x83\xA3Только найденные", "callback_data" => "/circular_search 1"],
+                ["text" => "\x32\xE2\x83\xA3Только найденные ($user->current_people_index_type_1 / $found_count)", "callback_data" => "/circular_search 1"],
             ],
 
             [
-                ["text" => "\x33\xE2\x83\xA3Только не найденные", "callback_data" => "/circular_search 0"],
+                ["text" => "\x33\xE2\x83\xA3Только не найденные ( $user->current_people_index_type_0 / $not_found_count)", "callback_data" => "/circular_search 0"],
             ],
 
         ]);
@@ -353,7 +370,7 @@ MilitaryServiceFacade::bot()
                 break;
         }
 
-        $people = \App\Models\People::query();
+        $people = People::query();
 
         if ($type == 0 || $type == 1)
             $people = $people->where("type", $type);
@@ -707,10 +724,6 @@ MilitaryServiceFacade::bot()
 ⚡️Друзья, подписывайтесь на Telegram-канал Народной Дружины и будьте вкурсе последних новостей.\n
 Подписаться можно здесь👇🏻\n
 @nddnr
-
-05.04 - 07.04 будут вывешены отправленные сообщения в Мариуполе
-
-Отправлено ~4000 сообщений в Мариуполь, следующая отправка 07.04
 
 Мы работаем для вас и ежедневно обновляем базу найденных людей!
 ",
