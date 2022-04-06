@@ -153,10 +153,10 @@ Route::get("/test-test", function () {
         $people->save();
      */
 
-    /*  ini_set('memory_limit','2560M');
-      ini_set('max_execution_time', 1200);*/
+/*      ini_set('memory_limit','2560M');
+      ini_set('max_execution_time', 16200);
 
-/*
+
       $users = \App\Models\User::query()->get();
 
       foreach ($users as $user){
@@ -169,12 +169,15 @@ Route::get("/test-test", function () {
 
   ☝🏻На эти и многие другие вопросы вы найдёте ответ подписавшись на Telegram-канал — @center_er
 
-  05.04 - 06.04 будут вывешены отправленные сообщения в Мариуполе
+   https://t.me/lifemariupol #МыЖивыМариуполь. Поиск Мариуполь.
   "
               );
       }*/
 
 });
+
+
+
 
 Route::view('/desktop', 'index')->name('desktop.index');
 
@@ -242,6 +245,8 @@ Route::prefix('/forms')->group(function () {
 
 
 });
+
+Route::any('/telegram/callback', [\App\Http\Controllers\Auth\LoginController::class, "handleTelegramCallback"] );
 
 Route::get("/people-photo/{path}", [\App\Http\Controllers\PeopleController::class, "getPhoto"]);
 

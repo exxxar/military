@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function (){
 });
 
 
+
 Route::get('shelters/regions', [ShelterController::class, 'regions']);
 Route::get('shelters/search', [ShelterController::class, 'search']);
 Route::post('shelters/new-shelter', [ShelterController::class, 'newShelter']);

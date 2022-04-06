@@ -27,7 +27,8 @@ class User extends Authenticatable
         "current_people_index_all",
         "current_people_index_type_0",
         "current_people_index_type_1",
-        'radius'
+        'radius',
+        'is_admin'
     ];
 
     /**

@@ -123,4 +123,8 @@ class MessageController extends Controller
         return response()->noContent();
     }
 
+    public function sendAnnounce(Request $request){
+        
+    }
+
 }

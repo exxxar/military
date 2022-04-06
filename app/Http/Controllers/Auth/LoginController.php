@@ -4,7 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Azate\LaravelTelegramLoginAuth\Contracts\Telegram\NotAllRequiredAttributesException;
+use Azate\LaravelTelegramLoginAuth\Contracts\Validation\Rules\ResponseOutdatedException;
+use Azate\LaravelTelegramLoginAuth\Contracts\Validation\Rules\SignatureException;
+use Azate\LaravelTelegramLoginAuth\TelegramLoginAuth;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -36,5 +43,24 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function handleTelegramCallback(TelegramLoginAuth $telegramLoginAuth, Request $request)
+    {
+        try {
+            $user = $telegramLoginAuth->validateWithError($request);
+
+            Log::info(print_r($user,true));
+        } catch(NotAllRequiredAttributesException $e) {
+            // ...
+        } catch(SignatureException $e) {
+            // ...
+        } catch(ResponseOutdatedException $e) {
+            // ...
+        } catch(Exception $e) {
+            // ...
+        }
+
+        // ...
     }
 }

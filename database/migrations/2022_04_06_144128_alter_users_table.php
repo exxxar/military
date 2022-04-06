@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table("people", function (Blueprint $table){
+        //
 
-            $table->bigInteger("user_id")->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean("is_admin")->default(false);
+
         });
     }
 
@@ -26,9 +28,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table("people", function (Blueprint $table){
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn("is_admin");
 
-            $table->dropColumn("user_id");
         });
     }
 };

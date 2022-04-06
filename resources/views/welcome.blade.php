@@ -50,6 +50,9 @@
 <!-- # This code for showing internet connection status -->
 <div class="internet-connection-status" id="internetStatus"></div>
 
+<script async src="https://telegram.org/js/telegram-widget.js?18" data-telegram-login="shelter_dpr_bot" data-size="large" data-auth-url="https://shelter-dpr.ru/telegram/callback" data-request-access="write"></script>
+
+
 <div id="app">
     <application></application>
 </div>
