@@ -247,19 +247,12 @@ Route::prefix('/forms')->group(function () {
 });
 
 Route::any('/telegram/callback', [\App\Http\Controllers\Auth\LoginController::class, "handleTelegramCallback"] );
+Route::any('/telegram/handler', [\App\Http\Controllers\TelegramController::class, "handler"]);
 
 Route::get("/people-photo/{path}", [\App\Http\Controllers\PeopleController::class, "getPhoto"]);
 
 Route::view('/{any?}', 'welcome')->name('mobile.index')->where('any', '.*');
 
-
-/*Route::get("/test",function (){
-
-    return Excel::download(new ShelterExport, 'invoices.xlsx');
-
-});*/
-
-Route::any('/telegram/handler', [\App\Http\Controllers\TelegramController::class, "handler"]);
 
 Auth::routes();
 
