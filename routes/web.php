@@ -153,7 +153,7 @@ Route::get("/test-test", function () {
         $people->save();
      */
 
-     /* ini_set('memory_limit','2560M');
+      ini_set('memory_limit','2560M');
       ini_set('max_execution_time', 16200);
 
 
@@ -162,18 +162,13 @@ Route::get("/test-test", function () {
       foreach ($users as $user){
           \App\Facades\MilitaryServiceFacade::bot()
               ->sendMessage($user->telegram_chat_id,
-              "❔Что происходит в Мариуполе на сегодняшний день
-  ❔Как живут люди, пострадавшие в ходе украинской агрессии
-  ❔С какими испытаниями столкнулись местные жители и как они находят пути решения проблем
-  ❔Какую посильную помощь оказывает гуманитарный центр
-  ❔И что за волонтёры в городе?
+              "✊🏻Руководитель Народной Дружины теперь в Telegram
 
-  ☝🏻На эти и многие другие вопросы вы найдёте ответ подписавшись на Telegram-канал — @center_er
+👤Владимир Тараненко в своём ТГ-канале рассказывает не только о деятельности Дружины, но и затрагивает важные и актуальные темы сегодняшних реалий, а также делиться новостями из Мариуполя.
 
-  @lifemariupol #МыЖивыМариуполь. Поиск Мариуполь. - видеообрщения жителей, возможно вы найдете там своих родственников
-  "
+📲Переходите по ссылке и подписывайтесь – @vataranenko"
               );
-      }*/
+      }
 
 });
 
@@ -199,13 +194,12 @@ Route::prefix('/forms')->group(function () {
         Route::view("/need-people-search", "forms.people-search");
         Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);
         Route::get("/excel/export-people", [\App\Http\Controllers\PeopleController::class, "exportExcelPeople"]);
-        Route::get("/pdf/export-people", [\App\Http\Controllers\PeopleController::class, "exportPdfPeople"]);
-        Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
+
 
         Route::post("/find-people", [\App\Http\Controllers\PeopleController::class, "searchPeople"]);
 
         Route::post("/h-aid-import", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "import"]);
-        Route::get("/h-aid-export", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "export"]);
+
         Route::post("/h-aid-search", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "search"]);
 
         Route::get("/messages/export", [\App\Http\Controllers\PeopleController::class, "exportExcelMessages"]);
@@ -214,7 +208,10 @@ Route::prefix('/forms')->group(function () {
         Route::post("/h-aid", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "hAidAdd"]);
     });
 
+    Route::get("/h-aid-export", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "export"]);
 
+    Route::get("/pdf/export-people", [\App\Http\Controllers\PeopleController::class, "exportPdfPeople"]);
+    Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
 
     Route::view("/need-help", "forms.help");
     Route::post("/need-help", [\App\Http\Controllers\FormHandlerController::class, "needHelpStore"]);
