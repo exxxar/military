@@ -90,7 +90,8 @@ class PeopleController extends Controller
     public function exportExcelMessages()
     {
         //Excel::store(new PeopleExport(), 'people.xlsx');
-
+        ini_set('memory_limit','2560M');
+        ini_set('max_execution_time', 16200);
         return Excel::download(new MessagesExport(), 'messages.xlsx');
     }
 
