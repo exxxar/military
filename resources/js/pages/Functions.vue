@@ -14,7 +14,7 @@
                 </div>
             </a>
 
-            <a href="/forms/h-aid" target="_blank" class="card service-card bg-info bg-gradient mb-3" v-if="user.is_admin">
+            <a href="/forms/h-aid" target="_blank" class="card service-card bg-info bg-gradient mb-3" v-if="user.is_admin||mode=='offline'">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="service-text">
@@ -39,7 +39,7 @@
             </a>
 
             <a href="/forms/excel/export-people" target="_blank"
-               v-if="user.is_admin"
+               v-if="user.is_admin||mode=='offline'"
                class="card service-card bg-warning bg-gradient mb-3">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
@@ -54,7 +54,7 @@
 
 
             <a href="/forms/pdf/export-people" target="_blank"
-               v-if="user.is_admin"
+               v-if="user.is_admin||mode=='offline'"
                class="card service-card bg-warning bg-gradient mb-3">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
@@ -76,7 +76,11 @@ export default {
     computed:{
         user() {
             return window.user
-        }
+        },
+        mode() {
+            return window.mode
+        },
+
     }
 }
 </script>

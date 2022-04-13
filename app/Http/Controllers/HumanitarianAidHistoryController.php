@@ -10,6 +10,7 @@ use App\Http\Requests\HumanitarianAidHistoryStoreRequest;
 use App\Http\Requests\HumanitarianAidHistoryUpdateRequest;
 use App\Http\Resources\HumanitarianAidHistoryCollection;
 use App\Http\Resources\HumanitarianAidHistoryResource;
+use App\Http\Resources\MessageCollection;
 use App\Http\Resources\PeopleCollection;
 use App\Imports\DeviceImport;
 use App\Imports\HAidHistoryImport;
@@ -17,6 +18,7 @@ use App\Imports\PeopleAndAidImport;
 use App\Imports\PeopleAndAidImport2;
 use App\Imports\PeopleAndAidImport3;
 use App\Models\HumanitarianAidHistory;
+use App\Models\Message;
 use App\Models\People;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -85,9 +87,12 @@ class HumanitarianAidHistoryController extends Controller
         return response()->noContent();
     }
 
-    public function export(Request $request)
+    public function export(Request $request, $period = "day")
     {
-        return Excel::download(new HAidHistoryExport(), 'h-aid.xlsx');
+        ini_set('memory_limit', '7560M');
+        ini_set('max_execution_time', 1223200);
+
+        return Excel::download(new HAidHistoryExport($period), 'h-aid.xlsx');
     }
 
 
@@ -118,6 +123,19 @@ class HumanitarianAidHistoryController extends Controller
 
         $tmp = (object)$request->all();
 
+        $tmp->full_name = ($tmp->t_name ?? "") . " " . ($tmp->f_name ?? "") . " " . ($tmp->s_name ?? "");
+
+       // dd($tmp);
+        if (!is_null($tmp->id)) {
+            $hAid = HumanitarianAidHistory::query()->find($tmp->id);
+
+            if (!is_null($hAid)) {
+                $hAid->update((array)$tmp);
+                return response()->noContent();
+            }
+        }
+
+
         try {
             $tmp->issue_at = !is_null($tmp->issue_at) ?
                 Carbon::parse($tmp->issue_at)->toDateTimeString() : null;
@@ -130,8 +148,6 @@ class HumanitarianAidHistoryController extends Controller
         HumanitarianAidHistory::create((array)$tmp);
 
         return response()->noContent();
-
-
     }
 
     public function search(Request $request)
@@ -147,10 +163,19 @@ class HumanitarianAidHistoryController extends Controller
             ->where("full_name", "like", "%$search%")
             ->orWhere("passport", "like", "%$search%")
             ->orderBy("issue_at", "desc")
-            ->take(10)
+            ->take(20)
             ->get();
 
+        $messages =  Message::query()
+            ->where("full_name", "like", "%$search%")
+            ->orWhere("identify", "like", "%$search%")
+            ->orderBy("created_at", "desc")
+            ->take(20)
+            ->get();
 
-        return response()->json(new HumanitarianAidHistoryCollection($aid));
+        return response()->json([
+            "history"=>new HumanitarianAidHistoryCollection($aid),
+            "messages"=>new MessageCollection($messages)
+        ]);
     }
 }

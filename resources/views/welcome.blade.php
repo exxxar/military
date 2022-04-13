@@ -42,6 +42,11 @@
         <meta name="user" content="{{ App\Models\User::self() }}"/>
     @endif
 
+    @if (env("APP_WORK_MODE")=="offline")
+        <meta name="mode" content="offline"/>
+    @else
+        <meta name="mode" content="online"/>
+    @endif
 
 </head>
 <body>
@@ -54,7 +59,7 @@
 <!-- # This code for showing internet connection status -->
 <div class="internet-connection-status" id="internetStatus"></div>
 
-@if (!Auth::check())
+@if (!Auth::check()&&env("APP_WORK_MODE")=="online")
     <div class="page-content-wrapper py-3">
         <div class="container">
             <div class="card">

@@ -35,6 +35,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.user = document.head.querySelector('meta[name="user"]') != null ?
     document.head.querySelector('meta[name="user"]').content : null;
 
+
 if (window.user) {
     window.user = JSON.parse(window.user)
     window.user.is_guest = false
@@ -43,3 +44,7 @@ if (window.user) {
     window.user.is_admin = false
     window.user.is_guest = true
 }
+
+
+window.mode = document.head.querySelector('meta[name="mode"]') != null ?
+    document.head.querySelector('meta[name="mode"]').content : "online";

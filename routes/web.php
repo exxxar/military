@@ -29,7 +29,7 @@ use Telegram\Bot\FileUpload\InputFile;
 */
 
 
-Route::get("/test-test", function () {
+Route::get("/test-test-2", function () {
 
     /* ini_set('memory_limit','2560M');
      ini_set('max_execution_time', 1200);
@@ -66,9 +66,9 @@ Route::get("/test-test", function () {
                     ."<br>";*/
     //  }
 
-/*    ini_set('memory_limit', '2560M');
+    ini_set('memory_limit', '2560M');
     ini_set('max_execution_time', 226200);
-    $tmp = json_decode(Storage::get("Base12022-4-9-20-3-584-f22b5c0c-ff93-4d95-a212-e95b66805698.json"));
+    $tmp = json_decode(Storage::get("Base12022-4-13-16-45-708-ff88ccd5-609f-41b6-b805-53d4cdd8ede0.json"));
     foreach ($tmp as $item) {
         $item = (object)$item;
 
@@ -89,7 +89,13 @@ Route::get("/test-test", function () {
 
         $haid = new HumanitarianAidHistory();
         $haid->full_name = ($item->tname ?? "") . " " . ($item->fname ?? "") . " " . ($item->sname ?? "");
-        $haid->passport = $item->passport;
+        $haid->t_name = $item->tname ?? null;
+        $haid->f_name = $item->fname ?? null;
+        $haid->s_name = $item->sname ?? null;
+        $haid->has_children = false;
+        $haid->count = 1;
+        $haid->types = json_encode(["Продуктовый набор", "Гигиенический набор"]);
+        $haid->passport = $item->passport ?? null;
         $haid->description = "-";
         $haid->issue_at = $item->issue_at;
         $haid->save();
@@ -101,7 +107,7 @@ Route::get("/test-test", function () {
         $people->tname = $item->tname ?? "";
         $people->type = 1;
         $people->passport = $item->passport;
-        $people->save();*/
+        $people->save();
 
         /* $people = People::query()->where("fname", $item->sname)
              ->where("sname", $item->sname)
@@ -131,7 +137,7 @@ Route::get("/test-test", function () {
            }*/
 
 
-   // }
+    }
 
 
     /*
@@ -153,16 +159,16 @@ Route::get("/test-test", function () {
         $people->save();
      */
 
-     ini_set('memory_limit','2560M');
-      ini_set('max_execution_time', 16200);
+    ini_set('memory_limit', '2560M');
+    ini_set('max_execution_time', 16200);
 
 
-      $users = \App\Models\User::query()->get();
+    $users = \App\Models\User::query()->get();
 
-      foreach ($users as $user){
-          \App\Facades\MilitaryServiceFacade::bot()
-              ->sendMessage($user->telegram_chat_id,
-              "✊🏻Руководитель Народной Дружины теперь в Telegram
+    foreach ($users as $user) {
+        \App\Facades\MilitaryServiceFacade::bot()
+            ->sendMessage($user->telegram_chat_id,
+                "✊🏻Руководитель Народной Дружины теперь в Telegram
 👤Владимир Тараненко в своём ТГ-канале рассказывает не только о деятельности Дружины, но и затрагивает важные и актуальные темы сегодняшних реалий, а также делится новостями из Мариуполя.
 
 Каждый человек может помочь другим! Не будьте безразличны, возможно это спасет чью-то жизнь!
@@ -176,8 +182,8 @@ Route::get("/test-test", function () {
 📲Переходите по ссылке и подписывайтесь – @vataranenko"
 
 
-              );
-      }
+            );
+    }
 
 });
 
@@ -188,8 +194,8 @@ Route::prefix('/forms')->group(function () {
 
     Route::view("/need-people-search-request", "forms.people-search-online");
     Route::view("/search-in-base", "forms.search-in-base");
-    Route::get("/send-message/{id?}", function ($id = null){
-        return view("forms.send-message",compact("id"));
+    Route::get("/send-message/{id?}", function ($id = null) {
+        return view("forms.send-message", compact("id"));
     });
     Route::post("/send-message", [\App\Http\Controllers\MessageController::class, "sendMessage"]);
     Route::get("/load-user-by-id", [\App\Http\Controllers\PeopleController::class, "loadUserById"]);
@@ -198,7 +204,9 @@ Route::prefix('/forms')->group(function () {
     Route::post("/upload-photos", [\App\Http\Controllers\PeopleController::class, "uploadPhotos"]);
 
 
-    Route::middleware(["auth","admin"])->group(function () {
+    $middleware = env("APP_WORK_MODE", "online") == "online" ? ["middleware" => ["auth", "admin"]] : [];
+
+    Route::group($middleware, function () {
         Route::view("/request-people", "forms.request-people");
         Route::view("/need-people-search", "forms.people-search");
         Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);
@@ -217,7 +225,11 @@ Route::prefix('/forms')->group(function () {
         Route::post("/h-aid", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "hAidAdd"]);
     });
 
-    Route::get("/h-aid-export", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "export"]);
+    //Route::middleware(["auth","admin"])->group(function () {
+
+    //});
+
+    Route::get("/h-aid-export/{period?}", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "export"]);
 
     Route::get("/pdf/export-people", [\App\Http\Controllers\PeopleController::class, "exportPdfPeople"]);
     Route::get("/pdf/download", [\App\Http\Controllers\PeopleController::class, "pdfDownload"]);
@@ -253,7 +265,7 @@ Route::prefix('/forms')->group(function () {
     Route::post("/help-clothes", [\App\Http\Controllers\FormHandlerController::class, "helpWithClothesStore"]);
 });
 
-Route::any('/telegram/callback', [\App\Http\Controllers\TelegramController::class, "handleTelegramCallback"] );
+Route::any('/telegram/callback', [\App\Http\Controllers\TelegramController::class, "handleTelegramCallback"]);
 Route::any('/telegram/handler', [\App\Http\Controllers\TelegramController::class, "handler"]);
 
 Route::get("/people-photo/{path}", [\App\Http\Controllers\PeopleController::class, "getPhoto"]);
