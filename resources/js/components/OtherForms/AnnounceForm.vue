@@ -16,13 +16,15 @@
 
 
                     <div class="alert custom-alert-2 alert-primary alert-dismissible fade show" role="alert">
-                        <i class="bi bi-check-circle"></i>Сообщения отправляются по расписанию. Запуск рассылки будет осуществлян в ближайщее по расписанию время, близкое к указнному во времени отправки.
+                        <i class="bi bi-check-circle"></i>Сообщения отправляются по расписанию. Запуск рассылки будет
+                        осуществлян в ближайщее по расписанию время, близкое к указнному во времени отправки.
                         <button class="btn btn-close btn-close-white position-relative p-1 ms-auto" type="button"
                                 data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
                     <!-- Search Form -->
-                    <form class="mb-3 pb-4 border-bottom" v-on:submit.prevent="sendMessage" ref="announce" id="announce">
+                    <form class="mb-3 pb-4 border-bottom" v-on:submit.prevent="sendMessage" ref="announce"
+                          id="announce">
                         <div class="form-group mb-2">
                             <label for="title">Заголовок сообщения<span
                                 style="color:red;">*</span></label>
@@ -55,7 +57,8 @@
                             <div v-for="(item,index) in form.images">
                                 <a type="button" class="text-secondary small mb-2 w-100"
                                    @click="removeImage(index)">Удалить</a>
-                                <input class="form-control mb-2" :id="'clothes'+index" type="text" placeholder="Ссылка на изображение"
+                                <input class="form-control mb-2" :id="'clothes'+index" type="text"
+                                       placeholder="Ссылка на изображение"
                                        v-model="form.images[index]" required>
                             </div>
 
@@ -100,29 +103,34 @@
                 >
                     <div class="row" @click="fill(item)">
                         <div class="col-12"> {{ item.title }}</div>
-                        <div class="col-12"><span class="badge bg-primary rounded-pill">{{ item.created_at }}</span>
+                        <div class="col-12"><span
+                            class="badge bg-primary rounded-pill">Дата размещения {{ item.created_at }}</span>
+                            <div class="col-12"><span class="badge bg-primary rounded-pill">Дата заплавнированной отправки {{
+                                    item.need_send_at
+                                }}</span>
+                            </div>
+                            <div class="col-12" v-if="item.sent_at!=null">
+                                <p>Дата фактический отправки <span class="badge bg-info">{{ item.sent_at }}</span></p>
+                            </div>
+                            <div class="col-12 mt-2"><p class="w-100">
+                                {{ item.text }}
+                            </p></div>
+
+                            <div class="col-12" v-if="item.images.length>0">
+                                <h6>Изображения к сообщению:</h6>
+                                <ul>
+                                    <li v-for="(sub,index2) in item.images" style="list-style: decimal"><a
+                                        class="btn btn-link"
+                                        :href="sub" target="_blank">{{ sub }}</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-danger" @click="remove(item.id)" :disabled="loader">
+                                    <span v-if="!loader">Удалить</span>
+                                    <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-12 mt-2"><p class="w-100">
-                            {{ item.text }}
-                        </p></div>
-                        <div class="col-12" v-if="item.sent_at!=null">
-                          <p>Дата отправки <span class="badge bg-info">{{item.sent_at}}</span></p>
-                        </div>
-                        <div class="col-12" v-if="item.images.length>0">
-                            <h6>Изображения к сообщению:</h6>
-                            <ul>
-                                <li v-for="(sub,index2) in item.images"  style="list-style: decimal"><a
-                                    class="btn btn-link"
-                                    :href="sub" target="_blank">{{sub}}</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-danger" @click="remove(item.id)" :disabled="loader">
-                                <span v-if="!loader">Удалить</span>
-                                <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
-                            </button>
-                        </div>
-                    </div>
 
 
                 </li>
@@ -161,16 +169,16 @@ export default {
                 this.messages = resp.data.data
             })
         },
-        fill(item){
+        fill(item) {
             this.form = Object.assign({}, item);
             this.form.need_send_at = this.prepareDate(this.form.need_send_at)
         },
-        remove(id){
+        remove(id) {
             this.loader = true
             this.message = null
             this.messageType = 0;
 
-            axios.delete("/forms/announces/remove/"+id).then(resp => {
+            axios.delete("/forms/announces/remove/" + id).then(resp => {
                 this.message = "Успешно удалено"
                 this.messageType = 0;
                 this.loader = false
@@ -212,7 +220,6 @@ export default {
             })
 
 
-
         },
         addImage() {
             this.form.images.push("");
@@ -221,7 +228,7 @@ export default {
             this.form.images.splice(index, 1);
         },
         prepareDate(datetime) {
-            let date = datetime? new Date(datetime): new Date();
+            let date = datetime ? new Date(datetime) : new Date();
 
             let month = ('0' + (date.getMonth() + 1)).slice(-2);
             let day = ('0' + date.getDate()).slice(-2);
