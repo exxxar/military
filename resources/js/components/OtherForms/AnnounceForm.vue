@@ -106,7 +106,7 @@
                             {{ item.text }}
                         </p></div>
                         <div class="col-12" v-if="item.sent_at!=null">
-                          <p>Дата отправки</p>
+                          <p>Дата отправки <span class="badge bg-info">{{item.sent_at}}</span></p>
                         </div>
                         <div class="col-12" v-if="item.images.length>0">
                             <h6>Изображения к сообщению:</h6>
