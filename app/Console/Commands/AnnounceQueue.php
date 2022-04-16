@@ -49,13 +49,16 @@ class AnnounceQueue extends Command
 
         if (empty($announceQueues))
             return 0;
-        
+
 
         foreach ($announceQueues as $announceQueue) {
 
             if (Carbon::parse($announceQueue->need_send_at)->timestamp>Carbon::now("+3:00")->timestamp)
                 continue;
 
+            $announceQueue->sent_at = Carbon::now("+3:00");
+            $announceQueue->save();
+            
             foreach ($users as $user) {
 
                 $images = $announceQueue->images ?? [];
@@ -76,8 +79,7 @@ class AnnounceQueue extends Command
 
             }
 
-            $announceQueue->sent_at = Carbon::now("+3:00");
-            $announceQueue->save();
+
         }
 
         return 0;
