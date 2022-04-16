@@ -39,7 +39,7 @@
             </a>
 
             <a href="/forms/send-announce" target="_blank"
-               v-if="user.is_admin||mode=='online'"
+               v-if="user.is_admin&&mode=='online'"
                class="card service-card bg-success bg-gradient mb-3">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
