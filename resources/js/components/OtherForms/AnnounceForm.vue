@@ -104,33 +104,32 @@
                     <div class="row" @click="fill(item)">
                         <div class="col-12"> {{ item.title }}</div>
                         <div class="col-12"><span
-                            class="badge bg-primary rounded-pill">Дата размещения {{ item.created_at }}</span>
-                            <div class="col-12"><span class="badge bg-primary rounded-pill">Дата заплавнированной отправки {{
-                                    item.need_send_at
-                                }}</span>
-                            </div>
-                            <div class="col-12" v-if="item.sent_at!=null">
-                                <p>Дата фактический отправки <span class="badge bg-info">{{ item.sent_at }}</span></p>
-                            </div>
-                            <div class="col-12 mt-2"><p class="w-100">
-                                {{ item.text }}
-                            </p></div>
-
-                            <div class="col-12" v-if="item.images.length>0">
-                                <h6>Изображения к сообщению:</h6>
-                                <ul>
-                                    <li v-for="(sub,index2) in item.images" style="list-style: decimal"><a
-                                        class="btn btn-link"
-                                        :href="sub" target="_blank">{{ sub }}</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-danger" @click="remove(item.id)" :disabled="loader">
-                                    <span v-if="!loader">Удалить</span>
-                                    <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
-                                </button>
-                            </div>
+                            class="badge bg-primary rounded-pill">Дата размещения {{ item.created_at }}</span></div>
+                        <div class="col-12"><span class="badge bg-primary rounded-pill">Дата заплавнированной отправки {{
+                                item.need_send_at
+                            }}</span></div>
+                        <div class="col-12" v-if="item.sent_at!=null">
+                            <p>Дата фактический отправки <span class="badge bg-info">{{ item.sent_at }}</span></p>
                         </div>
+                        <div class="col-12 mt-2"><p class="w-100">
+                            {{ item.text }}
+                        </p></div>
+
+                        <div class="col-12" v-if="item.images.length>0">
+                            <h6>Изображения к сообщению:</h6>
+                            <ul>
+                                <li v-for="(sub,index2) in item.images" style="list-style: decimal"><a
+                                    class="btn btn-link"
+                                    :href="sub" target="_blank">{{ sub }}</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-danger" @click="remove(item.id)" :disabled="loader">
+                                <span v-if="!loader">Удалить</span>
+                                <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
+                            </button>
+                        </div>
+                    </div>
 
 
                 </li>
