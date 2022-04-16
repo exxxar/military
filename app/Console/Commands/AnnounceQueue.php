@@ -47,6 +47,10 @@ class AnnounceQueue extends Command
             ->whereNull("sent_at")
             ->get();
 
+        if (empty($announceQueues))
+            return 0;
+        
+
         foreach ($announceQueues as $announceQueue) {
 
             if (Carbon::parse($announceQueue->need_send_at)->timestamp>Carbon::now("+3:00")->timestamp)
