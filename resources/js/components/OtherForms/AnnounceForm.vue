@@ -103,9 +103,9 @@
                 >
                     <div class="row" @click="fill(item)">
                         <div class="col-12"> {{ item.title }}</div>
-                        <div class="col-12"><span
-                            class="badge bg-primary rounded-pill">Дата размещения {{ item.created_at }}</span></div>
-                        <div class="col-12"><span class="badge bg-primary rounded-pill">Дата заплавнированной отправки {{
+                        <div class="col-12">Дата размещения <span
+                            class="badge bg-primary rounded-pill">{{ item.created_at }}</span></div>
+                        <div class="col-12">Дата заплавнированной отправки <span class="badge bg-primary rounded-pill">{{
                                 item.need_send_at
                             }}</span></div>
                         <div class="col-12" v-if="item.sent_at!=null">

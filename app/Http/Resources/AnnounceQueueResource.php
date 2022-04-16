@@ -24,6 +24,7 @@ class AnnounceQueueResource extends JsonResource
             'sent_at' => is_null($this->sent_at) ? null : Carbon::parse($this->sent_at)->toDateTimeString(),
             'sender_id' => $this->sender_id,
             'deleted_at' => $this->deleted_at,
+            'created_at' => is_null($this->created_at) ? null : Carbon::parse($this->created_at)->toDateTimeString(),
         ];
     }
 }
