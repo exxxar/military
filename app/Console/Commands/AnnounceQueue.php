@@ -58,7 +58,7 @@ class AnnounceQueue extends Command
 
             $announceQueue->sent_at = Carbon::now("+3:00");
             $announceQueue->save();
-            
+
             foreach ($users as $user) {
 
                 $images = $announceQueue->images ?? [];

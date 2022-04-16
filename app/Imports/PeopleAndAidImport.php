@@ -93,6 +93,9 @@ class PeopleAndAidImport implements OnEachRow, WithEvents
             },
             AfterImport::class => function (AfterImport $event) {
 
+                ini_set('memory_limit', '2560M');
+                ini_set('max_execution_time', 16200);
+                
                 $tmp = json_decode(json_encode($this->tmp));
                 foreach ($tmp as $item) {
                     $item = (object)$item;
