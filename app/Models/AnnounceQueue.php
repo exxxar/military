@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Message extends Model
+class AnnounceQueue extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -15,14 +16,12 @@ class Message extends Model
      * @var array
      */
     protected $fillable = [
-        'full_name',
-        'sms',
-        'identify',
-        'sender_full_name',
-        'sender_info',
-        'h_user_id',
-        'user_id',
-        'send_at',
+        'title',
+        'text',
+        'images',
+        'need_send_at',
+        'sent_at',
+        'sender_id',
     ];
 
     /**
@@ -32,11 +31,8 @@ class Message extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'created_at' => 'timestamp',
-        'updated_at' => 'timestamp',
+        'images' => 'array',
+        'need_send_at' => 'timestamp',
+        'sent_at' => 'timestamp',
     ];
-
-    public function user(){
-        return$this->hasOne(User::class,"id","user_id");
-    }
 }

@@ -1,12 +1,30 @@
 <template>
     <div class="container">
+
+        <div class="card" v-if="message2">
+            <div class="card-body">
+                <div class="alert custom-alert-2 alert-dismissible fade  show"
+                     v-bind:class="{'alert-success':messageType===0,'alert-danger':messageType===1}"
+                     role="alert">
+                    <i class="bi bi-check-circle"></i>{{ message2 }}
+                </div>
+            </div>
+        </div>
+
         <div class="card">
             <div class="card-body">
                 <div class="form-check form-switch">
                     <input class="form-check-input form-check-success"
                            v-model="need_sync"
-                           id="needDrinkingWater" type="checkbox">
-                    <label class="form-check-label" for="needDrinkingWater">Нужна синхронизация базы</label>
+                           id="needSyncBase" type="checkbox">
+                    <label class="form-check-label" for="needSyncBase">Нужна синхронизация базы</label>
+                </div>
+
+                <div class="form-check form-switch">
+                    <input class="form-check-input form-check-success"
+                           v-model="need_send_message"
+                           id="needSendMessage" type="checkbox">
+                    <label class="form-check-label" for="needSendMessage">Требуется отправка сообщения</label>
                 </div>
 
                 <div class="form-check form-switch">
@@ -18,18 +36,139 @@
             </div>
         </div>
 
+        <div class="card" v-if="need_send_message">
+            <div class="card-body">
+                <h4>Отправка сообщений</h4>
+
+                <form v-on:submit.prevent="sendMessageSubmit" ref="sendMessage" id="sendMessage" class="mt-3">
+                    <h6>Данные отправивтеля</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="messageSenderTName">Фамилия<span
+                                    style="color:red;">*</span></label>
+                                <input class="form-control" id="messageSenderTName" type="text"
+                                       placeholder="Иванов"
+                                       v-model="sms.sender_t_name" required>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="messageSenderFName">Имя<span
+                                    style="color:red;">*</span></label>
+                                <input class="form-control" id="messageSenderFName" type="text"
+                                       placeholder="Иван"
+                                       v-model="sms.sender_f_name" required>
+                            </div>
+                        </div>
+
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="messageSenderSName">Отчество</label>
+                                <input class="form-control" id="messageSenderSName" type="text"
+                                       placeholder="Иванович"
+                                       v-model="sms.sender_s_name">
+                            </div>
+                        </div>
+
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="messageSenderInfo">Доп. сведенья об отправителе:</label>
+                                <input class="form-control" id="messageSenderInfo" type="text"
+                                       placeholder="Номер паспорта или телефона"
+                                       v-model="sms.sender_info">
+                            </div>
+                        </div>
+
+                    </div>
+                    <h6>Данные получателя</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="messageReceiverTName">Фамилия<span
+                                    style="color:red;">*</span></label>
+                                <input class="form-control" id="messageReceiverTName" type="text"
+                                       placeholder="Иванов"
+                                       v-model="sms.receiver_t_name" required>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="messageReceiverFName">Имя<span
+                                    style="color:red;">*</span></label>
+                                <input class="form-control" id="messageReceiverFName" type="text"
+                                       placeholder="Иван"
+                                       v-model="sms.receiver_f_name" required>
+                            </div>
+                        </div>
+
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="messageReceiverSName">Отчество</label>
+                                <input class="form-control" id="messageReceiverSName" type="text"
+                                       placeholder="Иванович"
+                                       v-model="sms.receiver_s_name">
+                            </div>
+                        </div>
+
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="messageReceiverInfo">Доп. сведенья о получателе: </label>
+                                <input class="form-control" id="messageReceiverInfo" type="text"
+                                       placeholder="Номер паспорта или телефона"
+                                       v-model="sms.receiver_info">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="messageText">Сообщение {{ sms.message.length }}/
+                                    255</label>
+                                <textarea class="form-control" id="messageText" placeholder="Текст вашего сообщения"
+                                          v-model="sms.message" maxlength="255" required>
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
+                                        type="submit" :disabled="loader">
+                        <span v-if="!loader">Отправить сообщение
+                         <svg class="bi bi-arrow-right-short" width="24" height="24" viewBox="0 0 16 16"
+                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
+                        </svg>
+                        </span>
+                                    <span v-else><img src="/img/loader.gif" class="loader-btn" alt=""></span>
+
+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="divider divider-center-icon border-primary mt-5"><i class="bi bi-gear"></i></div>
+
+            </div>
+        </div>
+
         <div class="card" v-if="need_sync">
             <div class="card-body">
                 <h4>Импорт данных из других документов эксель</h4>
                 <small>Вы можете предварительно скачать шаблон <a href="/h-aid.xlsx" target="_blank">по
                     ссылке </a></small>
                 <form v-on:submit.prevent="uploadSubmit" ref="excel" class="mt-3">
-
-                    <div class="alert custom-alert-2 alert-dismissible fade  show"
-                         v-bind:class="{'alert-success':messageType===0,'alert-danger':messageType===1}"
-                         v-if="message2" role="alert">
-                        <i class="bi bi-check-circle"></i>{{ message2 }}
-                    </div>
 
                     <div class="form-group">
                         <label class="form-label" for="excelFile">Загрузить Эксель документ</label>
@@ -136,17 +275,19 @@
                         <input class="form-check-input form-check-success"
                                v-model="need_show_people"
                                id="needShowFindHistory" type="checkbox">
-                        <label class="form-check-label" for="needShowFindHistory">Отображать список людей</label>
+                        <label class="form-check-label" for="needShowFindHistory">Отображать список людей <span
+                            v-if="history.length>0">({{ history.length }})</span></label>
                     </div>
 
                     <div class="form-check form-switch">
                         <input class="form-check-input form-check-success"
                                v-model="need_show_messages"
                                id="needShowMessages" type="checkbox">
-                        <label class="form-check-label" for="needShowMessages">Отображать сообщения</label>
+                        <label class="form-check-label" for="needShowMessages">Отображать сообщения <span
+                            v-if="messages.length>0">({{ messages.length }})</span></label>
                     </div>
 
-                    <h4 v-if="need_show_people">Найдено людей в базе:</h4>
+                    <h5 class="mt-2" v-if="need_show_people">Найдено людей в базе:</h5>
                     <li class="list-group-item d-flex align-items-center  justify-content-between"
                         style="cursor: pointer"
                         v-if="need_show_people"
@@ -156,6 +297,11 @@
                         v-for="(item, index) in history"
                     >
                         <div class="row">
+                            <div class="col-12 d-flex justify-content-end" v-if="item.id==form.id">
+                                <button class="btn btn-danger" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#removeModal">Удалить запись
+                                </button>
+                            </div>
                             <div class="col-6"><p> {{ item.full_name }} </p></div>
                             <div class="col-6"><p> {{ item.passport }}
                                 ({{ item.passport_issue_at || "не указана дата выдачи" }})</p>
@@ -166,7 +312,7 @@
                             </div>
                             <div class="col-12">
                                 <p v-if="item.types">Какие именно наборы выданы:
-                                    <span v-for="sub in item.types">{{ sub }}, </span>
+                                    <span v-for="sub in prepareJSON(item.types)">{{ sub }}, </span>
                                 </p>
                             </div>
                             <div class="col-12" v-if="item.children">
@@ -193,11 +339,15 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="col-12" v-if="item.id==form.id">
+                                <div class="divider divider-center-icon border-primary" @click="scrollToBlock"><i
+                                    class="bi bi-arrow-down-circle"></i></div>
+                            </div>
                         </div>
 
                     </li>
 
-                    <h4 v-if="need_show_messages">Найдено сообщений в базе:</h4>
+                    <h5 class="mt-2" v-if="need_show_messages">Найдено сообщений в базе:</h5>
                     <li class="list-group-item d-flex align-items-center mt-2 justify-content-between"
                         style="cursor: pointer"
                         v-if="need_show_messages"
@@ -213,6 +363,21 @@
                             <div class="col-12 mt-2"><p class="w-100">
                                 {{ item.sms }}
                             </p></div>
+                            <div class="col-6">
+                                <p v-if="item.send_at" @click="checkMessage(item.id)" :disabled="loader">Прочитано в
+                                    <span class="badge bg-info">{{ item.send_at }}</span>
+                                </p>
+                            </div>
+                            <div class="col-6" v-if="!item.send_at">
+
+                                <button
+                                    class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center"
+                                    @click="checkMessage(item.id)"
+                                    type="submit" :disabled="loader">
+                                    <span v-if="!loader">Отметить как прочитанное</span>
+                                    <span v-if="loader"><img src="/img/loader.gif" class="loader-btn" alt=""></span>
+                                </button>
+                            </div>
                         </div>
 
 
@@ -220,16 +385,28 @@
                     <p class="mt-2" v-if="need_show_people&&history.length==0">Данных о человеке нет по этому
                         запросу</p>
                     <p class="mt-2" v-if="need_show_messages&&messages.length==0">Сообщений нет по данному запросу</p>
+                    <p class="mt-2" v-if="!need_show_messages&&!need_show_people">Вы не выбрали ни одного режима
+                        отображения!</p>
                 </ul>
                 <p class="mt-2" v-else>По данному запросу ничего нет</p>
-                <div class="divider divider-center-icon border-primary "><i class="bi bi-arrow-down-circle"></i></div>
+                <div class="divider divider-center-icon border-light"><i class="bi bi-flower1"></i></div>
             </div>
         </div>
 
-        <div class="card">
+        <div class="card h-aid-card">
             <div class="card-body">
                 <h4>Работа с гуманитарной помощью</h4>
-                <form v-on:submit.prevent="submit" ref="haid">
+                <div class="row">
+                    <div class="col-6">
+                        <button
+                            class="btn btn-outline-danger mb-2 d-flex mt-3 align-items-center justify-content-center"
+                            type="button"
+                            :disabled="loader" v-if="form.id!=null" @click="resetForm">
+                            Очистить форму от найденных данных
+                        </button>
+                    </div>
+                </div>
+                <form v-on:submit.prevent="submit" ref="haid" id="hAid">
 
                     <div class="form-group">
                         <label class="form-label">Какой набор выдается</label>
@@ -293,7 +470,6 @@
                     </div>
 
 
-
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
@@ -319,7 +495,7 @@
                                 <label class="form-label" for="inputAddress">Адрес получения</label>
                                 <input class="form-control" id="inputAddress" type="text"
                                        placeholder="ул. Университетская, 10а"
-                                       v-model="form.address" required>
+                                       v-model="form.address">
                             </div>
                         </div>
                     </div>
@@ -334,9 +510,14 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="form-label" :for="'dateIssue'+index">Дата получения</label>
+                                    <label class="form-label" :for="'dateIssue'+index">Дата получения
+                                        <small class="text-decoration-underline"
+                                               style="cursor: pointer;"
+                                               v-if="form.issue_date_history[index].date"
+                                               @click="form.issue_date_history[index].date=prepareDate(form.issue_date_history[index].date)">({{ prepareDate(form.issue_date_history[index].date) }})</small></label>
                                     <input class="form-control" :id="'dateIssue'+index" type="date"
-                                           v-model="form.issue_date_history[index].date" required>
+                                           v-model="form.issue_date_history[index].date"
+                                           required>
                                 </div>
                             </div>
 
@@ -344,7 +525,7 @@
                                 <div class="form-group">
                                     <label class="form-label" :for="'comment'+index">Комментарий оператора</label>
                                     <input class="form-control" :id="'comment'+index" type="text"
-                                           v-model="form.issue_date_history[index].comment" required>
+                                           v-model="form.issue_date_history[index].comment">
                                 </div>
                             </div>
 
@@ -386,7 +567,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="form-label" :for="'childTName'+index">Фамилия</label>
+                                    <label class="form-label" :for="'childTName'+index">Фамилия<span
+                                        style="color:red;">*</span></label>
                                     <input class="form-control" :id="'childTName'+index" type="text"
                                            placeholder="Иванов"
                                            v-model="form.children[index].t_name" required>
@@ -395,7 +577,8 @@
 
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="form-label" :for="'childFName'+index">Имя</label>
+                                    <label class="form-label" :for="'childFName'+index">Имя<span
+                                        style="color:red;">*</span></label>
                                     <input class="form-control" :id="'childFName'+index" type="text"
                                            placeholder="Алексей"
                                            v-model="form.children[index].f_name" required>
@@ -407,7 +590,7 @@
                                     <label class="form-label" :for="'childSName'+index">Отчество</label>
                                     <input class="form-control" :id="'childSName'+index" type="text"
                                            placeholder="Иванович"
-                                           v-model="form.children[index].s_name" required>
+                                           v-model="form.children[index].s_name">
                                 </div>
                             </div>
 
@@ -415,14 +598,15 @@
                                 <div class="form-group">
                                     <label class="form-label" :for="'birth'+index">Дата рождения ребенка</label>
                                     <input class="form-control" :id="'birth'+index" type="date"
-                                           v-model="form.children[index].birthday" required>
+                                           v-model="form.children[index].birthday">
                                 </div>
                             </div>
 
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="form-label" :for="'certificate'+index">Серия и номер свидетельства о
-                                        рождении</label>
+                                        рождении<span
+                                            style="color:red;">*</span></label>
                                     <input class="form-control" :id="'certificate'+index" type="text"
                                            placeholder="1-НО 000000"
                                            v-model="form.children[index].birth_certificate" required>
@@ -431,7 +615,8 @@
 
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="form-label" :for="'certificateIssue'+index">Дата выдачи</label>
+                                    <label class="form-label" :for="'certificateIssue'+index">Дата выдачи<span
+                                        style="color:red;">*</span></label>
                                     <input class="form-control" :id="'certificateIssue'+index" type="date"
                                            v-model="form.children[index].birth_certificate_issue_at" required>
                                 </div>
@@ -441,7 +626,7 @@
                                 <div class="form-group">
                                     <label class="form-label" :for="'moreInfo'+index">Дополнительная информация</label>
                                     <textarea class="form-control" :id="'moreInfo'+index"
-                                           v-model="form.children[index].comment" required>
+                                              v-model="form.children[index].comment">
                                     </textarea>
                                 </div>
                             </div>
@@ -479,12 +664,77 @@
                     </button>
 
                     <button
-                        class="btn btn-outline-warning w-100 d-flex mt-3 align-items-center justify-content-center"
-                        type="reset" :disabled="loader" v-if="form.id!=null">
+                        class="btn btn-outline-danger w-100 d-flex mt-3 align-items-center justify-content-center"
+                        type="button"
+                        :disabled="loader" v-if="form.id!=null" @click="resetForm">
                         Очистить форму
                     </button>
 
                 </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Remove HAid Modal -->
+    <div class="modal fade" id="removeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="staticBackdropLabel">Удаление человека из БД</h6>
+                    <button class="btn btn-close p-1 ms-auto" type="button" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6"><p> {{ form.full_name }} </p></div>
+                        <div class="col-6"><p> {{ form.passport }}
+                            ({{ form.passport_issue_at || "не указана дата выдачи" }})</p>
+                        </div>
+                        <div class="col-12">Гум.помощь выдана <span
+                            class="badge bg-info rounded-pill">{{ form.issue_at }}</span> в колличестве
+                            {{ form.count || 1 }}
+                        </div>
+                        <div class="col-12">
+                            <p v-if="form.types">Какие именно наборы выданы:
+                                <span v-for="sub in prepareJSON(form.types)">{{ sub }}, </span>
+                            </p>
+                        </div>
+                        <div class="col-12" v-if="form.children">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex align-items-center  justify-content-between"
+                                    v-for="child in form.children">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p>{{ child.t_name }} {{ child.f_name }} {{ child.s_name }}</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p>Свидетельство: {{ child.birth_certificate || "не указано" }}</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p>Дата выдачи:
+                                                {{ child.birth_certificate_issue_at || "не указано" }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p>Дата рождения: {{ child.birthday || "не указано" }}</p>
+                                        </div>
+                                    </div>
+
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-secondary" type="button" data-bs-dismiss="modal">Отменить</button>
+                    <button class="btn btn-sm btn-danger"
+                            @click="removeHAid"
+                            data-bs-dismiss="modal"
+                            type="button">Удалить
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -494,15 +744,18 @@
 
 export default {
 
-    watch:{
-      'form.types':{
-          handler: function(newValue) {
-             if (this.form.types.indexOf("Детский набор")!=-1)
-                 this.form.has_children = true
-              else
-                 this.form.has_children = false
-          },
-          deep: true
+    watch: {
+        'form.types': {
+            handler: function (newValue) {
+                if (!this.form.types)
+                    return;
+
+                if (this.form.types.indexOf("Детский набор") != -1)
+                    this.form.has_children = true
+                else
+                    this.form.has_children = false
+            },
+            deep: true
         }
     },
     data() {
@@ -514,9 +767,21 @@ export default {
             search: null,
             need_sync: false,
             need_search: false,
+            need_send_message: false,
             need_show_people: true,
             need_show_messages: false,
 
+            sms: {
+                receiver_f_name: null,
+                receiver_s_name: null,
+                receiver_t_name: null,
+                sender_f_name: null,
+                sender_s_name: null,
+                sender_t_name: null,
+                sender_info: null,
+                receiver_info: null,
+                message: ''
+            },
             history: [],
             messages: [],
             types: [
@@ -531,9 +796,7 @@ export default {
                 s_name: null,
                 passport: null,
                 issue_at: null,
-                issue_date_history: [
-
-                ],
+                issue_date_history: [],
                 description: null,
 
                 city: "Мариуполь",
@@ -572,7 +835,27 @@ export default {
 
     },
     methods: {
+        sendMessageSubmit() {
+            this.loader = true
+            axios.post('/forms/send-message-operator', this.sms)
+                .then(resp => {
+                    this.sms = {
+                        receiver_f_name: null,
+                        receiver_s_name: null,
+                        receiver_t_name: null,
+                        sender_f_name: null,
+                        sender_s_name: null,
+                        sender_t_name: null,
+                        sender_info: null,
+                        receiver_info: null,
+                        message: ''
+                    }
 
+                    this.loader = false
+                }).catch(() => {
+                this.loader = false
+            })
+        },
         uploadSubmit() {
             this.loader = true
 
@@ -607,9 +890,8 @@ export default {
                 this.history = resp.data.history.data
                 this.messages = resp.data.messages.data
 
-
-                this.$refs.search.reset();
                 this.loader = false
+                this.$refs.search.reset();
 
             }).catch(() => {
                 this.loader = false
@@ -619,7 +901,14 @@ export default {
 
             this.form = Object.assign({}, item);
 
-            console.log(this.form.issue_at)
+
+            if (this.form.children)
+                this.form.children = this.prepareJSON(this.form.children)
+
+            if (this.form.types)
+                this.form.types = this.prepareJSON(this.form.types)
+
+            console.log("copied=>", this.form)
 
             if (item.f_name == null && item.t_name == null) {
                 let tmp = this.form.full_name.split(" ");
@@ -650,6 +939,36 @@ export default {
 
             console.log(this.form.issue_at)
         },
+        checkMessage(id) {
+            axios.post("/forms/messages/read", {
+                id: id
+            }).then(() => {
+                this.loader = false
+                this.searchSubmit();
+
+            }).catch(() => {
+                this.loader = false
+            });
+        },
+        removeHAid() {
+
+            if (this.form.id == null)
+                return;
+
+            this.loader = true
+            axios.delete('/forms/h-aid/' + this.form.id).then(() => {
+                this.message2 = "Успешно удалено!"
+                this.messageType = 0;
+                this.loader = false
+
+                this.searchSubmit();
+
+            }).catch(() => {
+                this.loader = false
+                this.message2 = "Ошибка удаления!"
+                this.messageType = 1;
+            });
+        },
         submit() {
             this.form.user_id = this.userId;
             this.loader = true
@@ -678,6 +997,9 @@ export default {
             this.file = this.$refs.file.files[0];
         },
         addChild() {
+            if (typeof this.form.children != "array")
+                this.form.children = []
+
             this.form.children.push({
                 t_name: null,
                 f_name: null,
@@ -692,6 +1014,9 @@ export default {
             this.form.children.splice(index, 1);
         },
         addIssueDate() {
+            if (typeof this.form.issue_date_history != "array")
+                this.form.issue_date_history = []
+
             this.form.issue_date_history.push({
                 date: null,
                 count: 1,
@@ -702,7 +1027,61 @@ export default {
         removeIssue(index) {
             this.form.issue_date_history.splice(index, 1);
         },
+        prepareJSON(json) {
+            if (typeof json == "string")
+                return JSON.parse(json)
+            else
+                return json
+        },
+        scrollToBlock() {
 
+            window.scrollTo(0, document.querySelector(".h-aid-card").offsetTop);
+        },
+        prepareDate(datetime) {
+            let date = new Date(datetime);
+
+            let month = ('0' + (date.getMonth() + 1)).slice(-2);
+            let day = ('0' + date.getDate()).slice(-2);
+            let year = date.getFullYear();
+
+            let h = date.getHours();
+            let m = date.getMinutes()
+
+            console.log("data", year + '-' + month + '-' + day)
+
+            return year + '-' + month + '-' + day;
+
+        },
+        resetForm() {
+            this.form = {
+                id: null,
+                t_name: null,
+                f_name: null,
+                s_name: null,
+                passport: null,
+                issue_at: null,
+                issue_date_history: [],
+                description: null,
+
+                city: "Мариуполь",
+                address: null,
+
+                has_children: false,
+                passport_issue_at: null,
+                count: 1,
+                children: [{
+                    t_name: null,
+                    f_name: null,
+                    s_name: null,
+                    birth_certificate: null,
+                    birth_certificate_issue_at: null,
+                    birthday: null,
+                    comment: null,
+                }],
+                types: ["Продуктовый и гигиенический набор"]
+
+            }
+        }
     }
 }
 </script>

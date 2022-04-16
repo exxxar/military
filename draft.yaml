@@ -1,14 +1,17 @@
 models:
-  Message:
+  AnnounceQueue:
     id: id
-    full_name: string nullable
-    sms: longtext nullable
-    identify: string nullable
-    h_user_id: integer nullable
-    created_at: timestamp
-    updated_at: timestamp
+    title: string nullable
+    text: longtext nullable
+    images: json nullable
+    need_send_at: timestamp nullable
+    sent_at: timestamp nullable
+    softDeletes
+    timestamps
+
+
 
 controllers:
-  Message:
+  AnnounceQueue:
     resource: api
 

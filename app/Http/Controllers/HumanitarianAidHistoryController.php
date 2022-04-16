@@ -80,8 +80,13 @@ class HumanitarianAidHistoryController extends Controller
      * @param \App\Models\HumanitarianAidHistory $humanitarianAidHistory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, HumanitarianAidHistory $humanitarianAidHistory)
+    public function destroy(Request $request, $id)
     {
+        $humanitarianAidHistory = HumanitarianAidHistory::query()->find($id);
+
+        if (is_null($humanitarianAidHistory))
+            return response()->noContent(404);
+
         $humanitarianAidHistory->delete();
 
         return response()->noContent();
@@ -125,7 +130,30 @@ class HumanitarianAidHistoryController extends Controller
 
         $tmp->full_name = ($tmp->t_name ?? "") . " " . ($tmp->f_name ?? "") . " " . ($tmp->s_name ?? "");
 
-       // dd($tmp);
+        try {
+            $tmp->issue_at = !is_null($tmp->issue_at) ?
+                Carbon::parse($tmp->issue_at)->toDateTimeString() : null;
+
+        } catch (\Exception  $e) {
+            $tmp->issue_at = null;
+        }
+
+        if (empty($tmp->issue_date_history)) {
+            $tmp->issue_date_history = [];
+        }
+
+        $types = $tmp->types;
+
+        foreach ($types as $type)
+            $tmp->issue_date_history = [
+                (object)[
+                    "date" => $tmp->issue_at,
+                    "comment" => "",
+                    "type" => $type ?? null
+                ]
+            ];
+
+
         if (!is_null($tmp->id)) {
             $hAid = HumanitarianAidHistory::query()->find($tmp->id);
 
@@ -133,15 +161,6 @@ class HumanitarianAidHistoryController extends Controller
                 $hAid->update((array)$tmp);
                 return response()->noContent();
             }
-        }
-
-
-        try {
-            $tmp->issue_at = !is_null($tmp->issue_at) ?
-                Carbon::parse($tmp->issue_at)->toDateTimeString() : null;
-
-        } catch (\Exception  $e) {
-            $tmp->issue_at = null;
         }
 
 
@@ -166,16 +185,18 @@ class HumanitarianAidHistoryController extends Controller
             ->take(20)
             ->get();
 
-        $messages =  Message::query()
+        $messages = Message::query()
             ->where("full_name", "like", "%$search%")
             ->orWhere("identify", "like", "%$search%")
+            ->orWhere("sender_full_name", "like", "%$search%")
+            ->orWhere("sender_info", "like", "%$search%")
             ->orderBy("created_at", "desc")
             ->take(20)
             ->get();
 
         return response()->json([
-            "history"=>new HumanitarianAidHistoryCollection($aid),
-            "messages"=>new MessageCollection($messages)
+            "history" => new HumanitarianAidHistoryCollection($aid),
+            "messages" => new MessageCollection($messages)
         ]);
     }
 }

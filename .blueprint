@@ -1,19 +1,21 @@
 created:
-    - app/Http/Controllers/MessageController.php
-    - database/factories/MessageFactory.php
-    - database/migrations/2022_04_03_164121_create_messages_table.php
-    - app/Models/Message.php
-    - tests/Feature/Http/Controllers/MessageControllerTest.php
-    - app/Http/Requests/MessageStoreRequest.php
-    - app/Http/Requests/MessageUpdateRequest.php
-    - app/Http/Resources/MessageCollection.php
-    - app/Http/Resources/MessageResource.php
+    - app/Http/Controllers/AnnounceQueueController.php
+    - database/factories/AnnounceQueueFactory.php
+    - database/migrations/2022_04_16_153522_create_announce_queues_table.php
+    - app/Models/AnnounceQueue.php
+    - tests/Feature/Http/Controllers/AnnounceQueueControllerTest.php
+    - app/Http/Requests/AnnounceQueueStoreRequest.php
+    - app/Http/Requests/AnnounceQueueUpdateRequest.php
+    - app/Http/Resources/AnnounceQueueCollection.php
+    - app/Http/Resources/AnnounceQueueResource.php
 updated:
     - routes/api.php
 models:
-    Shelter: { id: id, city: 'string nullable', region: 'string nullable', address: 'string:400', lat: 'double default:0', lon: 'double default:0', balance_holder: 'string nullable', responsible_person: 'string nullable', capacity: 'integer default:0', description: 'longtext nullable' }
-    Assistance: { id: id, user_id: 'integer nullable', settings: 'json nullable', description: 'longtext nullable' }
-    AidCenter: { id: id, city: 'string nullable', region: 'string nullable', address: 'string:400', phone: 'string:100', required: 'longtext nullable', description: 'longtext nullable' }
-    People: { id: id, uuid: uuid, fname: 'string nullable', sname: 'string nullable', tname: 'string nullable', birth: 'string nullable', age_from: 'tinyint default:0 nullable', age_to: 'tintyint default:0 nullable', sex: 'tinyint deault:0', photos: 'json nullable', phone: 'string nullable', user_id: 'id:user nullable', people_id: 'id:people nullable', city: 'string nullable', region: 'string nullable', address: 'string nullable', story: 'longtext nullable', description: 'longtext nullable', status: 'integer default:0', for: 'integer default:0', searched_from: 'timestamp nullable', is_active: 'boolean default:true', deleted_at: 'timestamp nullable', created_at: timestamp, updated_at: timestamp }
-    HumanitarianAidHistory: { id: id, index: 'string nullable', full_name: 'string nullable', passport: 'string nullable', description: 'longtext nullable', issue_at: 'timestamp nullable', deleted_at: 'timestamp nullable', created_at: timestamp, updated_at: timestamp }
-    Message: { id: id, full_name: 'string nullable', sms: 'longtext nullable', identify: 'string nullable', h_user_id: 'integer nullable', created_at: timestamp, updated_at: timestamp }
+    AidCenter: { city: 'string nullable', region: 'string nullable', address: 'string:400 nullable', phone: 'string:100 nullable', required: 'text nullable', description: 'text nullable' }
+    Assistance: { user_id: 'integer nullable', settings: 'text nullable', description: 'text nullable' }
+    HumanitarianAidHistory: { full_name: 'string nullable', t_name: 'string nullable', f_name: 'string nullable', s_name: 'string nullable', passport: 'string nullable', passport_issue_at: 'date nullable', description: 'text nullable', city: 'string nullable', address: 'string nullable', issue_at: 'datetime nullable', issue_date_history: 'text nullable', '`index`': 'string nullable', has_children: 'boolean default:0', count: 'integer default:1', children: 'text nullable', types: 'text nullable' }
+    Message: { full_name: 'string nullable', sms: 'text nullable', identify: 'string nullable', h_user_id: 'integer nullable', user_id: 'biginteger nullable', send_at: 'datetime nullable' }
+    People: { uuid: 'string:36', fname: 'string nullable', sname: 'string nullable', tname: 'string nullable', birth: 'string nullable', age_from: 'integer nullable default:0', age_to: 'integer nullable default:0', sex: 'boolean default:0', photos: 'text nullable', phones: 'text nullable', user_id: 'biginteger unsigned nullable', people_id: 'biginteger unsigned nullable', city: 'string nullable', region: 'string nullable', address: 'string nullable', story: 'text nullable', description: 'text nullable', status: 'integer default:0', '`for`': 'integer default:0', searched_from: 'datetime nullable', is_active: 'boolean default:1', phoenix_num: 'string nullable', email: 'string nullable', passport: 'text nullable', evacuation_place: 'string nullable', type: 'integer default:0' }
+    Shelter: { city: 'string nullable', region: 'string nullable', address: 'string:400', lat: 'float:10 default:0', lon: 'float:10 default:0', balance_holder: 'string nullable', responsible_person: 'string nullable', capacity: 'integer default:0', description: 'text nullable', status: 'integer default:0', quality: 'integer default:0', type: 'integer default:0', facility: 'text nullable' }
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable', telegram_chat_id: 'string:50', phone: 'string:50 nullable', full_name: 'string nullable', radius: 'float:10 default:0.1', blocked_at: 'datetime nullable', current_people_index_all: 'biginteger nullable', current_people_index_type_0: 'biginteger nullable', current_people_index_type_1: 'biginteger nullable', is_admin: 'boolean default:0' }
+    AnnounceQueue: { id: id, title: 'string nullable', text: 'longtext nullable', images: 'json nullable', need_send_at: 'timestamp nullable', sent_at: 'timestamp nullable', softdeletes: softDeletes, timestamps: timestamps }

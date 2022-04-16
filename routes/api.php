@@ -66,3 +66,8 @@ Route::apiResource('humanitarian-aid-history', App\Http\Controllers\Humanitarian
 
 
 Route::apiResource('message', App\Http\Controllers\MessageController::class);*/
+
+/*
+Route::apiResource('announce-queue', App\Http\Controllers\AnnounceQueueController::class);*/
+
+

@@ -87,10 +87,27 @@ class PeopleController extends Controller
     }
 
 
+    public function readMessage(Request $request)
+    {
+        $request->validate([
+            "id" => "required"
+        ]);
+
+        $message = \App\Models\Message::query()->find($request->id);
+
+        if (is_null($message))
+            return response()->noContent(404);
+
+        $message->send_at = is_null($message->send_at) ? Carbon::now("+3:00") : null;
+        $message->save();
+
+        return response()->noContent();
+    }
+
     public function exportExcelMessages()
     {
         //Excel::store(new PeopleExport(), 'people.xlsx');
-        ini_set('memory_limit','2560M');
+        ini_set('memory_limit', '2560M');
         ini_set('max_execution_time', 16200);
         return Excel::download(new MessagesExport(), 'messages.xlsx');
     }
@@ -421,7 +438,7 @@ class PeopleController extends Controller
         ]);
 
 
-        if ($request->type=="haids"||!isset($request->type)) {
+        if ($request->type == "haids" || !isset($request->type)) {
             $hAid = HumanitarianAidHistory::query()->where("id", $request->id)->first();
 
             if (is_null($hAid))
@@ -442,12 +459,12 @@ class PeopleController extends Controller
                 "fname" => $fname,
                 "sname" => $sname,
                 "tname" => $tname,
-                "passport" => $hAid->passport??"",
+                "passport" => $hAid->passport ?? "",
             ]);
         }
 
 
-        if ($request->type=="people") {
+        if ($request->type == "people") {
             $people = People::query()->where("id", $request->id)->first();
 
 
@@ -460,10 +477,10 @@ class PeopleController extends Controller
                 ]);
 
             return response()->json([
-                "fname" => $people->fname??"",
-                "sname" => $people->sname??"",
-                "tname" => $people->tname??"",
-                "passport" => $people->passport??"",
+                "fname" => $people->fname ?? "",
+                "sname" => $people->sname ?? "",
+                "tname" => $people->tname ?? "",
+                "passport" => $people->passport ?? "",
             ]);
         }
 
@@ -476,21 +493,22 @@ class PeopleController extends Controller
 
     }
 
-    public function getPhoto(Request $request, $path){
+    public function getPhoto(Request $request, $path)
+    {
 
 
-        if (  !Storage::exists("images/$path")) {
+        if (!Storage::exists("images/$path")) {
             $myFile = public_path("noavatar.png");
             $headers = ['Content-Type: image/png'];
 
-            return response()->file($myFile,  $headers);
+            return response()->file($myFile, $headers);
         }
 
 
-        $myFile = storage_path("app/images/".$path);
+        $myFile = storage_path("app/images/" . $path);
         $headers = ['Content-Type: image/jpeg'];
 
-        return response()->file($myFile,  $headers);
+        return response()->file($myFile, $headers);
 
 
     }

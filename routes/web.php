@@ -29,164 +29,6 @@ use Telegram\Bot\FileUpload\InputFile;
 */
 
 
-Route::get("/test-test-2", function () {
-
-    /* ini_set('memory_limit','2560M');
-     ini_set('max_execution_time', 1200);
-     $peoples = People::query()
-         ->whereNotNull("user_id")
-         //->whereBetween("created_at", ["2022-03-30 12:00:00", "2022-03-30 20:00:00"])
-         ->get();
-
-     foreach ($peoples as $people) {
-
-         $haid = HumanitarianAidHistory::query()->where("full_name", "like", "%$people->tname%$people->fname%")
-             ->get();
-
-         if (count($haid)){
-             echo $people->tname . " " . $people->fname . " " . $people->sname . " ".print_r($people->phones,true)
-                 ." ".print_r($people->toArray(),true)
-                 ."<br>"
-                 ."<br>"
-                 ."<br>";
-         }
-     }*/
-
-    //  if (count($haid) > 0)
-    /*  \App\Facades\MilitaryServiceFacade::bot()
-          ->sendMessage($people->user_id, "Хорошие новости!\n"
-              . $people->tname . " " . $people->fname . " " . $people->sname . " По нашим сведеньям данный человек получал недавно гуманитарную помощь!"
-          );*/
-
-    /*
-                echo $people->tname . " " . $people->fname . " " . $people->sname . " ".print_r($people->phones,true)
-                    ." ".print_r($people->toArray(),true)
-                    ."<br>"
-                    ."<br>"
-                    ."<br>";*/
-    //  }
-
-    ini_set('memory_limit', '2560M');
-    ini_set('max_execution_time', 226200);
-    $tmp = json_decode(Storage::get("Base12022-4-13-16-45-708-ff88ccd5-609f-41b6-b805-53d4cdd8ede0.json"));
-    foreach ($tmp as $item) {
-        $item = (object)$item;
-
-        $fname = $item->fname ?? "";
-        $sname = $item->sname ?? "";
-        $tname = $item->tname ?? "";
-        $passport = $item->passport ?? "";
-
-        $checked = People::query()
-            ->where("fname", $fname)
-            ->where("sname", $sname)
-            ->where("tname", $tname)
-            ->where("passport", $passport)
-            ->first();
-
-        if (!is_null($checked))
-            continue;
-
-        $haid = new HumanitarianAidHistory();
-        $haid->full_name = ($item->tname ?? "") . " " . ($item->fname ?? "") . " " . ($item->sname ?? "");
-        $haid->t_name = $item->tname ?? null;
-        $haid->f_name = $item->fname ?? null;
-        $haid->s_name = $item->sname ?? null;
-        $haid->has_children = false;
-        $haid->count = 1;
-        $haid->types = json_encode(["Продуктовый набор", "Гигиенический набор"]);
-        $haid->passport = $item->passport ?? null;
-        $haid->description = "-";
-        $haid->issue_at = $item->issue_at;
-        $haid->save();
-
-        $people = new People();
-        $people->uuid = Str::uuid();
-        $people->fname = $item->fname ?? "";
-        $people->sname = $item->sname ?? "";
-        $people->tname = $item->tname ?? "";
-        $people->type = 1;
-        $people->passport = $item->passport;
-        $people->save();
-
-        /* $people = People::query()->where("fname", $item->sname)
-             ->where("sname", $item->sname)
-             ->where("tname", $item->tname)
-             ->first();*/
-
-        /*
-                $haid = HumanitarianAidHistory::query()
-                    ->where("full_name","$item->tname $item->sname $item->sname")
-                    ->where("passport",$item->passport)
-                    ->first();
-
-                if (!is_null($haid))
-                {
-                    $haid->full_name = "$item->tname $item->sname $item->fname";
-                    $haid->save();
-                }*/
-
-
-        /*   if (!is_null($people)) {
-               $people->fname = $item->sname??'';
-               $people->sname = $item->fname??'';
-               $people->tname = $item->tname??'';
-               $people->save();
-
-               Log::info("$item->tname $item->sname $item->fname => $people->tname $people->fname $people->sname");
-           }*/
-
-
-    }
-
-
-    /*
-     *
-        $haid = new HumanitarianAidHistory();
-        $haid->full_name = $item->tname." ".$item->sname." ".$item->fname;
-        $haid->passport = $item->passport;
-        $haid->description = "-";
-        $haid->issue_at = $item->issue_at;
-        $haid->save();
-
-        $people = new People();
-        $people->uuid = Str::uuid();
-        $people->fname = $item->fname;
-        $people->sname = $item->sname;
-        $people->tname = $item->tname;
-        $people->type = 1;
-        $people->passport = $item->passport;
-        $people->save();
-     */
-
-    ini_set('memory_limit', '2560M');
-    ini_set('max_execution_time', 16200);
-
-
-    $users = \App\Models\User::query()->get();
-
-    foreach ($users as $user) {
-        \App\Facades\MilitaryServiceFacade::bot()
-            ->sendMessage($user->telegram_chat_id,
-                "✊🏻Руководитель Народной Дружины теперь в Telegram
-👤Владимир Тараненко в своём ТГ-канале рассказывает не только о деятельности Дружины, но и затрагивает важные и актуальные темы сегодняшних реалий, а также делится новостями из Мариуполя.
-
-Каждый человек может помочь другим! Не будьте безразличны, возможно это спасет чью-то жизнь!
-
-Никакой политики, рекламы или новостей, только взаимная помощь:
-@only_help_request - заявки на помощь от людей! Помогайте друг другу в сложное время!
-@can_help - люди, которые могут вам помочь! Возможно и ваши навыки будут полезны!
-
-Передано 8.5 тыс. сообщений для отправки 11-12 апреля
-
-📲Переходите по ссылке и подписывайтесь – @vataranenko"
-
-
-            );
-    }
-
-});
-
 Route::view('/desktop', 'index')->name('desktop.index');
 
 Route::prefix('/forms')->group(function () {
@@ -198,6 +40,8 @@ Route::prefix('/forms')->group(function () {
         return view("forms.send-message", compact("id"));
     });
     Route::post("/send-message", [\App\Http\Controllers\MessageController::class, "sendMessage"]);
+    Route::post("/search-message", [\App\Http\Controllers\MessageController::class, "search"]);
+
     Route::get("/load-user-by-id", [\App\Http\Controllers\PeopleController::class, "loadUserById"]);
     Route::post("/search-in-base", [\App\Http\Controllers\PeopleController::class, "searchInBase"]);
     Route::post("/need-people-search-online", [\App\Http\Controllers\PeopleController::class, "needPeopleSearchOnline"]);
@@ -209,6 +53,12 @@ Route::prefix('/forms')->group(function () {
     Route::group($middleware, function () {
         Route::view("/request-people", "forms.request-people");
         Route::view("/need-people-search", "forms.people-search");
+        Route::view("/send-announce", "forms.send-announce");
+        Route::post("/announces/send-message", [\App\Http\Controllers\AnnounceQueueController::class, "sendMessage"]);
+        Route::delete("/announces/remove/{id}", [\App\Http\Controllers\AnnounceQueueController::class, "destroy"]);
+        Route::get("/announces/load-old", [\App\Http\Controllers\AnnounceQueueController::class, "index"]);
+
+
         Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);
         Route::get("/excel/export-people", [\App\Http\Controllers\PeopleController::class, "exportExcelPeople"]);
 
@@ -221,13 +71,14 @@ Route::prefix('/forms')->group(function () {
 
         Route::get("/messages/export", [\App\Http\Controllers\PeopleController::class, "exportExcelMessages"]);
 
+        Route::post("/messages/read", [\App\Http\Controllers\PeopleController::class, "readMessage"]);
+
         Route::view("/h-aid", "forms.h-aid");
         Route::post("/h-aid", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "hAidAdd"]);
+        Route::delete("/h-aid/{id}", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "destroy"]);
+        Route::post("/send-message-operator", [\App\Http\Controllers\MessageController::class, "sendMessageLocaly"]);
+
     });
-
-    //Route::middleware(["auth","admin"])->group(function () {
-
-    //});
 
     Route::get("/h-aid-export/{period?}", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "export"]);
 
