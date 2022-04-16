@@ -102,14 +102,14 @@
                     v-for="(item, index) in messages"
                 >
                     <div class="row" @click="fill(item)">
-                        <div class="col-12"> {{ item.title }}</div>
-                        <div class="col-12">Дата размещения <span
-                            class="badge bg-primary rounded-pill">{{ item.created_at }}</span></div>
-                        <div class="col-12">Дата заплавнированной отправки <span class="badge bg-primary rounded-pill">{{
+                        <div class="col-12"> <h5>{{ item.title }}</h5></div>
+                        <div class="col-12"><p>Дата размещения <span
+                            class="badge bg-primary rounded-pill">{{ item.created_at }}</span></p></div>
+                        <div class="col-12"><p>Дата заплавнированной отправки <span class="badge bg-primary rounded-pill">{{
                                 item.need_send_at
-                            }}</span></div>
+                            }}</span></p></div>
                         <div class="col-12" v-if="item.sent_at!=null">
-                            <p>Дата фактический отправки <span class="badge bg-info">{{ item.sent_at }}</span></p>
+                            <p>Дата фактической отправки <span class="badge bg-info">{{ item.sent_at }}</span></p>
                         </div>
                         <div class="col-12 mt-2"><p class="w-100">
                             {{ item.text }}
