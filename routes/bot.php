@@ -506,12 +506,14 @@ MilitaryServiceFacade::bot()
 
             $find = false;
             $hAids = HumanitarianAidHistory::query()->where("full_name", "like", "%$text%")
+                ->take(30)
+                ->skip(0)
                 ->get();
 
             if (count($hAids)) {
                 $tmp = "";
 
-                $count = $hAids->count();
+                $count = HumanitarianAidHistory::query()->where("full_name", "like", "%$text%")->count();
 
                 $hAids = $hAids->take(30);
 

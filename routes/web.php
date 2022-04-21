@@ -50,20 +50,23 @@ Route::prefix('/forms')->group(function () {
 
     $middleware = env("APP_WORK_MODE", "online") == "online" ? ["middleware" => ["auth", "admin"]] : [];
 
+
+    Route::view("/request-people", "forms.request-people");
+    Route::view("/need-people-search", "forms.people-search");
+    Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);
+    Route::post("/find-people", [\App\Http\Controllers\PeopleController::class, "searchPeople"]);
+
     Route::group($middleware, function () {
-        Route::view("/request-people", "forms.request-people");
-        Route::view("/need-people-search", "forms.people-search");
         Route::view("/send-announce", "forms.send-announce");
         Route::post("/announces/send-message", [\App\Http\Controllers\AnnounceQueueController::class, "sendMessage"]);
         Route::delete("/announces/remove/{id}", [\App\Http\Controllers\AnnounceQueueController::class, "destroy"]);
         Route::get("/announces/load-old", [\App\Http\Controllers\AnnounceQueueController::class, "index"]);
 
 
-        Route::post("/need-people-search", [\App\Http\Controllers\PeopleController::class, "needPeopleSearch"]);
         Route::get("/excel/export-people", [\App\Http\Controllers\PeopleController::class, "exportExcelPeople"]);
 
 
-        Route::post("/find-people", [\App\Http\Controllers\PeopleController::class, "searchPeople"]);
+
 
         Route::post("/h-aid-import", [\App\Http\Controllers\HumanitarianAidHistoryController::class, "import"]);
 
