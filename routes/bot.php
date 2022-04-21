@@ -96,21 +96,21 @@ MilitaryServiceFacade::bot()
 
         MilitaryServiceFacade::bot()->inlineKeyboard($message, [
             [
-                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message?uid=$user_id"],
+                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message?uid=$user_id&version=".env("APP_VERSION")],
             ],
             [
                 ["text" => "\xF0\x9F\x8E\xB2Просмотр заявок", "callback_data" => "/start_circular_search"],
             ],
             [
-                ["text" => "\xF0\x9F\x94\x8EОставить запрос на поиск", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=0"],
+                ["text" => "\xF0\x9F\x94\x8EОставить запрос на поиск", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=0&version=".env("APP_VERSION")],
             ],
 
             [
-                ["text" => "\xF0\x9F\x91\xA6Добавить данные о себе", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=1"],
+                ["text" => "\xF0\x9F\x91\xA6Добавить данные о себе", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=1&version=".env("APP_VERSION")],
             ],
 
             [
-                ["text" => "\xF0\x9F\x93\x83Поиск человека по базе", "url" => "$url/forms/search-in-base?uid=$user_id"],
+                ["text" => "\xF0\x9F\x93\x83Поиск человека по базе", "url" => "$url/forms/search-in-base?uid=$user_id&version=".env("APP_VERSION")],
             ],
 
             /*  [
@@ -146,26 +146,26 @@ MilitaryServiceFacade::bot()
         $url = env("APP_URL");
         MilitaryServiceFacade::bot()->inlineKeyboard("Направления помощи", [
             [
-                ["text" => "\xF0\x9F\x9A\x80Добавить новое убежище", "url" => "$url/forms/new-shelter?uid=$user_id"],
+                ["text" => "\xF0\x9F\x9A\x80Добавить новое убежище", "url" => "$url/forms/new-shelter?uid=$user_id&version=".env("APP_VERSION")],
             ],
             [
-                ["text" => "\xF0\x9F\x8F\xA0Добавить точку сбор гуманитарки", "url" => "$url/forms/new-aid-center?uid=$user_id"],
+                ["text" => "\xF0\x9F\x8F\xA0Добавить точку сбор гуманитарки", "url" => "$url/forms/new-aid-center?uid=$user_id&version=".env("APP_VERSION")],
             ],
             [
-                ["text" => "\xE2\x9C\x8AИмею полезные навыки!", "url" => "$url/forms/can-assistance?uid=$user_id"],
+                ["text" => "\xE2\x9C\x8AИмею полезные навыки!", "url" => "$url/forms/can-assistance?uid=$user_id&version=".env("APP_VERSION")],
             ],
             [
-                ["text" => "\xF0\x9F\x8D\x94Могу кормить людей!", "url" => "$url/forms/help-feeder?uid=$user_id"],
+                ["text" => "\xF0\x9F\x8D\x94Могу кормить людей!", "url" => "$url/forms/help-feeder?uid=$user_id&version=".env("APP_VERSION")],
             ],
             /* [
                  ["text" => "\xF0\x9F\x92\xB5Могу помочь деньгами", "url" => "$url/forms/help-with-money"],
              ],*/
 
             [
-                ["text" => "\xF0\x9F\x91\x95Могу помочь с вещами", "url" => "$url/forms/help-clothes?uid=$user_id"],
+                ["text" => "\xF0\x9F\x91\x95Могу помочь с вещами", "url" => "$url/forms/help-clothes?uid=$user_id&version=".env("APP_VERSION")],
             ],
             [
-                ["text" => "\xF0\x9F\x9A\x97Могу подвести \ доставить", "url" => "$url/forms/can-driver?uid=$user_id"],
+                ["text" => "\xF0\x9F\x9A\x97Могу подвести \ доставить", "url" => "$url/forms/can-driver?uid=$user_id&version=".env("APP_VERSION")],
             ],
 
         ]);
@@ -192,16 +192,16 @@ MilitaryServiceFacade::bot()
 
         MilitaryServiceFacade::bot()->inlineKeyboard($message, [
             [
-                ["text" => "Нужна помощь", "url" => "$url/forms/need-help?uid=$user_id"],
+                ["text" => "Нужна помощь", "url" => "$url/forms/need-help?uid=$user_id&version=".env("APP_VERSION")],
             ],
             [
-                ["text" => "Продукты или медикаменты", "url" => "$url/forms/need-goods-and-food?uid=$user_id"],
+                ["text" => "Продукты или медикаменты", "url" => "$url/forms/need-goods-and-food?uid=$user_id&version=".env("APP_VERSION")],
             ],
             [
-                ["text" => "Нужна вода", "url" => "$url/forms/help-water?uid=$user_id"],
+                ["text" => "Нужна вода", "url" => "$url/forms/help-water?uid=$user_id&version=".env("APP_VERSION")],
             ],
             [
-                ["text" => "Нужна перевозка", "url" => "$url/forms/help-delivery?uid=$user_id"],
+                ["text" => "Нужна перевозка", "url" => "$url/forms/help-delivery?uid=$user_id&version=".env("APP_VERSION")],
             ],
             /*  [
                   ["text" => "\xF0\x9F\x8D\xB4Мне нужен ремонт эл. техники или авто", "url" => "$url/forms/help-delivery?uid=$user_id"],
@@ -399,8 +399,8 @@ MilitaryServiceFacade::bot()
 
         $keyboard = [
             [
-                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message/$people->id?by=people&uid=$user_id"],
-                ["text" => "\xE2\x9D\xA4Есть инфо", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=1"],
+                ["text" => "\xF0\x9F\x93\xA7Оставить записку", "url" => "$url/forms/send-message/$people->id?by=people&uid=$user_id&version=".env("APP_VERSION")],
+                ["text" => "\xE2\x9D\xA4Есть инфо", "url" => "$url/forms/need-people-search-request?uid=$user_id&t=1&version=".env("APP_VERSION")],
             ],
 
             [
