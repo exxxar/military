@@ -755,22 +755,22 @@ MilitaryServiceFacade::bot()
 
             ]);
 
-        MilitaryServiceFacade::bot()->inlineKeyboard("Обратная связь:", [
+        MilitaryServiceFacade::bot()->inlineKeyboard("\xF0\x9F\x91\x87Обратная связь:", [
             [
-                ["text" => "\xE2\x9C\x85Канал оперативных новостей", "url" => "https://t.me/nddnr"]
+                ["text" => "\xF0\x9F\x93\xB0Канал оперативных новостей", "url" => "https://t.me/nddnr"]
             ],
 
             [
-                ["text" => "\xE2\x9C\x85Ищут на помощь", "url" => "https://t.me/only_help_request"],
-                ["text" => "\xE2\x9C\x85Могут помочь", "url" => "https://t.me/can_help"]
+                ["text" => "\xF0\x9F\x94\x8DИщут помощь", "url" => "https://t.me/only_help_request"],
+                ["text" => "\xF0\x9F\x92\xAAМогут помочь", "url" => "https://t.me/can_help"]
             ],
 
             [
-                ["text" => "\xE2\x9C\x85Связь с разработчиком в ВК", "url" => "https://vk.com/do_real_it"]
+                ["text" => "\xF0\x9F\x92\xBBСвязь с разработчиком в ВК", "url" => "https://vk.com/do_real_it"]
             ]
 
         ]);
-        
+
 
     }, "start")
     ->addRoute("/help|.*Консультация онлайн", function ($message) {
