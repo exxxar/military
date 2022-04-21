@@ -23,20 +23,20 @@
     <link rel="apple-touch-icon" sizes="167x167" href="img/icons/icon-167x167.png">
     <link rel="apple-touch-icon" sizes="180x180" href="img/icons/icon-180x180.png">
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/bootstrap-icons.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/tiny-slider.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/baguetteBox.min.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/rangeslider.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/vanilla-dataTables.min.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/apexcharts.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}?version={{env("APP_VERSION","1.0.0")}}">
+    <link rel="stylesheet" href="{{asset('/css/bootstrap-icons.css')}}?version={{env("APP_VERSION","1.0.0")}}">
+    <link rel="stylesheet" href="{{asset('/css/tiny-slider.css')}}?version={{env("APP_VERSION","1.0.0")}}">
+    <link rel="stylesheet" href="{{asset('/css/baguetteBox.min.css')}}?version={{env("APP_VERSION","1.0.0")}}">
+    <link rel="stylesheet" href="{{asset('/css/rangeslider.css')}}?version={{env("APP_VERSION","1.0.0")}}">
+    <link rel="stylesheet" href="{{asset('/css/vanilla-dataTables.min.css')}}?version={{env("APP_VERSION","1.0.0")}}">
+    <link rel="stylesheet" href="{{asset('/css/apexcharts.css')}}?version={{env("APP_VERSION","1.0.0")}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
           integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="{{asset('/style.css')}}">
+    <link rel="stylesheet" href="{{asset('/style.css')}}?version={{env("APP_VERSION","1.0.0")}}">
     <!-- Web App Manifest -->
-    <link rel="manifest" href="{{asset('/manifest.json')}}">
+    <link rel="manifest" href="{{asset('/manifest.json')}}?version={{env("APP_VERSION","1.0.0")}}">
 
     @if(\Illuminate\Support\Facades\Auth::check())
         <meta name="user" content="{{ App\Models\User::self() }}"/>
@@ -78,25 +78,25 @@
     <application></application>
 </div>
 
-<script src="{{ mix('/js/app.js') }}"></script>
+<script src="{{ mix('/js/app.js') }}?version={{env("APP_VERSION","1.0.0")}}"></script>
 <!-- All JavaScript Files -->
-<script src="{{asset('/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('/js/slideToggle.min.js')}}"></script>
-<script src="{{asset('/js/internet-status.js')}}"></script>
-<script src="{{asset('/js/tiny-slider.js')}}"></script>
-<script src="{{asset('/js/baguetteBox.min.js')}}"></script>
-<script src="{{asset('/js/countdown.js')}}"></script>
-<script src="{{asset('/js/rangeslider.min.js')}}"></script>
-<script src="{{asset('/js/vanilla-dataTables.min.js')}}"></script>
-<script src="{{asset('/js/index.js')}}"></script>
-<script src="{{asset('/js/magic-grid.min.js')}}"></script>
-<script src="{{asset('/js/dark-rtl.js')}}"></script>
-<script src="{{asset('/js/active.js')}}"></script>
+<script src="{{asset('/js/bootstrap.bundle.min.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/slideToggle.min.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/internet-status.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/tiny-slider.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/baguetteBox.min.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/countdown.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/rangeslider.min.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/vanilla-dataTables.min.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/index.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/magic-grid.min.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/dark-rtl.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
+<script src="{{asset('/js/active.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"
         integrity="sha512-yFjZbTYRCJodnuyGlsKamNE/LlEaEAxSUDe5+u61mV8zzqJVFOH7TnULE2/PP/l5vKWpUNnF4VGVkXh3MjgLsg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- PWA -->
-<script src="{{asset('/js/pwa.js')}}"></script>
+<script src="{{asset('/js/pwa.js')}}?version={{env("APP_VERSION","1.0.0")}}"></script>
 
 
 </body>
