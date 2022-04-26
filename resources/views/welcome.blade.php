@@ -66,7 +66,7 @@
                 <div class="card-body d-flex justify-content-center">
                     <script async src="https://telegram.org/js/telegram-widget.js?18"
                             data-telegram-login="shelter_dpr_bot" data-size="large"
-                            data-auth-url="https://shelter-dpr.ru/telegram/callback"
+                            data-auth-url="https://save-own-life.ru/telegram/callback"
                             data-request-access="write"></script>
                 </div>
             </div>
