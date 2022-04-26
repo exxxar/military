@@ -16,7 +16,7 @@
 
                 <div v-else>
                     <div
-                        v-if="!user.is_working_now"
+                        v-if="user.is_working_now"
                         class="alert custom-alert-2 alert-success alert-dismissible fade show" role="alert"><i
                         class="bi bi-check-circle"></i>
                         В данный момент вы за работой! Ваше рабочее время с {{user.start_at||"не задано"}} до {{user.end_at||"не задано"}}
