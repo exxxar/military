@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -51,6 +52,32 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'settings' => 'array',
     ];
+
+    protected $attributes = [
+      "is_working_now"
+    ];
+
+    public function getIsWorkingNowAtrribute()
+    {
+
+        if (!is_null($this->start_at) && !is_null($this->end_at)) {
+            $tmp_start = explode(':', $this->start_at);
+            $tmp_end = explode(':', $this->end_at);
+            $start_at_h = (int)($tmp_start[0] ?? "09");
+            $start_at_m = (int)($tmp_start[1] ?? "00");
+
+            $end_at_h = (int)($tmp_end[0] ?? "18");
+            $end_at_m = (int)($tmp_end[1] ?? "00");
+
+            $start_at = Carbon::now("+3:00")->setHour($start_at_h)->setMinute($start_at_m);
+            $end_at = Carbon::now("+3:00")->setHour($end_at_h)->setMinute($end_at_m);
+
+            return Carbon::now("+3:00") <= $end_at && Carbon::now("+3:00") >= $start_at;
+
+        }
+
+        return true;
+    }
 
     public static function self()
     {
