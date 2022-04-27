@@ -53,7 +53,7 @@ class User extends Authenticatable
         'settings' => 'array',
     ];
 
-    protected $attributes = [
+    protected $appends = [
       "is_working_now"
     ];
 

@@ -4,6 +4,7 @@ namespace App\Classes;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Telegram\Bot\Api;
 
 class TelegramBotHandler extends BaseBot
@@ -29,22 +30,29 @@ class TelegramBotHandler extends BaseBot
         //пользователь. И если он есть, то мы просто возвращаем его данные.
         $this->user = User::where("telegram_chat_id", $telegram_chat_id)->first();
 
+
         //А если пользователя нет, то создаем нового пользователя
         if (is_null($this->user)) {
-            $this->user = User::create([
-                'name' => $username ?? $telegram_chat_id, //берем псевдоним пользователя,
-                // а в случае отсуствия - берем в качестве псевдонима идентификатор
-                'email' => "$telegram_chat_id@donbassit.ru", //создаем почту н основе идентификатора пользователя
-                'telegram_chat_id' => $telegram_chat_id, //задаем телеграм ID (уникальное значение)
-                'password' => bcrypt($telegram_chat_id), //генерируем пароль на основе идентификатора
-                'full_name' => "$first_name $last_name" ?? null, //заполняем имя пользовтеля
-                'radius' => 0.5 //указываем радиус поиска объектов по умолчанию.
+            try {
+                $uuid = Str::uuid();
+                $this->user = User::create([
+                    'name' => $username ?? $telegram_chat_id ?? "unknown", //берем псевдоним пользователя,
+                    // а в случае отсуствия - берем в качестве псевдонима идентификатор
+                    'email' => "$uuid@donbassit.ru", //создаем почту н основе идентификатора пользователя
+                    'telegram_chat_id' => $telegram_chat_id, //задаем телеграм ID (уникальное значение)
+                    'password' => bcrypt($telegram_chat_id), //генерируем пароль на основе идентификатора
+                    'full_name' => "$first_name $last_name" ?? null, //заполняем имя пользовтеля
+                    'radius' => 0.5 //указываем радиус поиска объектов по умолчанию.
 
-            ]);
+                ]);
+            } catch (\Exception $e) {
+                Log::info("Error TBH " . $e->getMessage() . " " . $e->getLine());
+            }
         }
     }
 
-    public function currentUser(){
+    public function currentUser()
+    {
         return $this->user;
     }
 
@@ -135,12 +143,12 @@ class TelegramBotHandler extends BaseBot
 
         }
 
-        if (!empty($this->next)){
-            foreach ($this->next as $item){
+        if (!empty($this->next)) {
+            foreach ($this->next as $item) {
                 try {
                     $item["function"]($message);
                     $find = true;
-                }catch (\Exception $e){
+                } catch (\Exception $e) {
                     Log::error($e->getMessage() . " " . $e->getLine());
                 }
             }
