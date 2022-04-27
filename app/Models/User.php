@@ -53,11 +53,11 @@ class User extends Authenticatable
         'settings' => 'array',
     ];
 
-    protected $appends = [
+    protected $attributes = [
       "is_working_now"
     ];
 
-    public function getIsWorkingNowAtrribute()
+    public function getIsWorkingNowAttribute()
     {
 
         if (!is_null($this->start_at) && !is_null($this->end_at)) {
