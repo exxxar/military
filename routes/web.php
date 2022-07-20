@@ -28,7 +28,6 @@ use Telegram\Bot\FileUpload\InputFile;
 |
 */
 
-
 Route::view('/desktop', 'index')->name('desktop.index');
 
 Route::prefix('/forms')->group(function () {

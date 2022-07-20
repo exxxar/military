@@ -57,6 +57,7 @@ class User extends Authenticatable
       "is_working_now"
     ];
 
+    
     public function getIsWorkingNowAttribute()
     {
 

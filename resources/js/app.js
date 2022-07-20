@@ -57,7 +57,6 @@ import VueTheMask from 'vue-the-mask'
 const app = createApp({})
 
 
-
 app.component('application', App)
 app.component('header-component', Header)
 app.component('footer-component', Footer)
